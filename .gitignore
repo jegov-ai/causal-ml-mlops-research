@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+*.joblib
+customers.csv
+causal_predictions.csv
+optimization_results.csv
+experiment_log.json
+.gitignore.txt
