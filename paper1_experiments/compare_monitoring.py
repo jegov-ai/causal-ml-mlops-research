@@ -67,3 +67,38 @@ for group, group_data in data.groupby("group"):
         print(f"ALERT: Harmful change in Group {group}!")
     else:
         print(f"No positive-to-negative alert for Group {group}.")
+
+
+import pandas as pd
+
+# Load time-based treatment effect estimates
+data = pd.read_csv(
+    "paper1_experiments/effects_over_time.csv"
+)
+
+print("M0 vs M1 Monitoring Comparison\n")
+
+# M0: Monitor the overall estimated treatment effect
+overall = data.groupby("period")["estimated_effect"].mean()
+
+# M1: Monitor each subgroup separately
+subgroups = data.sort_values(["period", "group"])
+
+for period in sorted(data["period"].unique()):
+    overall_effect = overall.loc[period]
+
+    # M0 overall alert
+    m0_alert = overall_effect < 0
+
+    # M1 subgroup alerts
+    period_data = subgroups[subgroups["period"] == period]
+    m1_alerts = period_data[
+        period_data["estimated_effect"] < 0
+    ]["group"].tolist()
+
+    print(
+        f"Period {period}: "
+        f"M0={'ALERT' if m0_alert else 'No Alert'}, "
+        f"M1={m1_alerts if m1_alerts else 'No Alert'}"
+    )
+
