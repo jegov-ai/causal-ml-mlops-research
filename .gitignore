@@ -7,3 +7,6 @@ causal_predictions.csv
 optimization_results.csv
 experiment_log.json
 .gitignore.txt
+
+paper1_experiments/simulated_customers.csv
+paper1_experiments/effects_over_time.csv
