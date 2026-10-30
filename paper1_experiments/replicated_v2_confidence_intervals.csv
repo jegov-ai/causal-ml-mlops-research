@@ -1,0 +1,4 @@
+comparison,mean_difference,ci_low,ci_high
+M1 minus M0,-42.48,-45.370124999999994,-40.09
+M2 minus M0,-38.55,-41.88,-35.369875
+M2 minus M1,3.93,2.49,5.800124999999998

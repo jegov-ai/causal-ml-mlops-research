@@ -1,0 +1,4 @@
+method,mean_regret,mean_alerts,mean_false_alerts,detection_rate,mean_detection_delay
+M0,44.4,1.0,1.0,0.0,
+M1,1.92,1.0,0.04,0.96,0.0
+M2,5.85,1.06,1.06,0.0,
