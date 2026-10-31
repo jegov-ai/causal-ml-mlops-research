@@ -1,0 +1,19 @@
+scenario,review_budget,comparison,mean_difference,ci_low,ci_high
+response_shift,2,M2 minus M0,0.0,0.0,0.0
+response_shift,2,M2 minus M1,0.0,0.0,0.0
+response_shift,2,M1 minus M0,0.0,0.0,0.0
+response_shift,4,M2 minus M0,0.64,0.02,1.3301249999999982
+response_shift,4,M2 minus M1,-0.17,-0.72,0.285
+response_shift,4,M1 minus M0,0.81,0.285,1.405
+response_shift,8,M2 minus M0,0.095,0.0,0.285
+response_shift,8,M2 minus M1,0.095,0.0,0.285
+response_shift,8,M1 minus M0,0.0,0.0,0.0
+opposing_shift,2,M2 minus M0,-0.15,-0.6037499999999987,0.3
+opposing_shift,2,M2 minus M1,-0.3,-0.9,0.3
+opposing_shift,2,M1 minus M0,0.15,0.0,0.45
+opposing_shift,4,M2 minus M0,0.15,0.0,0.45
+opposing_shift,4,M2 minus M1,0.15,0.0,0.45
+opposing_shift,4,M1 minus M0,0.0,0.0,0.0
+opposing_shift,8,M2 minus M0,0.0,0.0,0.0
+opposing_shift,8,M2 minus M1,0.0,0.0,0.0
+opposing_shift,8,M1 minus M0,0.0,0.0,0.0

@@ -81,3 +81,36 @@ cannot detect changes in other outcome-distribution signals.
 Finalize effect trajectories, resource allocation, event metrics,
 sample sizes, seeds and acceptance checks.
 Document departures from this plan.
+
+
+## Fixed settings for the next exploratory experiment
+
+### Opposing subgroup-effect changes
+Equal-sized groups throughout.
+Periods 1–5: A = +20, B = +15.
+Periods 6–12: A = -10, B = +45.
+Overall ATE remains +17.5.
+No treatment cost beyond what is represented in the net effect.
+Conventional outcome-distribution signals remain available.
+
+### Common response and review budgets
+Evaluate budgets of 2, 4 and 8 decision reviews per run.
+The first issued alert starts consecutive per-period reviews.
+Each review checks both groups and consumes one review unit.
+The triggering period counts as the first review.
+Further alerts do not restart or extend the review schedule.
+Unused review capacity at the run's end remains unused.
+
+Use the same decision rule for every method:
+- Stop treatment if the effect's upper 95% confidence bound is negative.
+- Start treatment if its lower 95% confidence bound is positive.
+- Otherwise retain the current action.
+
+Current-period outcomes affect next-period actions only.
+These pointwise intervals are an exploratory decision rule,
+not a guarantee of sequential safety.
+
+### Interpretation
+The scenario and controller are exploratory choices.
+Do not modify them after inspecting results without recording
+the modification and using new test seeds.
