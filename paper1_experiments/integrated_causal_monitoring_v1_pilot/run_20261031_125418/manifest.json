@@ -1,0 +1,43 @@
+{
+  "n": 600,
+  "scale_runs": 20,
+  "calibration_runs": 100,
+  "null_runs": 50,
+  "test_runs": 5,
+  "mode": "pilot",
+  "thresholds": {
+    "M0": 3.9807801042687574,
+    "M1": 3.9807801042687574,
+    "M2": 3.9807801042687574
+  },
+  "cost": 10.0,
+  "periods": 12,
+  "change_period": 7,
+  "review_budgets": [
+    2,
+    4,
+    8
+  ],
+  "alert_cap": 2,
+  "seeds": {
+    "baseline": 42,
+    "scale_start": 50000,
+    "calibration_start": 60000,
+    "evaluation_start": 80000,
+    "heldout_null_start": 90000
+  },
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.19045-SP0",
+  "numpy": "2.5.4",
+  "pandas": "3.1.0",
+  "sklearn": "1.9.1",
+  "script_sha256": "f42bcd19b785184d9bc892cdcbb71e683cbf84fd27035af6f623b400d0d8d95a",
+  "elapsed_seconds": 289.46779340005014,
+  "scope": "Exploratory synthetic offline replay, conditional on one initial model.",
+  "gate": "Same-window holdout AIPW improvement lower pointwise 95% bound > 0; no sequential safety guarantee.",
+  "timing": "Score decisions first; current labels can update the next period only.",
+  "monitor": "Frozen common baseline nuisance model; no threshold/reference reset.",
+  "budgets": "First alert starts consecutive reviews; each review fits/evaluates one common candidate; actual computation cached across arms.",
+  "truth": "Known effects used only for offline scores, never training/alerts/gates.",
+  "omissions": "No M3, confounding, deployment feedback, delayed labels or external data. Study mode alone is not confirmatory preregistration."
+}
