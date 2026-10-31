@@ -1,0 +1,9 @@
+{
+  "train_n": 800,
+  "test_n": 200,
+  "cate_mae": 7.938535900967704,
+  "recommended": 163,
+  "regret": 0.925,
+  "harmful_treatment_rate": 0.0,
+  "treatment_rate": 0.815
+}

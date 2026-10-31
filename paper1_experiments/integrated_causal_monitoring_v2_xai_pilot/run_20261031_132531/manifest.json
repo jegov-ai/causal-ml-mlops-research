@@ -1,0 +1,49 @@
+{
+  "n": 600,
+  "scale_runs": 20,
+  "calibration_runs": 100,
+  "null_runs": 50,
+  "test_runs": 5,
+  "mode": "pilot",
+  "thresholds": {
+    "M0": 3.5661357818634585,
+    "M1": 3.6974474062683176,
+    "M2": 3.8118830904144585,
+    "M3": 3.8118830904144585
+  },
+  "cost": 10.0,
+  "periods": 12,
+  "change_period": 7,
+  "review_budgets": [
+    2,
+    4,
+    8
+  ],
+  "alert_cap": 2,
+  "seeds": {
+    "baseline": 42,
+    "scale_start": 110000,
+    "calibration_start": 120000,
+    "evaluation_start": 100000,
+    "heldout_null_start": 140000
+  },
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.19045-SP0",
+  "numpy": "2.5.4",
+  "pandas": "3.1.0",
+  "sklearn": "1.9.1",
+  "script_sha256": "e602dcb1e27f4ff630303234765532759151ed97277b12e3214adbc99a5def92",
+  "elapsed_seconds": 780.6557218000526,
+  "scope": "Exploratory synthetic offline replay, conditional on one initial model.",
+  "gate": "Same-window holdout AIPW improvement lower pointwise 95% bound > 0; no sequential safety guarantee.",
+  "timing": "Score decisions first; current labels can update the next period only.",
+  "monitor": "Frozen common baseline nuisance model; no threshold/reference reset.",
+  "budgets": "First alert starts consecutive reviews; each review fits/evaluates one common candidate; actual computation cached across arms.",
+  "truth": "Known effects used only for offline scores, never training/alerts/gates.",
+  "explanations": "Exact 2-feature Shapley enumeration, interventional masking against 16 fixed observed background rows; explains the fitted CATE function, not input-feature causal effects.",
+  "explanation_audit": "64 fixed independent anchors; oracle attribution error is offline synthetic evaluation only; no gate/alert access.",
+  "xai_blind_spot": "Frozen-model explanations cannot independently reveal a pure response shift when the feature distribution is unchanged.",
+  "xai_shared_live_compute_seconds": 450.9521072995849,
+  "intervals": "Paired percentile bootstrap 95% descriptive intervals; unadjusted across scenarios, budgets and contrasts; five pilot seeds are insufficient for inference.",
+  "omissions": "No confounding, deployment feedback, delayed labels or external data. Study mode alone is not confirmatory preregistration."
+}
