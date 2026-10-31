@@ -1,0 +1,7 @@
+scenario,method,runs,any_alert_rate,mean_alerts,mean_decision_reviews,mean_prechange_alerts,change_detection_rate,mean_change_delay,mean_prechange_regret,mean_postchange_regret,mean_harmful_windows
+response_shift,M0,100,1.0,2.0,6.59,0.01,1.0,0.43,0.0,2.45,1.09
+response_shift,M1,100,1.0,2.0,6.78,0.01,1.0,0.23,0.0,2.45,1.09
+response_shift,M2,100,1.0,2.0,6.98,0.0,1.0,0.02,0.0,2.45,1.09
+stable,M0,100,0.06,0.06,0.36,0.01,0.0,,0.0,0.0,0.0
+stable,M1,100,0.05,0.05,0.3,0.01,0.0,,0.0,0.0,0.0
+stable,M2,100,0.06,0.06,0.3,0.0,0.0,,0.0,0.0,0.0

@@ -1,0 +1,4 @@
+comparison,mean_regret_difference,ci_low,ci_high
+M2 minus M0,0.0,0.0,0.0
+M2 minus M1,0.0,0.0,0.0
+M1 minus M0,0.0,0.0,0.0
