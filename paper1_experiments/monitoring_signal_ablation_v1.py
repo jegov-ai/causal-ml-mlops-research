@@ -2,13 +2,14 @@
 
 M1 baseline; M2-A adds subgroup effects; M2-B adds assignment contrast;
 M2-FULL adds both. Original historical script and outputs stay unchanged.
-Only development smoke/pilot modes are enabled; no unseen study seeds are used.
+Study mode requires the frozen prospective protocol and clean tracked Git state.
 """
 
 import argparse
 import hashlib
 import json
 import platform
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -389,22 +390,49 @@ def evaluate_stream(seed, scenario, n, baseline, center, scale, thresholds,
     return records, summaries, benchmarks
 
 
+def run_settings(mode):
+    if mode == "smoke":
+        return ({"n": 200, "scale_runs": 3, "calibration_runs": 5,
+                 "null_runs": 3, "test_runs": 1},
+                {"scale": 300010, "calibration": 300020,
+                 "null": 300030, "evaluation": 300000})
+    if mode == "pilot":
+        return ({"n": 1000, "scale_runs": 10, "calibration_runs": 40,
+                 "null_runs": 20, "test_runs": 3},
+                {"scale": 301000, "calibration": 302000,
+                 "null": 303000, "evaluation": 300001})
+    if mode == "study":
+        return ({"n": 1000, "scale_runs": 100, "calibration_runs": 1000,
+                 "null_runs": 200, "test_runs": 100},
+                {"scale": 310000, "calibration": 320000,
+                 "null": 330000, "evaluation": 340000})
+    raise ValueError(f"Unknown mode: {mode}")
+
+
+def study_provenance():
+    root = Path(__file__).resolve().parents[1]
+    protocol = Path(__file__).with_name("SIGNAL_ABLATION_MAIN_PROTOCOL_v1.md")
+    expected = "6d800d0e4b35cb9668ad68f32fe21bdcfde780b3c46b78339dd6aae6ed6860b1"
+    if not protocol.exists() or hashlib.sha256(protocol.read_bytes()).hexdigest() != expected:
+        raise RuntimeError("Frozen main protocol missing or modified; stop and review before study.")
+    dirty = subprocess.check_output(["git", "status", "--porcelain", "--untracked-files=no"], cwd=root, text=True)
+    if dirty.strip():
+        raise RuntimeError("Tracked Git changes exist. Review and commit intended changes before study.")
+    script_relative = Path(__file__).resolve().relative_to(root).as_posix()
+    protocol_relative = protocol.resolve().relative_to(root).as_posix()
+    for relative in (script_relative, protocol_relative):
+        subprocess.check_call(["git", "ls-files", "--error-unmatch", relative], cwd=root, stdout=subprocess.DEVNULL)
+    return {"git_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip(),
+            "protocol_sha256": expected, "protocol_text": protocol.read_text()}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--mode", choices=("smoke", "pilot"), default="smoke")
+    parser.add_argument("--mode", choices=("smoke", "pilot", "study"), default="smoke")
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
-    # Development-only runs. Study execution is deliberately not exposed until
-    # CSV seed audit, compute assessment and prospective protocol freeze finish.
-    config = {"n": 1000, "scale_runs": 10, "calibration_runs": 40,
-              "null_runs": 20, "test_runs": 3}
-    starts = {"scale": 301000, "calibration": 302000,
-              "null": 303000, "evaluation": 300001}
-    if args.mode == "smoke":
-        config = {"n": 200, "scale_runs": 3, "calibration_runs": 5,
-                  "null_runs": 3, "test_runs": 1}
-        starts = {"scale": 300010, "calibration": 300020,
-                  "null": 300030, "evaluation": 300000}
+    config, starts = run_settings(args.mode)
+    provenance = study_provenance() if args.mode == "study" else {}
     out = args.output or Path(__file__).resolve().parent / (
         "monitoring_signal_ablation_v1_" + args.mode
     )
@@ -412,6 +440,16 @@ def main():
     out = out / time.strftime("run_%Y%m%d_%H%M%S")
     out.mkdir(parents=True, exist_ok=False)
     started = time.perf_counter()
+    phase_times = {}
+    (out / "script_snapshot.py").write_bytes(Path(__file__).read_bytes())
+    if provenance:
+        (out / "protocol_snapshot.md").write_text(provenance["protocol_text"])
+    (out / "launch.json").write_text(json.dumps({
+        "status": "started", "mode": args.mode, "config": config, "seed_starts": starts,
+        "git_commit": provenance.get("git_commit"),
+        "protocol_sha256": provenance.get("protocol_sha256"),
+        "script_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+    }, indent=2))
     print("MODE:", args.mode, "| exploratory synthetic benchmark", flush=True)
     print("Results folder:", out.resolve(), flush=True)
     if args.mode == "smoke":
@@ -436,6 +474,8 @@ def main():
         **decision_metrics(test, (mu1 - mu0) > COST),
     }
     print("ORIGINAL MODEL BASELINE:", baseline_report, flush=True)
+    phase_times["setup_seconds"] = time.perf_counter() - started
+    phase_started = time.perf_counter()
     print("Estimating stable signal scales...", flush=True)
     scale_data = np.concatenate([
         stream_vectors(seed, "stable", config["n"], baseline, explainer)
@@ -443,6 +483,8 @@ def main():
     ])
     center = scale_data.mean(axis=0)
     scale = np.maximum(scale_data.std(axis=0, ddof=1), 1e-8)
+    phase_times["scale_seconds"] = time.perf_counter() - phase_started
+    phase_started = time.perf_counter()
     maxima = {m: [] for m in METHODS}
     print("Calibrating independent null-run maxima...", flush=True)
     for index, seed in enumerate(range(starts["calibration"], starts["calibration"] + config["calibration_runs"])):
@@ -455,6 +497,8 @@ def main():
     thresholds = {m: float(np.quantile(maxima[m], .95, method="higher"))
                   for m in METHODS}
     print("Thresholds:", thresholds, flush=True)
+    phase_times["calibration_seconds"] = time.perf_counter() - phase_started
+    phase_started = time.perf_counter()
     null_records = []
     print("Checking false alerts on held-out stable runs...", flush=True)
     for seed in range(starts["null"], starts["null"] + config["null_runs"]):
@@ -465,6 +509,8 @@ def main():
             null_records.append(dict(seed=seed, method=m,
                                      any_alert=int(np.any(scores[m] > thresholds[m]))))
     null = pd.DataFrame(null_records)
+    phase_times["heldout_null_seconds"] = time.perf_counter() - phase_started
+    phase_started = time.perf_counter()
     records, results, benchmarks = [], [], []
     for scenario in SCENARIOS:
         for index, seed in enumerate(range(starts["evaluation"], starts["evaluation"] + config["test_runs"])):
@@ -486,6 +532,8 @@ def main():
             "thresholds": thresholds,
             "script_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         }, indent=2))
+    phase_times["evaluation_seconds"] = time.perf_counter() - phase_started
+    phase_started = time.perf_counter()
     runs = pd.DataFrame(results)
     summary = runs.groupby(["scenario", "review_budget", "method"]).agg(
         runs=("seed", "size"), mean_loss=("postchange_regret", "mean"),
@@ -575,8 +623,11 @@ def main():
         "source_baseline_sha256": hashlib.sha256(
             Path(__file__).with_name("integrated_causal_monitoring_v2_xai.py").read_bytes()
         ).hexdigest(),
-        "phase": "engineering development only; not unseen main evaluation",
-        "protocol": "SIGNAL_ABLATION_DEVELOPMENT_PROTOCOL_v1.md",
+        "phase": "prospectively specified exploratory main run" if args.mode == "study" else "engineering development only",
+        "git_commit": provenance.get("git_commit"),
+        "protocol_sha256": provenance.get("protocol_sha256"),
+        "phase_seconds": {**phase_times, "analysis_and_output_seconds": time.perf_counter() - phase_started},
+        "protocol": "SIGNAL_ABLATION_MAIN_PROTOCOL_v1.md" if args.mode == "study" else "SIGNAL_ABLATION_DEVELOPMENT_PROTOCOL_v1.md",
         "compute_note": "Historical explanation diagnostics retained in all arms; Shapley signals never enter ablation scores. Runtime includes diagnostics and caching.",
         "loss_units": "mean_loss is a legacy alias for the sum of period-average regret over periods 7 through 12; mean_postchange_regret_per_period divides by 6.",
         "harm_units": "harmful_treatment_rate is the fraction of ALL customers treated despite negative effect minus assumed cost; it is not conditional on treatment.",
@@ -591,7 +642,7 @@ def main():
         "xai_blind_spot": "Frozen-model explanations cannot independently reveal a pure response shift when the feature distribution is unchanged.",
         "xai_shared_live_compute_seconds": explainer.compute_seconds,
         "intervals": "Paired percentile bootstrap 95% descriptive intervals; unadjusted across scenarios, budgets and contrasts; development runs are insufficient for research inference.",
-        "omissions": "No confounding, deployment feedback, delayed labels or external data. Main study is unavailable until a separate prospective freeze.",
+        "omissions": "No confounding, deployment feedback, delayed labels or external data. Study is exploratory, conditional on the frozen protocol and one initial model.",
     }
     (out / "manifest.json").write_text(json.dumps(manifest, indent=2))
     (out / "checkpoint.json").write_text(json.dumps({"status": "complete", "manifest": "manifest.json"}, indent=2))
