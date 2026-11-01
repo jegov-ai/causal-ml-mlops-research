@@ -1,3 +1,5 @@
+from pathlib import Path
+ROOT = Path(__file__).resolve().parent
 
 # Project 1: Causal ML + MLOps Research
 # Component 3: Average Treatment Effect (ATE)
@@ -5,7 +7,7 @@
 import pandas as pd
 
 # Load our customer dataset
-data = pd.read_csv("customers.csv")
+data = pd.read_csv(ROOT / "customers.csv")
 
 # Separate customers into two groups
 treatment = data[data["discount"] == 1]

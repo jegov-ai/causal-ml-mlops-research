@@ -2,6 +2,9 @@
 
 import subprocess
 import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
 
 steps = [
     "generate_data.py",
@@ -17,7 +20,8 @@ for step in steps:
     print("\nRunning:", step, flush=True)
 
     subprocess.run(
-        [sys.executable, step],
+        [sys.executable, str(ROOT / step)],
+        cwd=ROOT,
         check=True
     )
 

@@ -1,3 +1,5 @@
+from pathlib import Path
+ROOT = Path(__file__).resolve().parent
 
 # Project 1: Causal ML + MLOps Research
 # Component 4: CATE Analysis by Age Group
@@ -5,7 +7,7 @@
 import pandas as pd
 
 # Load our existing customer dataset
-data = pd.read_csv("customers.csv")
+data = pd.read_csv(ROOT / "customers.csv")
 
 # Create two age groups
 young = data[data["age"] < 35]

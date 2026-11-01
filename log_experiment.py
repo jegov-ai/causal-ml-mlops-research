@@ -1,3 +1,5 @@
+from pathlib import Path
+ROOT = Path(__file__).resolve().parent
 
 import pandas as pd
 import json
@@ -5,7 +7,7 @@ from datetime import datetime, timezone
 from sklearn.metrics import mean_absolute_error
 
 # Read predictions saved by our causal ML model
-results = pd.read_csv("causal_predictions.csv")
+results = pd.read_csv(ROOT / "causal_predictions.csv")
 
 # Calculate evaluation metrics
 mae = mean_absolute_error(
@@ -27,7 +29,7 @@ experiment = {
 }
 
 # Save our experiment results
-with open("experiment_log.json", "w") as file:
+with open(ROOT / "experiment_log.json", "w") as file:
     json.dump(experiment, file, indent=4)
 
 print("MLOPS EXPERIMENT REPORT")

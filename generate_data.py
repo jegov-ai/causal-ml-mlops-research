@@ -1,3 +1,5 @@
+from pathlib import Path
+ROOT = Path(__file__).resolve().parent
 
 # Project 1: Causal ML + MLOps Research
 # Component 1: Synthetic data generation
@@ -37,7 +39,7 @@ data = pd.DataFrame({
 })
 
 # Save the dataset
-data.to_csv("customers.csv", index=False)
+data.to_csv(ROOT / "customers.csv", index=False)
 
 # Display basic information
 print("Dataset generated successfully!")

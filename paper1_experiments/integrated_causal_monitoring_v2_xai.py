@@ -2,7 +2,7 @@
 
 Run from the project root with its virtual-environment Python.
 Default: a small PILOT, not a confirmatory research result.
-M0 = conventional; M1 = M0 + ATE; M2 = M1 + subgroup effects.
+M0 = conventional; M1 = M0 + ATE; M2 = M1 + subgroup effects + assignment contrast.
 M3 adds exact two-feature finite-background Shapley attribution monitoring.
 These explain the fitted CATE function, not causal effects of the input features.
 """
@@ -82,6 +82,10 @@ def policy(models, data):
 
 def make_window(seed, period, scenario, n):
     """Logged assignments are independent of policy recommendations."""
+    if scenario not in SCENARIOS:
+        raise ValueError(f"Unknown scenario: {scenario}")
+    if n < 20 or period < 1 or period > PERIODS:
+        raise ValueError("Expected n >= 20 and a period within the monitoring horizon.")
     rng = np.random.default_rng(np.random.SeedSequence([seed, period]))
     shifted = period >= CHANGE
     share = .65 if scenario == "covariate" and shifted else YOUNG_SHARE
@@ -211,6 +215,8 @@ def aipw_effect(data, models):
     treatment = data.discount.to_numpy()
     y = data.purchase_amount.to_numpy()
     p = data.propensity.to_numpy()
+    if not np.isfinite(p).all() or not ((p > 0) & (p < 1)).all():
+        raise ValueError("AIPW requires finite propensities strictly between 0 and 1.")
     return (
         mu1 - mu0 + treatment * (y - mu1) / p
         - (1 - treatment) * (y - mu0) / (1 - p)
@@ -385,19 +391,22 @@ def evaluate_stream(seed, scenario, n, baseline, center, scale, thresholds,
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--mode", choices=("pilot", "study"), default="pilot")
+    parser.add_argument("--mode", choices=("smoke", "pilot", "study"), default="pilot")
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
     config = ({"n": 600, "scale_runs": 20, "calibration_runs": 100,
                "null_runs": 50, "test_runs": 5} if args.mode == "pilot" else
               {"n": 1000, "scale_runs": 100, "calibration_runs": 1000,
                "null_runs": 200, "test_runs": 50})
+    if args.mode == "smoke":
+        # Execution check only: too little calibration or replication for research.
+        config = {"n": 200, "scale_runs": 3, "calibration_runs": 5, "null_runs": 3, "test_runs": 1}
     # These fresh evaluation seeds were selected before inspecting v2 results.
     starts = ({"scale": 110000, "calibration": 120000, "evaluation": 100000,
-               "null": 140000} if args.mode == "pilot" else
+               "null": 140000} if args.mode != "study" else
               {"scale": 210000, "calibration": 220000, "evaluation": 200000,
                "null": 240000})
-    out = args.output or Path("paper1_experiments") / (
+    out = args.output or Path(__file__).resolve().parent / (
         "integrated_causal_monitoring_v2_xai_" + args.mode
     )
     # Each execution has its own folder, so earlier results are retained.
@@ -406,6 +415,8 @@ def main():
     started = time.perf_counter()
     print("MODE:", args.mode, "| exploratory synthetic benchmark", flush=True)
     print("Results folder:", out.resolve(), flush=True)
+    if args.mode == "smoke":
+        print("SMOKE TEST ONLY: thresholds and results are not research estimates.", flush=True)
     train, test = train_test_split(original_data(), test_size=.2, random_state=42)
     baseline = fit_models(train, 42)
     # Fixed balanced background: eight original training rows per age group.
@@ -468,6 +479,14 @@ def main():
             print(scenario, "seed", index + 1, "/", config["test_runs"], flush=True)
         # Checkpoint each completed scenario.
         pd.DataFrame(results).to_csv(out / "run_results.csv", index=False)
+        pd.DataFrame(records).to_csv(out / "period_log.csv", index=False)
+        pd.DataFrame(benchmarks).to_csv(out / "benchmarks.csv", index=False)
+        (out / "checkpoint.json").write_text(json.dumps({
+            "status": "partial", "last_completed_scenario": scenario,
+            "mode": args.mode, "config": config, "seed_starts": starts,
+            "thresholds": thresholds,
+            "script_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        }, indent=2))
     runs = pd.DataFrame(results)
     summary = runs.groupby(["scenario", "review_budget", "method"]).agg(
         runs=("seed", "size"), mean_loss=("postchange_regret", "mean"),
@@ -480,6 +499,15 @@ def main():
         explanation_change=("explanation_change", "mean"),
         harmful_treatment_rate=("harmful_treatment_rate", "mean"),
     ).reset_index()
+    summary["mean_postchange_cumulative_regret"] = summary["mean_loss"]
+    summary["mean_postchange_regret_per_period"] = summary["mean_loss"] / (PERIODS - CHANGE + 1)
+    counts = runs.groupby(["scenario", "review_budget", "method"]).agg(
+        detected_runs=("change_detected", "sum"),
+        eligible_shift_runs=("change_detected", "count"),
+    ).reset_index()
+    summary = summary.merge(counts, on=["scenario", "review_budget", "method"], validate="one_to_one")
+    summary["missed_runs"] = summary.eligible_shift_runs - summary.detected_runs
+    summary.loc[summary.eligible_shift_runs == 0, ["detected_runs", "missed_runs"]] = np.nan
     # Paired, per-scenario/per-budget descriptive intervals; no p-value claims.
     intervals = []
     bootstrap_rng = np.random.default_rng(518)
@@ -530,6 +558,9 @@ def main():
         "sklearn": sklearn.__version__,
         "script_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         "elapsed_seconds": time.perf_counter() - started,
+        "method_definitions": {"M0": "conventional signals 0:9", "M1": "M0 plus AIPW ATE", "M2": "M1 plus subgroup AIPW effects AND assignment contrast", "M3": "M2 plus frozen-model attribution-distribution statistics"},
+        "loss_units": "mean_loss is a legacy alias for the sum of period-average regret over periods 7 through 12; mean_postchange_regret_per_period divides by 6.",
+        "harm_units": "harmful_treatment_rate is the fraction of ALL customers treated despite negative effect minus assumed cost; it is not conditional on treatment.",
         "scope": "Exploratory synthetic offline replay, conditional on one initial model.",
         "gate": "Same-window holdout AIPW improvement lower pointwise 95% bound > 0; no sequential safety guarantee.",
         "timing": "Score decisions first; current labels can update the next period only.",
@@ -544,6 +575,7 @@ def main():
         "omissions": "No confounding, deployment feedback, delayed labels or external data. Study mode alone is not confirmatory preregistration.",
     }
     (out / "manifest.json").write_text(json.dumps(manifest, indent=2))
+    (out / "checkpoint.json").write_text(json.dumps({"status": "complete", "manifest": "manifest.json"}, indent=2))
     print("\nHELD-OUT NULL FALSE-ALERT RATES")
     print(null_summary.round(4).to_string())
     print("\nEXPLORATORY RESULTS")

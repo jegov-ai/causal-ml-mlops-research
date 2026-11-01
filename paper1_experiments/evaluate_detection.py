@@ -40,11 +40,13 @@ for group, group_data in data.groupby("group"):
         & (group_data["true_effect"] < 0)
     )
 
+    post_harm_alerts = alerts.loc[alerts.period >= first_harm] if first_harm is not None else alerts.iloc[:0]
+    first_detection = int(post_harm_alerts.period.min()) if not post_harm_alerts.empty else None
+
     detection_delay = (
-        max(0, first_alert - first_harm)
+        first_detection - first_harm
         if first_harm is not None
-        and first_alert is not None
-        and first_alert >= first_harm
+        and first_detection is not None
         else None
     )
 
@@ -52,9 +54,10 @@ for group, group_data in data.groupby("group"):
         "group": group,
         "first_harm": first_harm,
         "first_alert": first_alert,
+        "first_postharm_detection": first_detection,
         "detection_delay": detection_delay,
         "false_alert_periods": int(false_alerts),
         "missed_harmful_periods": int(missed_periods)
     })
 
-print(pd.DataFrame(results))
+print(pd.DataFrame(results).to_string(index=False))

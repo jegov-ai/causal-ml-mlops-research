@@ -1,8 +1,10 @@
+from pathlib import Path
+ROOT = Path(__file__).resolve().parent
 
 import pandas as pd
 
 # Load causal ML predictions
-data = pd.read_csv("causal_predictions.csv")
+data = pd.read_csv(ROOT / "causal_predictions.csv")
 
 # Hypothetical campaign cost per customer
 campaign_cost = 10
@@ -18,7 +20,7 @@ data["recommend_discount"] = (
 )
 
 # Save decisions
-data.to_csv("optimization_results.csv", index=False)
+data.to_csv(ROOT / "optimization_results.csv", index=False)
 
 print("PRODUCT OPTIMIZATION REPORT")
 print("---------------------------")

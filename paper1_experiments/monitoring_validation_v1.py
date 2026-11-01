@@ -6,7 +6,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-OUT = Path("paper1_experiments/monitoring_validation_v1_results")
+OUT = Path(__file__).resolve().parent / "monitoring_validation_v1_repaired_results"
 
 PERIODS = 12
 CHANGE_PERIOD = 6
@@ -223,9 +223,8 @@ def main():
                     "alerts": alerts,
                     "any_alert": int(alerts > 0),
                     "prechange_alerts": prechange_alerts,
-                    "change_detected": int(
-                        first_change_alert is not None
-                    ),
+                    "change_detected": (int(first_change_alert is not None)
+                                        if scenario != "stable" else np.nan),
                     "change_detection_delay": (
                         first_change_alert - CHANGE_PERIOD
                         if first_change_alert is not None

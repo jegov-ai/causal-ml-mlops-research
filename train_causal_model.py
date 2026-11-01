@@ -1,3 +1,5 @@
+from pathlib import Path
+ROOT = Path(__file__).resolve().parent
 
 import pandas as pd
 import joblib
@@ -6,7 +8,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
 
 # Load our existing dataset
-data = pd.read_csv("customers.csv")
+data = pd.read_csv(ROOT / "customers.csv")
 
 # Separate training and testing customers
 train, test = train_test_split(
@@ -58,13 +60,13 @@ print("Known average true effect: RM", round(test["true_effect"].mean(), 2))
 print("Treatment effect MAE: RM", round(mae, 2))
 
 # Save trained models for future use
-joblib.dump(treated_model, "treated_model.joblib")
-joblib.dump(control_model, "control_model.joblib")
+joblib.dump(treated_model, ROOT / "treated_model.joblib")
+joblib.dump(control_model, ROOT / "control_model.joblib")
 
 # Save evaluation results
 results = test[features].copy()
 results["true_effect"] = test["true_effect"]
 results["estimated_effect"] = estimated_effect
-results.to_csv("causal_predictions.csv", index=False)
+results.to_csv(ROOT / "causal_predictions.csv", index=False)
 
 print("Models and predictions saved successfully!")
