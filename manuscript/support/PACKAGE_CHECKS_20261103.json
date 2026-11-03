@@ -1,0 +1,17 @@
+{
+  "ablation_unique_period_keys": true,
+  "ablation_12_windows": true,
+  "ablation_regret_aggregation": true,
+  "ablation_summary_means": true,
+  "ablation_review_caps": true,
+  "ablation_alert_caps": true,
+  "calendar_unique_period_keys": true,
+  "calendar_12_windows": true,
+  "calendar_regret_aggregation": true,
+  "calendar_summary_means": true,
+  "calendar_review_caps": true,
+  "calendar_alert_caps": true,
+  "frozen_ablation_source_hash": true,
+  "single_manuscript_title": true,
+  "math_delimiters_balanced": true
+}
