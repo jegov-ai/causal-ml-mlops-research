@@ -188,3 +188,22 @@ This is not a claim of a new causal estimator, new drift detector or universally
 Prior research already addresses causal decisions under drift, monitoring-triggered adaptation and regret evaluation. Exact overlap with the unavailable full manuscripts of CausalStream and OnlineCML remains unresolved. Novelty and publication readiness remain provisional.
 
 Before submission, the manuscript requires a source-verified related-work section, complete scenario-generation details checked against code, full results tables, reproducibility documentation and supervisor review. Historical positive, null and adverse findings must remain preserved.
+ ## Appendix A. Verified data-generation details
+
+Each monitoring window independently generated customers using a random-number generator initialized from the evaluation seed and window index.
+
+The baseline probability of belonging to the younger group was 17/48 (approximately 35.4%). Ages were sampled uniformly from integers 18–34 for younger customers and 35–65 for older customers. In the covariate-shift scenario, the younger-group probability increased to 0.65 from window 7; within-group age distributions remained unchanged.
+
+Previous spending was sampled from a normal distribution with mean 200 and standard deviation 60, with negative values clipped to zero.
+
+Treatment assignment followed a Bernoulli distribution with probability 0.5 under baseline conditions. In the assignment-shift scenario, this probability changed from window 7 to 0.2 for younger customers and 0.8 for older customers. These known assignment probabilities were available to the AIPW calculations.
+
+The observed outcome was generated as:
+
+Y = 50 + 0.4 × previous spending + T × τ(age, window, scenario) + ε,
+
+where T denotes binary treatment assignment, τ denotes the scenario-specific treatment effect, and ε was independent normally distributed noise with mean zero and standard deviation 20.
+
+The stable scenario retained baseline conditions throughout. The covariate and assignment scenarios retained baseline subgroup treatment effects. Response and opposing-effect changes followed the trajectories described in Section 2.1.
+
+Each outcome model in the T-learner used a random forest with 100 trees, a minimum leaf size of five and one computational worker. The model received age and previous spending as predictors. Separate models were fitted to treated and untreated observations.
