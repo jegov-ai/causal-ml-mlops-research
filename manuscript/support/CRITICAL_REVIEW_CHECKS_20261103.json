@@ -1,0 +1,6 @@
+{
+  "all_225_contrasts": true,
+  "m1_all_15_cells_worse_mean_than_treat_all": true,
+  "periodic_all_15_cells_worse_mean_than_treat_all": true,
+  "three_scenarios_treat_all_zero": true
+}
