@@ -1,0 +1,8 @@
+scenario,accepted,harmful,helpful,tied,unavailable
+assignment,False,212,64,0,30
+covariate,False,173,100,4,27
+covariate,True,0,2,0,0
+opposing,False,74,122,0,27
+opposing,True,0,83,0,0
+response,False,7,265,0,27
+response,True,0,7,0,0

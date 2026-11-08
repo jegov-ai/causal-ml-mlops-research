@@ -1,0 +1,13 @@
+{
+  "period_rows": 16848,
+  "diagnostic_rows": 5310,
+  "all_original_period_fields_reconcile": true,
+  "one_diagnostic_per_review": true,
+  "unique_keys": true,
+  "acceptance_and_gate_reconcile": true,
+  "final_window_missingness_correct": true,
+  "all_gate_values_finite": true,
+  "classification_tolerance": 1e-10,
+  "runtime_minutes": 22.266514458336555,
+  "limitation": "No raw per-customer diagnostic predictions saved; true benefit is not independently reconstructed from actions."
+}

@@ -1,0 +1,9 @@
+method,accepted,harmful,helpful,tied,unavailable
+M0,False,466,551,4,111
+M0,True,0,92,0,0
+M1,False,466,551,4,111
+M1,True,0,92,0,0
+M2-FULL,False,466,554,4,108
+M2-FULL,True,0,92,0,0
+PERIODIC,False,750,552,16,229
+PERIODIC,True,2,84,0,5
