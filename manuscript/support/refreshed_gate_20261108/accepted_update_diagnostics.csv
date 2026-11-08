@@ -1,0 +1,9 @@
+gate_variant,method,harmful,helpful,unavailable
+frozen,M0,0,92,0
+frozen,M1,0,92,0
+frozen,M2-FULL,0,92,0
+frozen,PERIODIC,2,84,5
+refreshed,M0,9,109,0
+refreshed,M1,9,109,0
+refreshed,M2-FULL,9,109,0
+refreshed,PERIODIC,0,73,7

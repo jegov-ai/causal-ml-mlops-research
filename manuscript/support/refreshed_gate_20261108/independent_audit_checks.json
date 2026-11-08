@@ -1,0 +1,17 @@
+{
+  "period_rows": 33696,
+  "diagnostic_rows": 10620,
+  "paired_rows": 1404,
+  "complete_12_window_histories": true,
+  "frozen_periods_reconcile": true,
+  "monitoring_and_reviews_matched": true,
+  "all_paired_differences_recomputed": true,
+  "all_diagnostics_match_reviews_and_gates": true,
+  "last_window_missingness_correct": true,
+  "finite_nonnegative_regret": true,
+  "classification_tolerance": 1e-10,
+  "runtime_minutes": 44.13328302333442,
+  "limitations": "Three exposed stream seeds; repeated dependent cells. No individual diagnostic action reconstruction.",
+  "script_protocol_reference_hashes_reconcile": true,
+  "monitor_period_loss_equal_within_gate": true
+}
