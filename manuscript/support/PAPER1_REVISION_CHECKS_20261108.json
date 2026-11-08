@@ -1,0 +1,13 @@
+{
+  "input_sha256": "c3cc542be88c65639d4dbea7b5dae865c30584ab9499e6c6ecc7f8230b6a584b",
+  "output_sha256": "6d9ef902691636fe6af2122ded87ddd776549ad3b12e320bf421c26d0783a047",
+  "result_table_lines_unchanged": true,
+  "display_equations_unchanged": true,
+  "no_new_simulation": true,
+  "source_checks": [
+    "original_data() in frozen integrated source",
+    "issue/first_detection/detection_delay in frozen ablation source",
+    "initial_data() in sensitivity source"
+  ],
+  "word_count": 7758
+}
