@@ -120,7 +120,7 @@ def main():
                                 cols=['seed','scenario','period','method','review_budget','score','threshold','alert_issued','review_performed']
                                 pd.testing.assert_frame_equal(frame[cols],frozen[cols])
                             allrows.append(frame.assign(gate_variant=variant))
-                            if variant=='frozen':allbench.extend(dict(**r,initial_seed=fit,onset=onset) for r in bench)
+                            if variant=='frozen':allbench.extend(dict(r,initial_seed=fit,onset=onset) for r in bench)
                         status['completed_configurations']+=1
                         if status['completed_configurations']%10==0 or args.mode=='pilot':
                             pd.concat(allrows,ignore_index=True).to_csv(out/'period_log.csv',index=False)
