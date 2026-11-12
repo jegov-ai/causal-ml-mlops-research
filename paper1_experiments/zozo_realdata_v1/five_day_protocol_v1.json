@@ -1,0 +1,143 @@
+{
+  "protocol_version": "1.0",
+  "study_status": "prospectively_specified_exploratory_external_case_study_after_development_pilot",
+  "purpose": "Evaluate the incremental effect of refreshed versus frozen outcome predictions in repeated candidate-acceptance gates on real chronological recommendation logs.",
+  "not_tested": [
+    "M0 versus M1 versus FULL monitoring",
+    "known-onset causal-effect change detection",
+    "individual ground-truth effects or oracle regret",
+    "actual deployment or policy-induced feedback",
+    "profitability",
+    "sequential deployment safety"
+  ],
+  "dataset": {
+    "name": "ZOZO Open Bandit Dataset",
+    "provider": "ZOZO NEXT / ZOZO",
+    "campaign": "men",
+    "position": 1,
+    "revision": "90a1283aecd19026caf15a0840af1176a41f6a76",
+    "dataset_url": "https://huggingface.co/datasets/zozonext/open-bandit",
+    "paper_url": "https://arxiv.org/abs/2008.07146",
+    "citation": "Saito, Aihara, Matsutani and Narita. Open Bandit Dataset and Pipeline: Towards Realistic and Reproducible Off-Policy Evaluation. NeurIPS Datasets and Benchmarks, 2021.",
+    "data_license": "CC BY 4.0",
+    "input_sha256": {
+      "men_bts.csv": "f116bb11bd0b18f02ca69d313c790c63c006728b3fae28a562d7309e20a0e4b5",
+      "men.csv": "c4b6f65e62bf2c683914703ab6b875cc3e1b4ef0403a5779f548f5578cc34d6d",
+      "item_context.csv": "ccdc500e5f96d79f48da43f5fc45c1dc14f07240720a4fd131e94519a16fcba4"
+    }
+  },
+  "prior_exposure": {
+    "development_dates_UTC": [
+      "2019-11-24",
+      "2019-11-25"
+    ],
+    "development_counts_and_pilot_results_inspected": true,
+    "reserved_date_outcomes_not_analysed_in_recorded_workflow": true,
+    "reserved_dates_structure_counts_and_propensity_ranges_inspected": true,
+    "pilot_result": "Both gates rejected the one development candidate; selected policies were identical. DR and IPS ranked initial and candidate policies differently in subsequent development data.",
+    "development_source_commit": "09fdfce",
+    "development_result_commit": "fefa2dd"
+  },
+  "initial_training": {
+    "source": "bts",
+    "start_inclusive_UTC": "2019-11-24T00:00:00+00:00",
+    "end_exclusive_UTC": "2019-11-26T00:00:00+00:00",
+    "records": 406692,
+    "clicks": 3077,
+    "both_gates_start_with_same_initial_policy": true
+  },
+  "evaluation_dates_UTC": [
+    "2019-11-26",
+    "2019-11-27",
+    "2019-11-28",
+    "2019-11-29",
+    "2019-11-30"
+  ],
+  "daily_schedule_UTC": {
+    "candidate_training": "00:00 inclusive to 12:00 exclusive on the same date; BTS source only",
+    "gate_check": "12:00 inclusive to 18:00 exclusive on the same date; BTS source only",
+    "subsequent_evaluation": "18:00 inclusive to 24:00 exclusive on the same date; primary BTS and secondary Random analysed separately",
+    "candidate_training_uses_only_current_morning": true,
+    "candidate_shared_between_gates": true,
+    "one_review_opportunity_per_gate_per_date": true,
+    "review_cap_per_gate": 5,
+    "accepted_candidate_applies_only_after_gate_window": true,
+    "incumbent_carries_forward_to_next_date": true,
+    "no_performance_claim_for_hours_outside_evaluation_windows": true
+  },
+  "model": {
+    "reference": "Reuse run_gate_pilot.py fit_model, feature_records and predict_all with unchanged model family, features, scaling, regularization and seed.",
+    "family": "pooled_logistic_regression",
+    "solver": "liblinear",
+    "C": 0.1,
+    "tol": 1e-06,
+    "max_iter": 500,
+    "random_state": 42,
+    "class_weight": null,
+    "training_sample_weights": null,
+    "all_34_items_retained": true,
+    "policy": "argmax predicted click probability; lowest item_id breaks ties",
+    "preprocessing_fit_only_on_each_training_partition": true,
+    "no_settings_selection_using_reserved_outcomes": true
+  },
+  "gates": {
+    "shared_rule": "Paired doubly robust candidate-minus-current-incumbent mean minus 1.96 row standard errors must be strictly positive. This pointwise heuristic is not a valid sequential-safety certificate.",
+    "frozen": "Use the single outcome model trained on the two initial development days for every gate score.",
+    "refreshed": "Use that dates candidate outcome model, trained before the gate window, for gate scores.",
+    "separate_incumbent_paths": true,
+    "candidate_policy_and_training_data_identical_between_gates": true,
+    "zero_matching_rows_for_either_compared_policy": "For each gate independently, reject if either policy in that gates own comparison has zero matching logged rows; record the reason. Apply the same check to both gates. This fail-closed check is an addition to the pilot and must be disclosed.",
+    "no_weight_clipping_or_posthoc_action_dropping": true,
+    "convergence_or_invalid_input_failure": "Stop and preserve incomplete run. Do not silently retune or omit a date."
+  },
+  "evaluation": {
+    "common_outcome_model": "The candidate outcome model trained that morning, fixed before the gate and evaluation windows; shared across all evaluated policies.",
+    "estimators": [
+      "doubly_robust",
+      "inverse_probability_weighting"
+    ],
+    "primary_logging_source": "bts",
+    "secondary_logging_source": "random",
+    "sources_not_pooled": true,
+    "policies": [
+      "frozen_gate_path",
+      "refreshed_gate_path",
+      "initial_no_update",
+      "always_update_current_candidate",
+      "uniform_over_34_products"
+    ],
+    "primary_contrast": "Equal-weight average across five dates of the within-date DR mean(refreshed_gate_path minus frozen_gate_path) on subsequent BTS evaluation records. Positive favours refreshing.",
+    "secondary_contrasts": [
+      "Same paired contrast using IPS on BTS records",
+      "Same DR and IPS paired contrasts using Random records",
+      "Each gate path versus initial_no_update, always_update_current_candidate and uniform_over_34_products, reported as secondary with no unadjusted significance claims"
+    ],
+    "same_contexts_and_common_nuisance_predictions_for_each_within_source_comparison": true,
+    "identical_selected_policies": "Report identical decisions and exact score cancellation. A zero interval does not establish population equivalence."
+  },
+  "uncertainty_and_diagnostics": {
+    "report_all_five_daily_primary_contrasts": true,
+    "report_learned_policy_weight_ESS_max_weight_share_matching_rows_and_matching_clicks": true,
+    "weight_ESS_not_independent_sample_size_or_power": true,
+    "row_SEs": "Descriptive only; ignore repeat-user/time dependence. Not primary inferential evidence.",
+    "exploratory_bootstrap": {
+      "block_minutes": 30,
+      "resamples": 1000,
+      "seed": 42,
+      "method": "Resample nonempty contiguous 30-minute blocks within each date using common paired block draws; recompute each dates row mean and then average the five date means equally.",
+      "limitations": "Conditions on fitted/selected policy paths and observed five dates. Does not capture full retraining/selection uncertainty, all temporal dependence or repeat-user clustering. Not a population-level confidence guarantee."
+    },
+    "few_clicks_or_estimator_disagreement": "Report as limited or inconclusive evidence; do not interpret non-significance as equivalence.",
+    "no_true_shift_onset_or_individual_oracle_available": true
+  },
+  "execution_and_reporting": {
+    "register_and_commit_protocol_and_source_before_reserved_outcome_analysis": true,
+    "first_run_and_all_failures_preserved": true,
+    "record_commit_source_hashes_input_hashes_versions_and_window_counts": true,
+    "new_unique_run_directory_no_overwriting": true,
+    "no_tuning_or_selecting_dates_after_reserved_results": true,
+    "repeat_run_only_as_disclosed_reproduction_or_protocol_deviation": true,
+    "preserve_null_adverse_and_simple_baseline_results": true,
+    "contribution_scope": "A short exploratory real-data gate case study supplementing, not replacing, the controlled simulation evidence."
+  }
+}
