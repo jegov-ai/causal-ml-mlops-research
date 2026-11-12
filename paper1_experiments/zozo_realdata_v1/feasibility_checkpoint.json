@@ -1,0 +1,24 @@
+{
+  "status": "feasibility_only_no_models_fitted",
+  "dataset": "ZOZO Open Bandit Dataset",
+  "revision": "90a1283aecd19026caf15a0840af1176a41f6a76",
+  "campaign": "men",
+  "position": 1,
+  "development_dates_UTC": [
+    "2019-11-24",
+    "2019-11-25"
+  ],
+  "reserved_dates_UTC": [
+    "2019-11-26",
+    "2019-11-27",
+    "2019-11-28",
+    "2019-11-29",
+    "2019-11-30"
+  ],
+  "random_development_records": 44966,
+  "random_development_clicks": 271,
+  "bts_development_records": 406692,
+  "bts_development_clicks": 3077,
+  "reserved_click_results_inspected": false,
+  "publication_novelty_established": false
+}
