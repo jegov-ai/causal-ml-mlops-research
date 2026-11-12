@@ -1,0 +1,80 @@
+{
+  "status": "exploratory_development_pilot_not_confirmatory",
+  "source": "bts_men",
+  "position": 1,
+  "all_34_items_retained": true,
+  "interval_bounds_UTC": [
+    "2019-11-24T00:00:00+00:00",
+    "2019-11-25T00:00:00+00:00",
+    "2019-11-25T12:00:00+00:00",
+    "2019-11-25T18:00:00+00:00",
+    "2019-11-26T00:00:00+00:00"
+  ],
+  "partition_order": [
+    "initial_training",
+    "candidate_training",
+    "gate_check",
+    "subsequent_evaluation"
+  ],
+  "model": {
+    "family": "pooled_logistic_regression",
+    "solver": "liblinear",
+    "C": 0.1,
+    "tol": 1e-06,
+    "max_iter": 500,
+    "random_state": 42,
+    "class_weight": null,
+    "training_sample_weights": null
+  },
+  "features": [
+    "categorical_item_id",
+    "four_categorical_user_features",
+    "four_categorical_item_features",
+    "numeric_affinity_for_selected_item"
+  ],
+  "preprocessing": "DictVectorizer and MaxAbsScaler fitted on each training partition only",
+  "policy": "deterministic largest predicted click probability; ties use lowest item_id",
+  "gate": "paired DR candidate-minus-initial mean minus 1.96 row standard errors > 0",
+  "gate_models": {
+    "frozen": "initial outcome model",
+    "refreshed": "candidate outcome model"
+  },
+  "evaluation": "same candidate-trained outcome model for every policy; report DR and IPS",
+  "evaluation_comparators": [
+    "initial",
+    "candidate",
+    "uniform",
+    "frozen_gate",
+    "refreshed_gate"
+  ],
+  "exploratory_time_bootstrap": {
+    "block_minutes": 30,
+    "resamples": 1000,
+    "seed": 42
+  },
+  "weight_clipping": null,
+  "prediction_batch_rows": 4096,
+  "expected_partition_records": [
+    235357,
+    88983,
+    65052,
+    17300
+  ],
+  "expected_partition_clicks": [
+    1791,
+    643,
+    512,
+    131
+  ],
+  "limitations": [
+    "All two-day development outcome summaries have already been inspected.",
+    "This tests one review and gate implementation, not M0/M1/FULL monitoring.",
+    "Dates do not establish that a causal effect shift actually occurred.",
+    "Row-based gate standard errors ignore dependence and give no sequential safety guarantee.",
+    "The 30-minute bootstrap is exploratory, with few time blocks and no guaranteed coverage.",
+    "User identity is unavailable; dependence from repeat users cannot be fully accounted for.",
+    "Per-position evaluation assumes the other displayed items do not invalidate the reward model.",
+    "Logged BTS probabilities are Monte Carlo estimates, not independently reconstructed.",
+    "No individual ground truth, oracle regret, causal-monitor superiority, or real profit established."
+  ]
+}

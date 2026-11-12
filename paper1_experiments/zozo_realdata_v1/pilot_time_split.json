@@ -1,0 +1,27 @@
+{
+  "status": "development_pilot_time_split_only",
+  "source": "bts_men",
+  "position": 1,
+  "timezone": "UTC",
+  "initial_training": [
+    "2019-11-24T00:00:00+00:00",
+    "2019-11-25T00:00:00+00:00"
+  ],
+  "candidate_training": [
+    "2019-11-25T00:00:00+00:00",
+    "2019-11-25T12:00:00+00:00"
+  ],
+  "gate_check": [
+    "2019-11-25T12:00:00+00:00",
+    "2019-11-25T18:00:00+00:00"
+  ],
+  "subsequent_evaluation": [
+    "2019-11-25T18:00:00+00:00",
+    "2019-11-26T00:00:00+00:00"
+  ],
+  "interval_convention": "start_inclusive_end_exclusive",
+  "development_outcomes_previously_inspected": true,
+  "later_five_days_reserved": true,
+  "model_and_gate_settings": "not_yet_finalized",
+  "models_fitted": false
+}
