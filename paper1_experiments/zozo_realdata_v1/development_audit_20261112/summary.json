@@ -1,0 +1,67 @@
+{
+  "status": "development_audit_complete_no_models_fitted",
+  "development_dates_UTC": [
+    "2019-11-24",
+    "2019-11-25"
+  ],
+  "position": 1,
+  "reserved_outcomes_analysed": false,
+  "source_files": {
+    "random": {
+      "file": "men.csv",
+      "sha256": "c4b6f65e62bf2c683914703ab6b875cc3e1b4ef0403a5779f548f5578cc34d6d",
+      "bytes": 151946449
+    },
+    "bts": {
+      "file": "men_bts.csv",
+      "sha256": "f116bb11bd0b18f02ca69d313c790c63c006728b3fae28a562d7309e20a0e4b5",
+      "bytes": 1332891122
+    },
+    "items": {
+      "file": "item_context.csv",
+      "sha256": "ccdc500e5f96d79f48da43f5fc45c1dc14f07240720a4fd131e94519a16fcba4",
+      "bytes": 4287
+    }
+  },
+  "script_sha256": "ed92dc915a0a8a7719345f154725a414548efce4146786822eea965730ac8f85",
+  "checkpoint_sha256": "3e85831a6c3c842ae392360004cc5ac82eaef9bf20f578f4761f22f608f0a117",
+  "summaries": {
+    "random": {
+      "scanned_rows": 452949,
+      "development_rows": 44966,
+      "development_clicks": 271,
+      "daily": {
+        "2019-11-24": {
+          "records": 25907,
+          "clicks": 153
+        },
+        "2019-11-25": {
+          "records": 19059,
+          "clicks": 118
+        }
+      }
+    },
+    "bts": {
+      "scanned_rows": 4077727,
+      "development_rows": 406692,
+      "development_clicks": 3077,
+      "daily": {
+        "2019-11-24": {
+          "records": 235357,
+          "clicks": 1791
+        },
+        "2019-11-25": {
+          "records": 171335,
+          "clicks": 1286
+        }
+      }
+    }
+  },
+  "limitations": [
+    "Only observed-action propensities are available in these files.",
+    "Weight ESS describes concentration for each constant-item target policy.",
+    "It is not the ESS of a learned policy or a measure of independent observations.",
+    "No policy precision, temporal drift, gate safety, or publication novelty established.",
+    "BTS propensities are recorded estimates; their accuracy was not reconstructed."
+  ]
+}
