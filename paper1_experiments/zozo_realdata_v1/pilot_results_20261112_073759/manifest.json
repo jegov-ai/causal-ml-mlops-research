@@ -1,0 +1,147 @@
+{
+  "status": "complete",
+  "settings": {
+    "status": "exploratory_development_pilot_not_confirmatory",
+    "source": "bts_men",
+    "position": 1,
+    "all_34_items_retained": true,
+    "interval_bounds_UTC": [
+      "2019-11-24T00:00:00+00:00",
+      "2019-11-25T00:00:00+00:00",
+      "2019-11-25T12:00:00+00:00",
+      "2019-11-25T18:00:00+00:00",
+      "2019-11-26T00:00:00+00:00"
+    ],
+    "partition_order": [
+      "initial_training",
+      "candidate_training",
+      "gate_check",
+      "subsequent_evaluation"
+    ],
+    "model": {
+      "family": "pooled_logistic_regression",
+      "solver": "liblinear",
+      "C": 0.1,
+      "tol": 1e-06,
+      "max_iter": 500,
+      "random_state": 42,
+      "class_weight": null,
+      "training_sample_weights": null
+    },
+    "features": [
+      "categorical_item_id",
+      "four_categorical_user_features",
+      "four_categorical_item_features",
+      "numeric_affinity_for_selected_item"
+    ],
+    "preprocessing": "DictVectorizer and MaxAbsScaler fitted on each training partition only",
+    "policy": "deterministic largest predicted click probability; ties use lowest item_id",
+    "gate": "paired DR candidate-minus-initial mean minus 1.96 row standard errors > 0",
+    "gate_models": {
+      "frozen": "initial outcome model",
+      "refreshed": "candidate outcome model"
+    },
+    "evaluation": "same candidate-trained outcome model for every policy; report DR and IPS",
+    "evaluation_comparators": [
+      "initial",
+      "candidate",
+      "uniform",
+      "frozen_gate",
+      "refreshed_gate"
+    ],
+    "exploratory_time_bootstrap": {
+      "block_minutes": 30,
+      "resamples": 1000,
+      "seed": 42
+    },
+    "weight_clipping": null,
+    "prediction_batch_rows": 4096,
+    "expected_partition_records": [
+      235357,
+      88983,
+      65052,
+      17300
+    ],
+    "expected_partition_clicks": [
+      1791,
+      643,
+      512,
+      131
+    ],
+    "limitations": [
+      "All two-day development outcome summaries have already been inspected.",
+      "This tests one review and gate implementation, not M0/M1/FULL monitoring.",
+      "Dates do not establish that a causal effect shift actually occurred.",
+      "Row-based gate standard errors ignore dependence and give no sequential safety guarantee.",
+      "The 30-minute bootstrap is exploratory, with few time blocks and no guaranteed coverage.",
+      "User identity is unavailable; dependence from repeat users cannot be fully accounted for.",
+      "Per-position evaluation assumes the other displayed items do not invalidate the reward model.",
+      "Logged BTS probabilities are Monte Carlo estimates, not independently reconstructed.",
+      "No individual ground truth, oracle regret, causal-monitor superiority, or real profit established."
+    ]
+  },
+  "input_sha256": {
+    "men_bts.csv": "f116bb11bd0b18f02ca69d313c790c63c006728b3fae28a562d7309e20a0e4b5",
+    "item_context.csv": "ccdc500e5f96d79f48da43f5fc45c1dc14f07240720a4fd131e94519a16fcba4"
+  },
+  "source_sha256": "664cc9c90e7fa90a86164bf74657142efb064d73ed6f24e02a6c92e75724b3f5",
+  "audit_source_sha256": "ed92dc915a0a8a7719345f154725a414548efce4146786822eea965730ac8f85",
+  "settings_sha256": "56776a802184f81e14ccf435f53190bc75a5454498fd6f9d22370f3bcbfd944b",
+  "split_sha256": "8803e80cadb1e13905d5c193773b26e38ade0defc767e4e813d493a815922ae1",
+  "versions": {
+    "python": "3.12.10",
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "sklearn": "1.9.1"
+  },
+  "later_outcomes_analysed": false,
+  "gate_results": [
+    {
+      "gate": "frozen",
+      "mean": -0.006074651144344765,
+      "row_se": 0.003954719045859894,
+      "row_lower_95": -0.013825900474230157,
+      "row_upper_95": 0.0016765981855406268,
+      "candidate_accepted": false
+    },
+    {
+      "gate": "refreshed",
+      "mean": -0.0032000324909634884,
+      "row_se": 0.00396600819196367,
+      "row_lower_95": -0.010973408547212281,
+      "row_upper_95": 0.0045733435652853035,
+      "candidate_accepted": false
+    }
+  ],
+  "paired_contrasts": {
+    "dr": {
+      "mean": 0.0,
+      "row_se": 0.0,
+      "row_lower_95": 0.0,
+      "row_upper_95": 0.0,
+      "time_bootstrap": {
+        "blocks": 12,
+        "interval": [
+          0.0,
+          0.0
+        ],
+        "label": "exploratory 30-minute block percentile interval"
+      }
+    },
+    "ips": {
+      "mean": 0.0,
+      "row_se": 0.0,
+      "row_lower_95": 0.0,
+      "row_upper_95": 0.0,
+      "time_bootstrap": {
+        "blocks": 12,
+        "interval": [
+          0.0,
+          0.0
+        ],
+        "label": "exploratory 30-minute block percentile interval"
+      }
+    }
+  },
+  "evaluation_disagreement_rows": 17298
+}

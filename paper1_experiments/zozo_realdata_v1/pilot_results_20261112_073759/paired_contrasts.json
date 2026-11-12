@@ -1,0 +1,30 @@
+{
+  "dr": {
+    "mean": 0.0,
+    "row_se": 0.0,
+    "row_lower_95": 0.0,
+    "row_upper_95": 0.0,
+    "time_bootstrap": {
+      "blocks": 12,
+      "interval": [
+        0.0,
+        0.0
+      ],
+      "label": "exploratory 30-minute block percentile interval"
+    }
+  },
+  "ips": {
+    "mean": 0.0,
+    "row_se": 0.0,
+    "row_lower_95": 0.0,
+    "row_upper_95": 0.0,
+    "time_bootstrap": {
+      "blocks": 12,
+      "interval": [
+        0.0,
+        0.0
+      ],
+      "label": "exploratory 30-minute block percentile interval"
+    }
+  }
+}
