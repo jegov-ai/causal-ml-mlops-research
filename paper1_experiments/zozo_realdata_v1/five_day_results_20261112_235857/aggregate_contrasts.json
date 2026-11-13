@@ -1,0 +1,237 @@
+{
+  "date_weighting": "equal across all five dates",
+  "interval_label": "exploratory paired within-date 30-minute block percentile interval",
+  "interval_is_population_equivalence_or_safety_proof": false,
+  "bootstrap_resamples": 1000,
+  "seed": 42,
+  "sources": {
+    "bts": {
+      "refreshed_gate_path_minus_frozen_gate_path__dr": {
+        "mean": 0.0,
+        "exploratory_interval": [
+          0.0,
+          0.0
+        ],
+        "primary": true
+      },
+      "refreshed_gate_path_minus_frozen_gate_path__ips": {
+        "mean": 0.0,
+        "exploratory_interval": [
+          0.0,
+          0.0
+        ],
+        "primary": false
+      },
+      "frozen_gate_path_minus_initial_no_update__dr": {
+        "mean": 0.0,
+        "exploratory_interval": [
+          0.0,
+          0.0
+        ],
+        "primary": false
+      },
+      "frozen_gate_path_minus_initial_no_update__ips": {
+        "mean": 0.0,
+        "exploratory_interval": [
+          0.0,
+          0.0
+        ],
+        "primary": false
+      },
+      "frozen_gate_path_minus_always_update_current_candidate__dr": {
+        "mean": 0.007127307242166462,
+        "exploratory_interval": [
+          0.002003513687357009,
+          0.012209431675531051
+        ],
+        "primary": false
+      },
+      "frozen_gate_path_minus_always_update_current_candidate__ips": {
+        "mean": 0.004025639311445775,
+        "exploratory_interval": [
+          0.0008266112194370823,
+          0.007980994370480315
+        ],
+        "primary": false
+      },
+      "frozen_gate_path_minus_uniform_over_34_products__dr": {
+        "mean": 0.0010914500978976677,
+        "exploratory_interval": [
+          -0.0029337032435573073,
+          0.005175707386825647
+        ],
+        "primary": false
+      },
+      "frozen_gate_path_minus_uniform_over_34_products__ips": {
+        "mean": 0.0009352083438500072,
+        "exploratory_interval": [
+          -0.0027811444501446214,
+          0.005019043509777442
+        ],
+        "primary": false
+      },
+      "refreshed_gate_path_minus_initial_no_update__dr": {
+        "mean": 0.0,
+        "exploratory_interval": [
+          0.0,
+          0.0
+        ],
+        "primary": false
+      },
+      "refreshed_gate_path_minus_initial_no_update__ips": {
+        "mean": 0.0,
+        "exploratory_interval": [
+          0.0,
+          0.0
+        ],
+        "primary": false
+      },
+      "refreshed_gate_path_minus_always_update_current_candidate__dr": {
+        "mean": 0.007127307242166462,
+        "exploratory_interval": [
+          0.002003513687357009,
+          0.012209431675531051
+        ],
+        "primary": false
+      },
+      "refreshed_gate_path_minus_always_update_current_candidate__ips": {
+        "mean": 0.004025639311445775,
+        "exploratory_interval": [
+          0.0008266112194370823,
+          0.007980994370480315
+        ],
+        "primary": false
+      },
+      "refreshed_gate_path_minus_uniform_over_34_products__dr": {
+        "mean": 0.0010914500978976677,
+        "exploratory_interval": [
+          -0.0029337032435573073,
+          0.005175707386825647
+        ],
+        "primary": false
+      },
+      "refreshed_gate_path_minus_uniform_over_34_products__ips": {
+        "mean": 0.0009352083438500072,
+        "exploratory_interval": [
+          -0.0027811444501446214,
+          0.005019043509777442
+        ],
+        "primary": false
+      }
+    },
+    "random": {
+      "refreshed_gate_path_minus_frozen_gate_path__dr": {
+        "mean": 0.0,
+        "exploratory_interval": [
+          0.0,
+          0.0
+        ],
+        "primary": false
+      },
+      "refreshed_gate_path_minus_frozen_gate_path__ips": {
+        "mean": 0.0,
+        "exploratory_interval": [
+          0.0,
+          0.0
+        ],
+        "primary": false
+      },
+      "frozen_gate_path_minus_initial_no_update__dr": {
+        "mean": 0.0,
+        "exploratory_interval": [
+          0.0,
+          0.0
+        ],
+        "primary": false
+      },
+      "frozen_gate_path_minus_initial_no_update__ips": {
+        "mean": 0.0,
+        "exploratory_interval": [
+          0.0,
+          0.0
+        ],
+        "primary": false
+      },
+      "frozen_gate_path_minus_always_update_current_candidate__dr": {
+        "mean": 0.0036245742430898813,
+        "exploratory_interval": [
+          -0.008051673470183476,
+          0.011855025846727955
+        ],
+        "primary": false
+      },
+      "frozen_gate_path_minus_always_update_current_candidate__ips": {
+        "mean": -0.003221222169587873,
+        "exploratory_interval": [
+          -0.011765215618309715,
+          0.0
+        ],
+        "primary": false
+      },
+      "frozen_gate_path_minus_uniform_over_34_products__dr": {
+        "mean": 0.003320611100395185,
+        "exploratory_interval": [
+          -0.003640225054915881,
+          0.011989327391941869
+        ],
+        "primary": false
+      },
+      "frozen_gate_path_minus_uniform_over_34_products__ips": {
+        "mean": 0.0021738210602657354,
+        "exploratory_interval": [
+          -0.0041525241023243255,
+          0.01037733815844395
+        ],
+        "primary": false
+      },
+      "refreshed_gate_path_minus_initial_no_update__dr": {
+        "mean": 0.0,
+        "exploratory_interval": [
+          0.0,
+          0.0
+        ],
+        "primary": false
+      },
+      "refreshed_gate_path_minus_initial_no_update__ips": {
+        "mean": 0.0,
+        "exploratory_interval": [
+          0.0,
+          0.0
+        ],
+        "primary": false
+      },
+      "refreshed_gate_path_minus_always_update_current_candidate__dr": {
+        "mean": 0.0036245742430898813,
+        "exploratory_interval": [
+          -0.008051673470183476,
+          0.011855025846727955
+        ],
+        "primary": false
+      },
+      "refreshed_gate_path_minus_always_update_current_candidate__ips": {
+        "mean": -0.003221222169587873,
+        "exploratory_interval": [
+          -0.011765215618309715,
+          0.0
+        ],
+        "primary": false
+      },
+      "refreshed_gate_path_minus_uniform_over_34_products__dr": {
+        "mean": 0.003320611100395185,
+        "exploratory_interval": [
+          -0.003640225054915881,
+          0.011989327391941869
+        ],
+        "primary": false
+      },
+      "refreshed_gate_path_minus_uniform_over_34_products__ips": {
+        "mean": 0.0021738210602657354,
+        "exploratory_interval": [
+          -0.0041525241023243255,
+          0.01037733815844395
+        ],
+        "primary": false
+      }
+    }
+  }
+}

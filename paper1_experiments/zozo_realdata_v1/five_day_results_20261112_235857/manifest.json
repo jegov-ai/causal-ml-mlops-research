@@ -1,0 +1,237 @@
+{
+  "status": "complete",
+  "run_id": "20261112T235857Z_173ba8d4",
+  "reproduction": false,
+  "first_execution_marker": "C:\\Users\\User\\causal-ml-mlops-research\\data\\zozo_open_bandit\\five_day_runs\\first_execution.json",
+  "input_sha256": {
+    "men_bts.csv": "f116bb11bd0b18f02ca69d313c790c63c006728b3fae28a562d7309e20a0e4b5",
+    "men.csv": "c4b6f65e62bf2c683914703ab6b875cc3e1b4ef0403a5779f548f5578cc34d6d",
+    "item_context.csv": "ccdc500e5f96d79f48da43f5fc45c1dc14f07240720a4fd131e94519a16fcba4"
+  },
+  "git_commit": "b216bd8afabb18c0cb53877fb29ea1426c5b07e3",
+  "source_sha256_LF_normalized": {
+    "five_day_protocol_v1.json": "6aef95eff7ef3eeb78a244269b343fba04b9434f5b294aa113ee6a70493d149b",
+    "run_gate_pilot.py": "664cc9c90e7fa90a86164bf74657142efb064d73ed6f24e02a6c92e75724b3f5",
+    "check_development.py": "ed92dc915a0a8a7719345f154725a414548efce4146786822eea965730ac8f85",
+    "run_five_day_case_study.py": "abfbded84a125fba3e43d5b585211d14a6485855106fa98d83969812837dcac8"
+  },
+  "versions": {
+    "python": "3.12.10",
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "sklearn": "1.9.1"
+  },
+  "windows": [
+    {
+      "date": "2019-11-24/25",
+      "source": "bts",
+      "part": "initial_training",
+      "records": 406692,
+      "clicks": 3077,
+      "first_timestamp": "2019-11-24 00:00:00.020518+00:00",
+      "last_timestamp": "2019-11-25 23:59:57.537372+00:00"
+    },
+    {
+      "date": "2019-11-26",
+      "source": "bts",
+      "part": "candidate_training",
+      "records": 92423,
+      "clicks": 634,
+      "first_timestamp": "2019-11-26 00:00:00.617986+00:00",
+      "last_timestamp": "2019-11-26 11:59:59.960728+00:00"
+    },
+    {
+      "date": "2019-11-26",
+      "source": "bts",
+      "part": "gate_check",
+      "records": 66916,
+      "clicks": 606,
+      "first_timestamp": "2019-11-26 12:00:00.119895+00:00",
+      "last_timestamp": "2019-11-26 17:59:59.758868+00:00"
+    },
+    {
+      "date": "2019-11-26",
+      "source": "bts",
+      "part": "subsequent_evaluation",
+      "records": 19214,
+      "clicks": 112,
+      "first_timestamp": "2019-11-26 18:00:01.171165+00:00",
+      "last_timestamp": "2019-11-26 23:59:58.511852+00:00"
+    },
+    {
+      "date": "2019-11-26",
+      "source": "random",
+      "part": "subsequent_evaluation",
+      "records": 2075,
+      "clicks": 10,
+      "first_timestamp": "2019-11-26 18:00:37.831865+00:00",
+      "last_timestamp": "2019-11-26 23:59:54.495015+00:00"
+    },
+    {
+      "date": "2019-11-27",
+      "source": "bts",
+      "part": "candidate_training",
+      "records": 100991,
+      "clicks": 683,
+      "first_timestamp": "2019-11-27 00:00:00.259064+00:00",
+      "last_timestamp": "2019-11-27 11:59:59.865632+00:00"
+    },
+    {
+      "date": "2019-11-27",
+      "source": "bts",
+      "part": "gate_check",
+      "records": 77699,
+      "clicks": 516,
+      "first_timestamp": "2019-11-27 12:00:00.648666+00:00",
+      "last_timestamp": "2019-11-27 17:59:58.664415+00:00"
+    },
+    {
+      "date": "2019-11-27",
+      "source": "bts",
+      "part": "subsequent_evaluation",
+      "records": 20703,
+      "clicks": 124,
+      "first_timestamp": "2019-11-27 18:00:02.335478+00:00",
+      "last_timestamp": "2019-11-27 23:59:59.493937+00:00"
+    },
+    {
+      "date": "2019-11-27",
+      "source": "random",
+      "part": "subsequent_evaluation",
+      "records": 2306,
+      "clicks": 2,
+      "first_timestamp": "2019-11-27 18:00:02.785306+00:00",
+      "last_timestamp": "2019-11-27 23:59:51.060784+00:00"
+    },
+    {
+      "date": "2019-11-28",
+      "source": "bts",
+      "part": "candidate_training",
+      "records": 106673,
+      "clicks": 675,
+      "first_timestamp": "2019-11-28 00:00:01.495201+00:00",
+      "last_timestamp": "2019-11-28 11:59:59.962918+00:00"
+    },
+    {
+      "date": "2019-11-28",
+      "source": "bts",
+      "part": "gate_check",
+      "records": 74164,
+      "clicks": 600,
+      "first_timestamp": "2019-11-28 12:00:00.090214+00:00",
+      "last_timestamp": "2019-11-28 17:59:56.580363+00:00"
+    },
+    {
+      "date": "2019-11-28",
+      "source": "bts",
+      "part": "subsequent_evaluation",
+      "records": 21903,
+      "clicks": 159,
+      "first_timestamp": "2019-11-28 18:00:01.462312+00:00",
+      "last_timestamp": "2019-11-28 23:59:59.400007+00:00"
+    },
+    {
+      "date": "2019-11-28",
+      "source": "random",
+      "part": "subsequent_evaluation",
+      "records": 2407,
+      "clicks": 9,
+      "first_timestamp": "2019-11-28 18:00:10.539296+00:00",
+      "last_timestamp": "2019-11-28 23:59:59.358301+00:00"
+    },
+    {
+      "date": "2019-11-29",
+      "source": "bts",
+      "part": "candidate_training",
+      "records": 102416,
+      "clicks": 600,
+      "first_timestamp": "2019-11-29 00:00:00.254917+00:00",
+      "last_timestamp": "2019-11-29 11:59:59.538867+00:00"
+    },
+    {
+      "date": "2019-11-29",
+      "source": "bts",
+      "part": "gate_check",
+      "records": 61548,
+      "clicks": 420,
+      "first_timestamp": "2019-11-29 12:00:00.708810+00:00",
+      "last_timestamp": "2019-11-29 17:59:59.688760+00:00"
+    },
+    {
+      "date": "2019-11-29",
+      "source": "bts",
+      "part": "subsequent_evaluation",
+      "records": 19037,
+      "clicks": 143,
+      "first_timestamp": "2019-11-29 18:00:03.793561+00:00",
+      "last_timestamp": "2019-11-29 23:59:59.891283+00:00"
+    },
+    {
+      "date": "2019-11-29",
+      "source": "random",
+      "part": "subsequent_evaluation",
+      "records": 2151,
+      "clicks": 11,
+      "first_timestamp": "2019-11-29 18:00:06.694135+00:00",
+      "last_timestamp": "2019-11-29 23:59:55.234051+00:00"
+    },
+    {
+      "date": "2019-11-30",
+      "source": "bts",
+      "part": "candidate_training",
+      "records": 102969,
+      "clicks": 789,
+      "first_timestamp": "2019-11-30 00:00:00.767943+00:00",
+      "last_timestamp": "2019-11-30 11:59:59.965859+00:00"
+    },
+    {
+      "date": "2019-11-30",
+      "source": "bts",
+      "part": "gate_check",
+      "records": 65961,
+      "clicks": 597,
+      "first_timestamp": "2019-11-30 12:00:00.525333+00:00",
+      "last_timestamp": "2019-11-30 17:59:59.086328+00:00"
+    },
+    {
+      "date": "2019-11-30",
+      "source": "bts",
+      "part": "subsequent_evaluation",
+      "records": 19569,
+      "clicks": 110,
+      "first_timestamp": "2019-11-30 18:00:00.792314+00:00",
+      "last_timestamp": "2019-11-30 23:59:58.483184+00:00"
+    },
+    {
+      "date": "2019-11-30",
+      "source": "random",
+      "part": "subsequent_evaluation",
+      "records": 2111,
+      "clicks": 6,
+      "first_timestamp": "2019-11-30 18:00:03.549246+00:00",
+      "last_timestamp": "2019-11-30 23:59:58.339017+00:00"
+    }
+  ],
+  "reserved_outcomes_processing_started": true,
+  "limitations": {
+    "report_all_five_daily_primary_contrasts": true,
+    "report_learned_policy_weight_ESS_max_weight_share_matching_rows_and_matching_clicks": true,
+    "weight_ESS_not_independent_sample_size_or_power": true,
+    "row_SEs": "Descriptive only; ignore repeat-user/time dependence. Not primary inferential evidence.",
+    "exploratory_bootstrap": {
+      "block_minutes": 30,
+      "resamples": 1000,
+      "seed": 42,
+      "method": "Resample nonempty contiguous 30-minute blocks within each date using common paired block draws; recompute each dates row mean and then average the five date means equally.",
+      "limitations": "Conditions on fitted/selected policy paths and observed five dates. Does not capture full retraining/selection uncertainty, all temporal dependence or repeat-user clustering. Not a population-level confidence guarantee."
+    },
+    "few_clicks_or_estimator_disagreement": "Report as limited or inconclusive evidence; do not interpret non-significance as equivalence.",
+    "no_true_shift_onset_or_individual_oracle_available": true
+  },
+  "scope": "A short exploratory real-data gate case study supplementing, not replacing, the controlled simulation evidence.",
+  "stage": "complete",
+  "final_selected_models": {
+    "frozen": "initial",
+    "refreshed": "initial"
+  }
+}
