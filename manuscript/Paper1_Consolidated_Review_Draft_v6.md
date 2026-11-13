@@ -18,6 +18,8 @@ Development diagnostics motivated a fixed comparison of frozen versus candidate-
 
 The real-log studies separated training, checking and subsequent evaluation. Both ZOZO gates rejected all five daily candidates. Both KuaiRand gates accepted the same candidate on 1 May and rejected the other thirteen, yielding identical paths across fourteen reserved dates. Their primary refreshed-minus-frozen value contrasts were exactly zero in both studies. KuaiRand evening evaluation covered 373,097 records and 25,586 users; user-cluster and time-block intervals were reported separately. Secondary KuaiRand estimates favored the shared gate path over retaining the initial policy, but showed no clear advantage over always updating or the always-short baseline.
 
+A post-hoc KuaiRand analysis identified one rejected candidate with positive later estimated gains under both estimators and both resampling procedures, providing an exploratory gate-to-evening discrepancy.
+
 These findings distinguish monitoring information from acceptance and downstream policy performance. Refreshing improved the specified synthetic design average but added no observed policy-value benefit in either real-log case study. The contribution is a controlled empirical evaluation using established methods, retaining beneficial, null and adverse outcomes and simple baselines; it is not a new estimator or a sequential-safety result.
 
 Keywords: causal machine learning; MLOps; distribution shift; treatment-policy regret; model monitoring; update acceptance; off-policy evaluation.
@@ -405,6 +407,16 @@ The primary exploratory interval resampled 25,586 unique evaluation users as clu
 
 The protocol was committed at `063633f`, the runner at `2311e495abff3ce1086c73c886539cb65d65def0`, before reserved analysis. Run `20261113T024802Z_7e829973` completed all fourteen dates. Results were preserved at `b9ba6e6`; the saved-score audit was preserved at `5b2cc88`. The audit reconciled 43 recorded windows, 28 gate records, 112 evaluation rows and 364 daily paired contrasts, reconstructed saved score and support calculations, and checked both 1,000-resample bootstrap procedures and source snapshots. It did not independently refit models, reload all raw input rows or reproduce every incumbent model prediction. A first-execution marker, unique output directories, fixed-source checks and preserved failure records constrained retries and undocumented retuning.
 
+### 3.15 Post-hoc diagnosis of KuaiRand candidate rejection
+
+After inspecting the original study and preliminary daily contrasts, we performed an explicitly retrospective saved-score analysis. It added no independent dates, streams or model fits and did not change the original protocol, gate trajectories or primary result. The analysis compared each day's candidate with the incumbent that existed before that day's gate, using their recorded subsequent-evening DR and IPS scores under the common evaluation q̂.
+
+On rejected dates the selected gate policy remained that incumbent. On the single accepted date, 1 May, the incumbent was still the initial model; its saved no-update scores supplied the predecision comparison. Comparing the accepted candidate with the selected gate policy would instead cancel it against itself and would not answer this question. The script stopped if the required old-incumbent predictions were unavailable rather than substituting an unsupported counterfactual.
+
+Each daily paired contrast received separate user-cluster and 30-minute-block percentile intervals, using 1,000 common paired resamples and seed 42. Here users were resampled within each individual date, because the target was a daily candidate-to-incumbent comparison; these are not the across-date user resamples for the original fourteen-date endpoint. Intervals condition on the recorded models and paths and are unadjusted for multiple daily comparisons. Signs were classified with tolerance 10⁻¹². Daily gains were not summed as attainable controller savings: accepting a different candidate could change later incumbents and review outcomes.
+
+The diagnostic run was `posthoc_20261113T080334Z_fc95911b`; source and summaries were committed at `179b250`. It used the original successful saved-score audit and recorded input/source hashes, without refitting models or reopening raw logs. No alternative training window, review calendar or acceptance threshold was evaluated. These diagnostics cannot independently identify true false rejections, effects of operational constraints or a superior replacement controller.
+
 ## 4. Results
 
 ### 4.1 Incremental monitoring signals
@@ -620,6 +632,29 @@ There was no clear advantage over always updating or always-short: their paired 
 
 The primary finding remains the exact null refreshed-versus-frozen contrast. Secondary improvement over initial/no-update is shared by both gates and cannot be attributed to refreshing q̂. Nor does it establish that the personalized model was necessary, because the simple always-short baseline was competitive. All estimates, baselines and daily contrasts are retained without selecting a favorable outcome definition or date subset.
 
+### 4.11 Post-hoc candidate quality and gate-to-evening discrepancies
+
+Among the thirteen rejected candidates, nine had negative subsequent-evening point estimates under both DR and IPS, two had positive point estimates under both, and two had conflicting estimator signs. These are descriptive classifications of estimated value, not counts of truly harmful or helpful policies. The two positive-estimate rejected dates were 28 and 30 April. The accepted 1 May candidate also had positive later point estimates, although its daily user-cluster intervals included zero. These daily contrasts have a different target from the full fourteen-date gate-path-versus-no-update contrast in Section 4.10.
+
+| Date | Decision | Frozen gate DR gain | Later DR gain | Later IPS gain | Later DR user-cluster interval |
+| --- | --- | ---: | ---: | ---: | --- |
+| 2022-04-28 | Rejected | 0.002558 | 0.000210 | 0.000318 | [−0.005540, 0.006578] |
+| 2022-04-30 | Rejected | −0.002457 | 0.004164 | 0.003938 | [0.000640, 0.007772] |
+| 2022-05-01 | Accepted | 0.008692 | 0.007148 | 0.007181 | [−0.000823, 0.015206] |
+
+On 28 April, both original gate mean estimates were positive but their row-based lower bounds were negative; later estimates were small and their user-cluster intervals crossed zero. This case did not supply clear later evidence of a beneficial rejected candidate.
+
+On 30 April, both original gate estimates were approximately −0.002457, yet the candidate's subsequent-evening differences were +0.004164 (DR) and +0.003938 (IPS), approximately +0.416 and +0.394 percentage points. All four exploratory daily intervals were above zero:
+
+| Estimator | Daily user-cluster interval | Daily time-block interval |
+| --- | --- | --- |
+| DR | [0.000640, 0.007772] | [0.000392, 0.007969] |
+| IPS | [0.000230, 0.007886] | [0.000254, 0.007652] |
+
+This is a case of disagreement between gate-time and subsequent-period estimated value. On this recorded comparison, removing the 1.96-SE deduction alone would not reverse rejection because the gate point estimates themselves were negative. That arithmetic observation holds the recorded incumbent and scores fixed; it does not evaluate an alternative threshold policy from the start of the study.
+
+The case was identified retrospectively among multiple daily comparisons. Different contexts, sampling variation, dependence, estimator limitations or temporal changes could contribute; the analysis does not isolate the cause or establish a true missed beneficial update. It motivates a targeted investigation of whether a checking window represents the later decision horizon, rather than an automatic relaxation of acceptance. The original exact null refreshed-versus-frozen result remains unchanged.
+
 ## 5. Discussion and limitations
 
 The completed experiments distinguish monitoring differences from decision improvements. Additional signals sometimes changed alerts or reviews without improving accepted updates or treatment-policy regret.
@@ -640,6 +675,8 @@ The two real-data studies address different questions from synthetic oracle scor
 
 Real-log off-policy estimates require valid recorded probabilities and sufficient action support, usable context/outcome measurements and an appropriate per-position reward interpretation despite other products appearing in the slate. BTS probabilities were supplied estimates. Repeated-user identities were unavailable in ZOZO; its exploratory time-block analysis cannot fully account for that clustering. KuaiRand provides user IDs and permits a user-cluster analysis, but neither its user nor time resampling captures every dependence or policy-selection uncertainty. Training-only preprocessing and chronological splits reduce direct outcome reuse but do not establish causal identification under every unmeasured interaction. Random logging supplies a separate check, yet rare matching clicks make its estimates imprecise. The ZOZO BTS and Random populations/logging sources were not pooled or assumed interchangeable; KuaiRand was also analysed separately. Neither case supplies individual counterfactual truth, a known shift onset, a production feedback experiment or measured monetary benefit. KuaiRand additionally restricts interpretation to its published selected-user cohort, conditional random insertions and supplied fixed catalogue grouping.
 
+The post-hoc KuaiRand diagnostics further distinguish weak subsequent candidate estimates, uncertainty-limited rejection and disagreement between checking-time and later estimated value. The 30 April case is an exploratory signal for gate-to-action-horizon alignment, not evidence that refreshing solves that issue: both gate variants rejected it. The stored trajectories do not isolate training-window or review-budget effects, and an outcome-informed change would require separately specified prospective validation. No causal claim about the rejection mechanism or new controller-performance estimate is made from this case.
+
 ### 5.1 Literature coverage and contribution uncertainty
 
 The existing corpus contains 100 records; it must not be described as 100 completed full-text reviews. Nine particularly relevant papers were previously selected, of which seven received selective full-text inspection. The complete CausalStream and OnlineCML manuscripts remained unavailable.
@@ -654,7 +691,7 @@ The original monitoring ablation found no incremental regret reduction from subg
 
 In the separate ZOZO and KuaiRand case studies, gate paths were identical within each study: all five candidates were rejected in ZOZO, while both KuaiRand gates accepted the same 1 May candidate and rejected the other thirteen. Both primary refreshed-versus-frozen value contrasts were exactly zero. KuaiRand secondary estimates favored their shared path over never updating, but did not distinguish it clearly from always-short or always-updating. These results provide observed external boundaries on the gate findings, without attributing shared improvements to outcome-model refreshing or asserting that personalization beat every simple baseline.
 
-Together, the studies support evaluating monitoring information, review timing, acceptance decisions and simple-policy benchmarks as distinct parts of an adaptation pipeline. The contribution is a conditional, reproducible empirical evaluation using established methods. Prior-art overlap, supervisor review and journal-specific preparation remain separate from completion of the experiments.
+A retrospective KuaiRand case additionally showed negative gate-time estimates alongside positive later estimates, motivating further investigation of checking-window representativeness without establishing a true false rejection. Together, the studies support evaluating monitoring information, review timing, acceptance decisions and simple-policy benchmarks as distinct parts of an adaptation pipeline. The contribution is a conditional, reproducible empirical evaluation using established methods. Prior-art overlap, supervisor review and journal-specific preparation remain separate from completion of the experiments.
 
 ## References and evidence-limited records
 
@@ -734,3 +771,5 @@ ZOZO protocol and source are in `paper1_experiments/zozo_realdata_v1/`; the prot
 The inherited related-work and novelty-access limitations have not been resolved by adding experiments. Final bibliography verification, supervisor/authorship and affiliation review, venue requirements and any applicable AI-use disclosure remain before submission. No publication acceptance or first-of-its-kind claim follows from the audit results.
 
 KuaiRand records are under `paper1_experiments/kuairand_realdata_v1/` on branch `paper1-kuairand-feasibility`: structural checkpoint `b26e8e4`, development summary `b34c23c`, pilot source/settings `b213e6c`, pilot findings `2bbfc1e`, fourteen-date protocol `063633f`, main runner `2311e49`, results `b9ba6e6` and saved-score audit `5b2cc88`. Small results and the audit disclosure are in `fourteen_day_results_20261113_024802/`. The raw archive and detailed NPZ arrays remain excluded from Git in `data/kuairand/`; the public repository's summaries alone do not contain every row needed to reconstruct the full saved-score audit. The run records explicit millisecond units and both uncertainty procedures. The inherited 100-record corpus count is not increased or relabelled as completed full-text review by the targeted follow-up in Section 2.7.
+
+The explicitly post-hoc KuaiRand diagnostic source is `diagnose_candidate_gates.py`; its manifest, full fourteen-date table and summary are preserved in `posthoc_candidate_diagnostics_20261113_080334/`, committed and pushed at `179b250`. They record prior outcome exposure, paired daily uncertainty and the limits of predecision-incumbent reconstruction. This follow-up explains exposed results and is not counted as an additional independent validation experiment or a prospectively confirmed hypothesis.
