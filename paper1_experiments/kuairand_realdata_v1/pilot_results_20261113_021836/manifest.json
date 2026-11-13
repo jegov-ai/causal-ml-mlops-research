@@ -1,0 +1,152 @@
+{
+  "status": "complete",
+  "git_commit": "b213e6c82f7b42067f3937ca1ce84cd6746e0ce7",
+  "archive_sha256": "c814bf6f3624c0cfae83c57de3df26b2ed206e5c57bab4c4dcbfabbabe20cbf0",
+  "settings": {
+    "status": "exposed_three_date_development_pilot_not_independent_validation",
+    "dataset": "KuaiRand-Pure",
+    "provider": "https://zenodo.org/records/10439422",
+    "citation": "Gao et al. (2022), KuaiRand, CIKM, doi:10.1145/3511808.3557624",
+    "licence": "CC BY-SA 4.0; archive LICENSE retained with raw input",
+    "archive_md5": "0820331067a3784d9691136f772b35a7",
+    "source": "random_interventions_only",
+    "tab": 1,
+    "groups_in_order": [
+      "short",
+      "long",
+      "unknown"
+    ],
+    "catalogue_counts": [
+      1743,
+      5601,
+      239
+    ],
+    "short_definition": "finite catalogue video_duration > 0 and <= 30000 milliseconds",
+    "long_definition": "finite catalogue video_duration > 30000 milliseconds",
+    "unknown_definition": "missing, nonnumeric, nonfinite or nonpositive catalogue duration",
+    "group_logging_probabilities": [
+      0.22985625741790847,
+      0.7386258736647765,
+      0.03151786891731505
+    ],
+    "target_policy": "choose one duration group; sample a video uniformly within its fixed catalogue group",
+    "unknown_items_retained": true,
+    "clock": "time_ms explicitly decoded as Unix milliseconds; calendar UTC+08:00",
+    "source_date_field_not_used_for_splits": true,
+    "timestamp_mismatch_cause": "not established; raw date field and mismatch flag retained",
+    "outcome": "long_view (binary)",
+    "development_aggregate_outcomes_already_inspected": true,
+    "reserved_outcomes_not_analysed": true,
+    "intervals": {
+      "initial_training": [
+        "2022-04-22T00:00:00+08:00",
+        "2022-04-24T00:00:00+08:00"
+      ],
+      "candidate_training": [
+        "2022-04-23T12:00:00+08:00",
+        "2022-04-24T12:00:00+08:00"
+      ],
+      "gate_check": [
+        "2022-04-24T12:00:00+08:00",
+        "2022-04-24T18:00:00+08:00"
+      ],
+      "subsequent_evaluation": [
+        "2022-04-24T18:00:00+08:00",
+        "2022-04-25T00:00:00+08:00"
+      ]
+    },
+    "candidate_uses_rolling_24_hours": true,
+    "training_partitions_overlap_each_other_but_not_gate_or_evaluation": true,
+    "difference_from_ZOZO": "duration-group policies and rolling-24h candidate training; not identical item-ranking replication",
+    "features": [
+      "categorical user_id",
+      "categorical duration group",
+      "user_id by group",
+      "six-hour clock bin by group",
+      "day-of-week by group"
+    ],
+    "excluded_features": [
+      "all released aggregate user/video statistics",
+      "current/future feedback",
+      "source date field",
+      "normal recommendation logs"
+    ],
+    "model": {
+      "solver": "liblinear",
+      "C": 0.1,
+      "tol": 1e-06,
+      "max_iter": 500,
+      "random_state": 42,
+      "class_weight": null
+    },
+    "preprocessing": "training-only sparse DictVectorizer and MaxAbsScaler",
+    "gate_rule": "paired DR gain minus 1.96 row SE strictly positive; zero-match check on either compared policy",
+    "frozen_gate_q": "initial model",
+    "refreshed_gate_q": "candidate model",
+    "separate_gate_selection": true,
+    "evaluation_common_q": "candidate model for every policy",
+    "weight_clipping": null,
+    "tie_break": "first in short,long,unknown order",
+    "estimators": [
+      "DR",
+      "IPS"
+    ],
+    "inference": "descriptive development results only; no inferential claims",
+    "limitations": [
+      "Published cohort selected to have at least ten random exposures; no unrestricted population claim.",
+      "Conditional random-insertion group probabilities, not propensities for ordinary recommendations.",
+      "Repeated-user dependence is not represented by row standard errors.",
+      "Policies are evaluated on logged contexts; no policy-induced feedback or whole-feed intervention identified.",
+      "One development review cannot establish superiority or sequential safety.",
+      "Long-view is an engagement metric, not measured profit or individual causal truth."
+    ]
+  },
+  "versions": {
+    "python": "3.12.10",
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "sklearn": "1.9.1"
+  },
+  "reserved_outcomes_analysed": false,
+  "timestamp_array_unit": "ms",
+  "windows": {
+    "initial_training": {
+      "records": 76627,
+      "long_views": 6586,
+      "users": 12101,
+      "date_mismatches": 692,
+      "first_timestamp": "2022-04-22 10:42:12.831000+08:00",
+      "last_timestamp": "2022-04-23 23:59:59.919000+08:00"
+    },
+    "candidate_training": {
+      "records": 48782,
+      "long_views": 4055,
+      "users": 9877,
+      "date_mismatches": 324,
+      "first_timestamp": "2022-04-23 12:00:01.319000+08:00",
+      "last_timestamp": "2022-04-24 11:59:59.886000+08:00"
+    },
+    "gate_check": {
+      "records": 13187,
+      "long_views": 1093,
+      "users": 4313,
+      "date_mismatches": 0,
+      "first_timestamp": "2022-04-24 12:00:04+08:00",
+      "last_timestamp": "2022-04-24 17:59:53.692000+08:00"
+    },
+    "subsequent_evaluation": {
+      "records": 15387,
+      "long_views": 1208,
+      "users": 5139,
+      "date_mismatches": 331,
+      "first_timestamp": "2022-04-24 18:00:02.015000+08:00",
+      "last_timestamp": "2022-04-24 23:59:58.598000+08:00"
+    }
+  },
+  "source_sha256": {
+    "run_kuairand_pilot.py": "698aa9234ff314c18e0455eb7e875d9107767bfa95326ba3510da22621960460",
+    "pilot_settings.json": "fc59906249332dbf4f4c5fef33b2d3eea962b2cabe811a9d9fbef07a5afaf1fb",
+    "development_outcomes.csv": "500cf27704beea5b0e88e69c15bc86ccf5398ef54f0c2ffc2243258da6f7530d",
+    "feasibility_checkpoint.json": "0181f9bee3b3b17da1886fbc650d67fd68f9b6e7f435bf7b5e61ae8c25461296"
+  }
+}

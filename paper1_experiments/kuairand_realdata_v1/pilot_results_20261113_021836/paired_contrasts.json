@@ -1,0 +1,14 @@
+{
+  "dr": {
+    "mean": 0.0,
+    "row_se": 0.0,
+    "row_lower_95": 0.0,
+    "row_upper_95": 0.0
+  },
+  "ips": {
+    "mean": 0.0,
+    "row_se": 0.0,
+    "row_lower_95": 0.0,
+    "row_upper_95": 0.0
+  }
+}
