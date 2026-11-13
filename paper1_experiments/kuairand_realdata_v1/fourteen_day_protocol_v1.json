@@ -1,0 +1,244 @@
+{
+  "protocol_version": "1.0",
+  "status": "prospectively_specified_exploratory_external_gate_case_study_after_exposed_development",
+  "purpose": "Compare frozen versus candidate-refreshed outcome predictions in repeated held-out DR acceptance gates on real chronological randomized video exposures.",
+  "research_question": "Under the fixed group-policy model and daily reviews, does refreshing gate outcome predictions change selected policies and their subsequent long-view value?",
+  "not_tested": [
+    "A new causal or doubly robust estimator",
+    "M0/M1/FULL monitoring superiority",
+    "Known-onset causal drift detection",
+    "Individual-video ranking",
+    "Actual deployment or policy-induced user feedback",
+    "Individual counterfactual truth or oracle regret",
+    "Profit or sequential deployment safety"
+  ],
+  "dataset": {
+    "name": "KuaiRand-Pure",
+    "provider_record": "https://zenodo.org/records/10439422",
+    "archive": "data/kuairand/raw/KuaiRand-Pure.tar.gz",
+    "bytes": 47432272,
+    "md5": "0820331067a3784d9691136f772b35a7",
+    "sha256_reference": "feasibility_checkpoint.json committed at b26e8e4",
+    "licence": "CC BY-SA 4.0; retain archive LICENSE and attribution",
+    "citation": "Gao et al. (2022), KuaiRand: An Unbiased Sequential Recommendation Dataset with Randomly Exposed Videos, CIKM, doi:10.1145/3511808.3557624",
+    "log_member": "KuaiRand-Pure/data/log_random_4_22_to_5_08_pure.csv",
+    "catalogue_member": "KuaiRand-Pure/data/video_features_basic_pure.csv",
+    "eligibility": "is_rand == 1 and tab == 1; all three catalogue duration groups retained",
+    "excluded": "Ordinary recommendation logs and released user/video aggregate statistics",
+    "main_interface_records": 1178025,
+    "cohort_scope": "Published cohort retained users with at least ten random exposures. Do not assume transport to all platform users.",
+    "identification_assumptions": [
+      "Uniform random insertion from the documented fixed catalogue is applicable to the analysed intervention records and published selected cohort.",
+      "The fixed catalogue group mapping defines a policy that samples uniformly among its member videos; group propensities are conditional on random insertion, not probabilities for ordinary feed traffic.",
+      "Recorded timestamps and predecision user identities are usable, and catalogue duration is treated as fixed metadata; its snapshot limitations must be disclosed.",
+      "Value is evaluated on logged contexts. This does not identify effects of changing entire feeds, retention, future user states or future cohort selection."
+    ]
+  },
+  "prior_exposure": {
+    "development_dates_local": [
+      "2022-04-22",
+      "2022-04-23",
+      "2022-04-24"
+    ],
+    "development_records": 120645,
+    "development_long_views": 10128,
+    "development_group_outcome_summaries_inspected": true,
+    "development_pilot_run": "20261113T021836Z_161acfdd",
+    "development_pilot_source_commit": "b213e6c",
+    "development_result_commit": "2bbfc1e",
+    "pilot_findings": "Both gates rejected. Initial policy DR/IPS approximately 0.075061/0.075792; always-long approximately 0.082995/0.082884 in the subsequent development window. Retain all baselines.",
+    "reserved_structure_dates_groups_and_counts_inspected": true,
+    "reserved_outcomes_not_analysed_in_recorded_workflow": true,
+    "reserved_records": 1057380
+  },
+  "time": {
+    "clock": "Decode time_ms explicitly as Unix milliseconds; never infer integer datetime units.",
+    "calendar": "fixed UTC+08:00 offset",
+    "interval_convention": "start inclusive; end exclusive",
+    "recorded_date_not_used_for_partitioning": true,
+    "recorded_date_mismatches_in_main_interface": 8564,
+    "mismatch_direction": "timestamp-derived local date one day earlier than recorded date",
+    "mismatch_cause": "not established",
+    "mismatch_handling": "Retain records and mismatch flag; no retrospective deletion based on outcomes.",
+    "input_not_assumed_chronologically_sorted": "Sort by time_ms and original CSV row index using a stable sort.",
+    "saved_timestamp_field": "timestamp_ms",
+    "saved_timestamp_unit": "ms",
+    "initial_training": [
+      "2022-04-22T00:00:00+08:00",
+      "2022-04-25T00:00:00+08:00"
+    ],
+    "initial_scope": "All available records in the three exposed development dates; the first date is partially observed. This differs from the pilot initial two-date model.",
+    "evaluation_dates_local": [
+      "2022-04-25",
+      "2022-04-26",
+      "2022-04-27",
+      "2022-04-28",
+      "2022-04-29",
+      "2022-04-30",
+      "2022-05-01",
+      "2022-05-02",
+      "2022-05-03",
+      "2022-05-04",
+      "2022-05-05",
+      "2022-05-06",
+      "2022-05-07",
+      "2022-05-08"
+    ],
+    "candidate_training": "Previous date 12:00 to current date 12:00; rolling 24 hours, using only past logged outcomes.",
+    "gate_check": "Current date 12:00 to 18:00.",
+    "subsequent_evaluation": "Current date 18:00 to next date 00:00, using available records; report observed endpoints.",
+    "training_overlap": "Initial and rolling candidate training may overlap; earlier evaluation records may enter a later rolling training window only after they are past observations.",
+    "no_within_date_gate_or_evaluation_outcomes_in_candidate_fit": true,
+    "no_claim_for_hours_outside_evening_evaluation": true
+  },
+  "policy_class": {
+    "catalogue_size": 7583,
+    "group_order": [
+      "short",
+      "long",
+      "unknown"
+    ],
+    "definitions": {
+      "short": "Finite catalogue video_duration > 0 and <= 30000 milliseconds.",
+      "long": "Finite catalogue video_duration > 30000 milliseconds.",
+      "unknown": "Missing, nonnumeric, nonfinite or nonpositive catalogue duration."
+    },
+    "catalogue_counts": {
+      "short": 1743,
+      "long": 5601,
+      "unknown": 239
+    },
+    "group_logging_probabilities": {
+      "short": 0.22985625741790847,
+      "long": 0.7386258736647765,
+      "unknown": 0.03151786891731505
+    },
+    "learned_policy": "Choose highest predicted long-view-probability group, then uniformly sample a catalogue video within that group; first group in declared order breaks ties.",
+    "uniform_baseline": "Uniform over all 7583 catalogue videos; group probabilities equal catalogue counts/7583, not 1/3.",
+    "no_posthoc_group_dropping_or_redefinition": true
+  },
+  "model": {
+    "implementation_reference": "Reuse classify, features, fit, predict, scores and decision from run_kuairand_pilot.py at commit b213e6c.",
+    "family": "pooled logistic regression",
+    "solver": "liblinear",
+    "C": 0.1,
+    "tol": 1e-06,
+    "max_iter": 500,
+    "random_state": 42,
+    "class_weight": null,
+    "training_sample_weights": null,
+    "features": [
+      "Categorical user_id",
+      "Categorical group",
+      "Categorical user_id by group",
+      "Six-hour clock bin by group",
+      "Day-of-week by group"
+    ],
+    "preprocessing": "Sparse DictVectorizer and MaxAbsScaler fitted separately on each training partition; unseen categories ignored by the trained mapping.",
+    "current_feedback_never_a_feature": true,
+    "no_model_selection_using_reserved_outcomes": true,
+    "same_candidate_both_gates": true
+  },
+  "gates": {
+    "frozen_q": "Single initial outcome model fitted on the three development dates.",
+    "refreshed_q": "Current date candidate outcome model fitted on preceding 24 hours before noon.",
+    "rule": "Mean paired DR(candidate minus current incumbent) - 1.96 row standard errors strictly greater than zero.",
+    "zero_match_rule": "For each gate independently reject if candidate or its own incumbent has zero matching logged groups.",
+    "initial_policy_shared": true,
+    "separate_incumbent_paths": true,
+    "daily_review_opportunities": 1,
+    "maximum_reviews_per_gate": 14,
+    "updates_apply_only_after_gate_window": true,
+    "selected_incumbent_carries_to_next_date": true,
+    "no_weight_clipping_or_forced_updates": true,
+    "row_SE_limitation": "Pointwise heuristic ignoring repeated-user/time dependence; not a sequential safety certificate."
+  },
+  "evaluation": {
+    "outcome": "long_view binary as supplied; do not switch outcomes after seeing reserved results.",
+    "common_q": "Current morning candidate outcome model for every policy on that dates same evening rows.",
+    "policies": [
+      "frozen_gate_path",
+      "refreshed_gate_path",
+      "initial_no_update",
+      "always_update_current_candidate",
+      "uniform_catalogue",
+      "always_short",
+      "always_long",
+      "always_unknown"
+    ],
+    "estimators": [
+      "DR",
+      "IPS"
+    ],
+    "logged_action": "Catalogue duration group of the logged video.",
+    "IPS": "pi(logged group | context) / p(logged group) * observed long_view.",
+    "DR": "Sum over groups pi(group | context)*q(context,group), plus IPS weight times (observed long_view - q(context,logged group)).",
+    "primary": "Equal-weight mean of all 14 within-date evening DR differences: refreshed_gate_path minus frozen_gate_path. Positive favors refreshed.",
+    "secondary": [
+      "Same paired contrast using IPS",
+      "Each gate versus each of six baselines using both estimators",
+      "All 14 daily contrasts and selected model paths"
+    ],
+    "same_rows_common_q_and_paired_contrasts": true,
+    "source_not_pooled_with_ZOZO_or_synthetic_results": true,
+    "units": "Estimated long-view probability differences, not measured profit or relative percentage improvements.",
+    "identical_paths": "Report exact cancellation if actions agree; a zero interval is not population equivalence."
+  },
+  "uncertainty": {
+    "primary_exploratory_interval": {
+      "method": "Paired user-cluster percentile bootstrap conditional on fitted and selected paths.",
+      "resamples": 1000,
+      "seed": 42,
+      "clusters": "Unique user IDs across the union of all 14 evening evaluation windows.",
+      "draws": "Sample the same number of user IDs with replacement; carry each sampled users complete evaluation records across every date. Use common multiplicities across policies and estimators.",
+      "aggregation": "Recompute each dates row-weighted paired mean using resampled user multiplicities, then average all 14 date means equally.",
+      "empty_resampled_date": "Stop with a recorded error; never omit a date or silently change the method."
+    },
+    "temporal_sensitivity_interval": {
+      "method": "Separate paired within-date 30-minute block percentile bootstrap.",
+      "resamples": 1000,
+      "seed": 42,
+      "draws": "Resample nonempty contiguous 30-minute blocks within each date with common paired draws; recompute date row means then average 14 dates equally.",
+      "purpose": "Sensitivity to short-range temporal clustering; not a substitute for user clustering."
+    },
+    "limitations": [
+      "Neither interval is guaranteed population coverage or sequential safety.",
+      "Both condition on fitted/selected policy paths and observed dates; neither refits models or captures full training/selection uncertainty.",
+      "User resampling does not resolve all common time shocks; within-date time-block resampling does not preserve all repeated-user dependence.",
+      "Fourteen adjacent dates are not fourteen independent deployments or long-term regimes.",
+      "Report both interval types; never select the narrower or more favorable interval."
+    ],
+    "secondary_comparisons": "Descriptive and exploratory; no unadjusted multiple-comparison superiority claims.",
+    "diagnostics": [
+      "Records, long_views and unique users per training/gate/evaluation window",
+      "Each policy matching rows, matching long_views, matching users, weight ESS and largest normalized weight share",
+      "Every daily gate estimate, lower bound, zero-match reason and selection",
+      "Date-mismatch counts and actual observed time boundaries"
+    ],
+    "ESS_interpretation": "Weight concentration diagnostic, not independent sample size or power."
+  },
+  "execution": {
+    "protocol_and_runner_committed_before_reserved_outcomes": true,
+    "required_pilot_source_reference": "b213e6c:paper1_experiments/kuairand_realdata_v1/run_kuairand_pilot.py",
+    "source_comparison": "Validate reused pilot bytes against that Git object after normalizing CRLF to LF.",
+    "verify_archive_md5_and_checkpoint_sha256_before_reading": true,
+    "record": [
+      "Git commit",
+      "Normalized source hashes and source snapshots",
+      "Protocol hash",
+      "Input hashes",
+      "Software versions",
+      "Every window count and boundary",
+      "Completion or failure status"
+    ],
+    "first_execution_marker": "Create before analysing any reserved outcome; normal invocation refuses an existing marker.",
+    "unique_output_directory_and_no_overwrite": true,
+    "repeat_policy": "Only explicitly labelled unchanged-source reproduction; source changes require a disclosed protocol deviation, not automatic retry.",
+    "fail_closed": "Stop on missing windows, invalid labels/propensities, catalogue mismatch or model convergence failure; preserve partial run and errors. No omitted dates, automatic retuning or favorable stopping.",
+    "preserve_all_null_adverse_and_baseline_results": true,
+    "no_outcome_driven_design_changes": true,
+    "reserved_outcomes_access_rule": "Filter by explicit eligible time window before numeric outcome conversion. A later training window may use only outcomes chronologically available before its gate.",
+    "audit_scope": "Saved-score and aggregation reconciliation is separate from an independent refit or raw-row reconstruction."
+  },
+  "relationship_to_paper1": "Independent real-source gate case study extending temporal coverage and user-level diagnostics; supplements simulation and ZOZO evidence without claiming to validate all monitoring arms or establish novelty."
+}
