@@ -1,0 +1,29 @@
+{
+  "status": "structure_only_no_outcomes_analysed",
+  "dataset": "KuaiRand-Pure",
+  "provider_record": "https://zenodo.org/records/10439422",
+  "archive_md5_verified": "0820331067a3784d9691136f772b35a7",
+  "archive_sha256": "c814bf6f3624c0cfae83c57de3df26b2ed206e5c57bab4c4dcbfabbabe20cbf0",
+  "random_records": 1186059,
+  "main_interface_tab": 1,
+  "main_interface_records": 1178025,
+  "catalogue_items": 7583,
+  "duration_groups_catalogue": {
+    "short_at_most_30_seconds": 1743,
+    "long_over_30_seconds": 5601,
+    "unknown_or_invalid": 239
+  },
+  "chronological_clock": "time_ms decoded as milliseconds since Unix epoch",
+  "calendar_offset": "UTC+08:00",
+  "recorded_date_mismatches": 8564,
+  "mismatch_cause": "not_established",
+  "development_start_inclusive": "2022-04-22T00:00:00+08:00",
+  "development_end_exclusive": "2022-04-25T00:00:00+08:00",
+  "reserved_start_inclusive": "2022-04-25T00:00:00+08:00",
+  "reserved_end_exclusive": "2022-05-09T00:00:00+08:00",
+  "development_records": 120645,
+  "reserved_records": 1057380,
+  "outcomes_inspected": false,
+  "models_fitted": false,
+  "policy_and_gate_protocol_finalized": false
+}
