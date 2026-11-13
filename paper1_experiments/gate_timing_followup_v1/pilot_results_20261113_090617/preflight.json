@@ -1,0 +1,933 @@
+{
+  "mode": "pilot",
+  "provenance": {
+    "commit": "99556c9bb56dbf8c239b04dc8de05e0e090f50ed",
+    "hashes": {
+      "paper1_experiments/gate_timing_followup_v1/run_gate_timing_followup.py": "44dc217718ec8e902677dc12d9d9b4860af22b616a93166f53fe77199b53f2b0",
+      "paper1_experiments/gate_timing_followup_v1/gate_timing_protocol_v1.json": "9f6b501bae0b83a28a7884b581a5ed20afded48a7646560a1dea70b4d6685816",
+      ".gitignore": "a5a98e597733a97bd71e3757b2a714ed8393e82a3a587c3d4602be531fdf5222"
+    },
+    "versions": {
+      "python": "3.12.10",
+      "numpy": "2.5.4",
+      "pandas": "3.1.0",
+      "sklearn": "1.9.1"
+    }
+  },
+  "inventory_hash": "4df3eaf4a1d51715e6942aace7a76c4036efa351443502309ebea5c6667ea018",
+  "seeds": [
+    609900,
+    609901,
+    609902
+  ],
+  "freshness": {
+    "scope": "Project CSV seed/_seed columns and CSV members of ZIP archives; not undocumented external runs or nested archives.",
+    "files_with_seed_columns": 142,
+    "fields": [
+      {
+        "file": "paper1_experiments.zip::paper1_experiments/integrated_causal_monitoring_v1_pilot/run_20261031_125418/benchmarks.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments.zip::paper1_experiments/integrated_causal_monitoring_v1_pilot/run_20261031_125418/heldout_null_runs.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments.zip::paper1_experiments/integrated_causal_monitoring_v1_pilot/run_20261031_125418/period_log.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments.zip::paper1_experiments/integrated_causal_monitoring_v1_pilot/run_20261031_125418/run_results.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments.zip::paper1_experiments/integrated_causal_monitoring_v2_xai_pilot/run_20261031_132531/benchmarks.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments.zip::paper1_experiments/integrated_causal_monitoring_v2_xai_pilot/run_20261031_132531/heldout_null_runs.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments.zip::paper1_experiments/integrated_causal_monitoring_v2_xai_pilot/run_20261031_132531/period_log.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments.zip::paper1_experiments/integrated_causal_monitoring_v2_xai_pilot/run_20261031_132531/run_results.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments.zip::paper1_experiments/integrated_causal_monitoring_v2_xai_study/run_20261031_134132/benchmarks.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments.zip::paper1_experiments/integrated_causal_monitoring_v2_xai_study/run_20261031_134132/heldout_null_runs.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments.zip::paper1_experiments/integrated_causal_monitoring_v2_xai_study/run_20261031_134132/period_log.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments.zip::paper1_experiments/integrated_causal_monitoring_v2_xai_study/run_20261031_134132/run_results.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments.zip::paper1_experiments/integrated_metrics.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments.zip::paper1_experiments/integrated_observations.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments.zip::paper1_experiments/m2_diagnostic_details.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments.zip::paper1_experiments/m2_explanation_stability_v1_results.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments.zip::paper1_experiments/m2_warning_policy_runs.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments.zip::paper1_experiments/m2_warning_policy_totals.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments.zip::paper1_experiments/monitoring_validation_v1_diagnostic_results/period_log.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments.zip::paper1_experiments/monitoring_validation_v1_results/runs.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments.zip::paper1_experiments/monitoring_validation_v2_followup_diagnostic_results/period_log.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments.zip::paper1_experiments/monitoring_validation_v2_followup_results/runs.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments.zip::paper1_experiments/monitoring_validation_v3_results/period_log.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments.zip::paper1_experiments/monitoring_validation_v3_results/runs.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments.zip::paper1_experiments/replicated_runs.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments.zip::paper1_experiments/replicated_v2_runs.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_study_results.zip::run_20261031_134132/benchmarks.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_study_results.zip::run_20261031_134132/heldout_null_runs.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_study_results.zip::run_20261031_134132/period_log.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_study_results.zip::run_20261031_134132/run_results.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "manuscript/support/SENSITIVITY_CELL_MEAN_CONTRASTS_20261108.csv",
+        "fields": [
+          "initial_seed"
+        ]
+      },
+      {
+        "file": "manuscript/support/refreshed_gate_20261108/cell_mean_differences.csv",
+        "fields": [
+          "initial_seed"
+        ]
+      },
+      {
+        "file": "manuscript/support/refreshed_gate_20261108/recomputed_paired_differences.csv",
+        "fields": [
+          "initial_seed",
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/Project1_Gate_Validation_Complete_504254.zip::run_20261110_131649_504254/benchmarks.csv",
+        "fields": [
+          "seed",
+          "initial_seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/Project1_Gate_Validation_Complete_504254.zip::run_20261110_131649_504254/fixed_policy_comparisons.csv",
+        "fields": [
+          "initial_seed",
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/Project1_Gate_Validation_Complete_504254.zip::run_20261110_131649_504254/paired_differences.csv",
+        "fields": [
+          "initial_seed",
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/Project1_Gate_Validation_Complete_504254.zip::run_20261110_131649_504254/period_log.csv",
+        "fields": [
+          "seed",
+          "initial_seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/Project1_Gate_Validation_Complete_504254.zip::run_20261110_131649_504254/primary_seed_differences.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/Project1_Gate_Validation_Complete_504254.zip::run_20261110_131649_504254/review_diagnostics.csv",
+        "fields": [
+          "initial_seed",
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/Project1_Gate_Validation_Complete_504254.zip::run_20261110_131649_504254/run_outcomes.csv",
+        "fields": [
+          "initial_seed",
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/integrated_metrics.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/integrated_observations.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/m2_diagnostic_details.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/m2_explanation_stability_v1_results.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/m2_warning_policy_runs.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/m2_warning_policy_totals.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/replicated_runs.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/replicated_v2_runs.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/gate_diagnostic_replay_v1_results/run_20261108_143737/reproduced_period_log.csv",
+        "fields": [
+          "seed",
+          "initial_seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/gate_diagnostic_replay_v1_results/run_20261108_143737/review_diagnostics.csv",
+        "fields": [
+          "initial_seed",
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/gate_diagnostic_replay_v1_results/run_20261108_143830/reproduced_period_log.csv",
+        "fields": [
+          "seed",
+          "initial_seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/gate_diagnostic_replay_v1_results/run_20261108_143830/review_diagnostics.csv",
+        "fields": [
+          "initial_seed",
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/gate_validation_v1_pilot/run_20261110_125336_560320/benchmarks.csv",
+        "fields": [
+          "seed",
+          "initial_seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/gate_validation_v1_pilot/run_20261110_125336_560320/fixed_policy_comparisons.csv",
+        "fields": [
+          "initial_seed",
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/gate_validation_v1_pilot/run_20261110_125336_560320/paired_differences.csv",
+        "fields": [
+          "initial_seed",
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/gate_validation_v1_pilot/run_20261110_125336_560320/period_log.csv",
+        "fields": [
+          "seed",
+          "initial_seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/gate_validation_v1_pilot/run_20261110_125336_560320/primary_seed_differences.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/gate_validation_v1_pilot/run_20261110_125336_560320/review_diagnostics.csv",
+        "fields": [
+          "initial_seed",
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/gate_validation_v1_pilot/run_20261110_125336_560320/run_outcomes.csv",
+        "fields": [
+          "initial_seed",
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/gate_validation_v1_validation/run_20261110_131649_504254/benchmarks.csv",
+        "fields": [
+          "seed",
+          "initial_seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/gate_validation_v1_validation/run_20261110_131649_504254/fixed_policy_comparisons.csv",
+        "fields": [
+          "initial_seed",
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/gate_validation_v1_validation/run_20261110_131649_504254/paired_differences.csv",
+        "fields": [
+          "initial_seed",
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/gate_validation_v1_validation/run_20261110_131649_504254/period_log.csv",
+        "fields": [
+          "seed",
+          "initial_seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/gate_validation_v1_validation/run_20261110_131649_504254/primary_seed_differences.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/gate_validation_v1_validation/run_20261110_131649_504254/review_diagnostics.csv",
+        "fields": [
+          "initial_seed",
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/gate_validation_v1_validation/run_20261110_131649_504254/run_outcomes.csv",
+        "fields": [
+          "initial_seed",
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/integrated_causal_monitoring_v1_pilot/run_20261031_125418/benchmarks.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/integrated_causal_monitoring_v1_pilot/run_20261031_125418/heldout_null_runs.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/integrated_causal_monitoring_v1_pilot/run_20261031_125418/period_log.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/integrated_causal_monitoring_v1_pilot/run_20261031_125418/run_results.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/integrated_causal_monitoring_v2_xai_pilot/run_20261031_132531/benchmarks.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/integrated_causal_monitoring_v2_xai_pilot/run_20261031_132531/heldout_null_runs.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/integrated_causal_monitoring_v2_xai_pilot/run_20261031_132531/period_log.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/integrated_causal_monitoring_v2_xai_pilot/run_20261031_132531/run_results.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/integrated_causal_monitoring_v2_xai_study/run_20261031_134132/benchmarks.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/integrated_causal_monitoring_v2_xai_study/run_20261031_134132/heldout_null_runs.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/integrated_causal_monitoring_v2_xai_study/run_20261031_134132/period_log.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/integrated_causal_monitoring_v2_xai_study/run_20261031_134132/run_results.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/model_onset_sensitivity_v1_development/run_20261106_102857_143041/benchmarks.csv",
+        "fields": [
+          "seed",
+          "initial_seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/model_onset_sensitivity_v1_development/run_20261106_102857_143041/heldout_null_1042.csv",
+        "fields": [
+          "seed",
+          "initial_seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/model_onset_sensitivity_v1_development/run_20261106_102857_143041/heldout_null_2042.csv",
+        "fields": [
+          "seed",
+          "initial_seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/model_onset_sensitivity_v1_development/run_20261106_102857_143041/heldout_null_42.csv",
+        "fields": [
+          "seed",
+          "initial_seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/model_onset_sensitivity_v1_development/run_20261106_102857_143041/paired_development_contrasts.csv",
+        "fields": [
+          "initial_seed",
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/model_onset_sensitivity_v1_development/run_20261106_102857_143041/period_log.csv",
+        "fields": [
+          "seed",
+          "initial_seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/model_onset_sensitivity_v1_development/run_20261106_102857_143041/run_results.csv",
+        "fields": [
+          "seed",
+          "initial_seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/model_onset_sensitivity_v1_development/run_20261106_102857_143041/summary.csv",
+        "fields": [
+          "initial_seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/monitoring_review_spacing_v1_development/run_20261103_072712/benchmarks.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/monitoring_review_spacing_v1_development/run_20261103_072712/period_log.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/monitoring_review_spacing_v1_development/run_20261103_072712/run_results.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/monitoring_schedule_comparison_v1_results/run_20261102_054710/benchmarks.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/monitoring_schedule_comparison_v1_results/run_20261102_054710/period_log.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/monitoring_schedule_comparison_v1_results/run_20261102_054710/run_results.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/monitoring_signal_ablation_v1_pilot/run_20261102_001734/benchmarks.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/monitoring_signal_ablation_v1_pilot/run_20261102_001734/heldout_null_runs.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/monitoring_signal_ablation_v1_pilot/run_20261102_001734/period_log.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/monitoring_signal_ablation_v1_pilot/run_20261102_001734/run_results.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/monitoring_signal_ablation_v1_smoke/run_20261102_001133/benchmarks.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/monitoring_signal_ablation_v1_smoke/run_20261102_001133/heldout_null_runs.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/monitoring_signal_ablation_v1_smoke/run_20261102_001133/period_log.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/monitoring_signal_ablation_v1_smoke/run_20261102_001133/run_results.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/monitoring_signal_ablation_v1_study/run_20261102_012152/benchmarks.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/monitoring_signal_ablation_v1_study/run_20261102_012152/heldout_null_runs.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/monitoring_signal_ablation_v1_study/run_20261102_012152/period_log.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/monitoring_signal_ablation_v1_study/run_20261102_012152/run_results.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/monitoring_validation_v1_diagnostic_results/period_log.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/monitoring_validation_v1_results/runs.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/monitoring_validation_v2_followup_diagnostic_results/period_log.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/monitoring_validation_v2_followup_results/runs.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/monitoring_validation_v3_results/period_log.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/monitoring_validation_v3_results/runs.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/refreshed_gate_development_v1_results/run_20261108_162318/paired_development_differences.csv",
+        "fields": [
+          "initial_seed",
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/refreshed_gate_development_v1_results/run_20261108_162318/period_log.csv",
+        "fields": [
+          "seed",
+          "initial_seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/refreshed_gate_development_v1_results/run_20261108_162318/review_diagnostics.csv",
+        "fields": [
+          "initial_seed",
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/refreshed_gate_development_v1_results/run_20261108_162318/run_outcomes.csv",
+        "fields": [
+          "initial_seed",
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/refreshed_gate_development_v1_results/run_20261108_162422/paired_development_differences.csv",
+        "fields": [
+          "initial_seed",
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/refreshed_gate_development_v1_results/run_20261108_162422/period_log.csv",
+        "fields": [
+          "seed",
+          "initial_seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/refreshed_gate_development_v1_results/run_20261108_162422/review_diagnostics.csv",
+        "fields": [
+          "initial_seed",
+          "seed"
+        ]
+      },
+      {
+        "file": "paper1_experiments/refreshed_gate_development_v1_results/run_20261108_162422/run_outcomes.csv",
+        "fields": [
+          "initial_seed",
+          "seed"
+        ]
+      },
+      {
+        "file": "reproducibility/archives/Project1_Ablation_Study_012152.zip::run_20261102_012152/benchmarks.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "reproducibility/archives/Project1_Ablation_Study_012152.zip::run_20261102_012152/heldout_null_runs.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "reproducibility/archives/Project1_Ablation_Study_012152.zip::run_20261102_012152/period_log.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "reproducibility/archives/Project1_Ablation_Study_012152.zip::run_20261102_012152/run_results.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "reproducibility/archives/Project1_Gate_Diagnostics_143830.zip::run_20261108_143830/reproduced_period_log.csv",
+        "fields": [
+          "seed",
+          "initial_seed"
+        ]
+      },
+      {
+        "file": "reproducibility/archives/Project1_Gate_Diagnostics_143830.zip::run_20261108_143830/review_diagnostics.csv",
+        "fields": [
+          "initial_seed",
+          "seed"
+        ]
+      },
+      {
+        "file": "reproducibility/archives/Project1_Refreshed_Gate_162422.zip::run_20261108_162422/paired_development_differences.csv",
+        "fields": [
+          "initial_seed",
+          "seed"
+        ]
+      },
+      {
+        "file": "reproducibility/archives/Project1_Refreshed_Gate_162422.zip::run_20261108_162422/period_log.csv",
+        "fields": [
+          "seed",
+          "initial_seed"
+        ]
+      },
+      {
+        "file": "reproducibility/archives/Project1_Refreshed_Gate_162422.zip::run_20261108_162422/review_diagnostics.csv",
+        "fields": [
+          "initial_seed",
+          "seed"
+        ]
+      },
+      {
+        "file": "reproducibility/archives/Project1_Refreshed_Gate_162422.zip::run_20261108_162422/run_outcomes.csv",
+        "fields": [
+          "initial_seed",
+          "seed"
+        ]
+      },
+      {
+        "file": "reproducibility/archives/Project1_Review_Spacing_072712.zip::run_20261103_072712/benchmarks.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "reproducibility/archives/Project1_Review_Spacing_072712.zip::run_20261103_072712/period_log.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "reproducibility/archives/Project1_Review_Spacing_072712.zip::run_20261103_072712/run_results.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "reproducibility/archives/Project1_Schedule_Study_054710.zip::run_20261102_054710/benchmarks.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "reproducibility/archives/Project1_Schedule_Study_054710.zip::run_20261102_054710/period_log.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "reproducibility/archives/Project1_Schedule_Study_054710.zip::run_20261102_054710/run_results.csv",
+        "fields": [
+          "seed"
+        ]
+      },
+      {
+        "file": "reproducibility/archives/Project1_Sensitivity_Development_102857.zip::run_20261106_102857_143041/benchmarks.csv",
+        "fields": [
+          "seed",
+          "initial_seed"
+        ]
+      },
+      {
+        "file": "reproducibility/archives/Project1_Sensitivity_Development_102857.zip::run_20261106_102857_143041/heldout_null_1042.csv",
+        "fields": [
+          "seed",
+          "initial_seed"
+        ]
+      },
+      {
+        "file": "reproducibility/archives/Project1_Sensitivity_Development_102857.zip::run_20261106_102857_143041/heldout_null_2042.csv",
+        "fields": [
+          "seed",
+          "initial_seed"
+        ]
+      },
+      {
+        "file": "reproducibility/archives/Project1_Sensitivity_Development_102857.zip::run_20261106_102857_143041/heldout_null_42.csv",
+        "fields": [
+          "seed",
+          "initial_seed"
+        ]
+      },
+      {
+        "file": "reproducibility/archives/Project1_Sensitivity_Development_102857.zip::run_20261106_102857_143041/paired_development_contrasts.csv",
+        "fields": [
+          "initial_seed",
+          "seed"
+        ]
+      },
+      {
+        "file": "reproducibility/archives/Project1_Sensitivity_Development_102857.zip::run_20261106_102857_143041/period_log.csv",
+        "fields": [
+          "seed",
+          "initial_seed"
+        ]
+      },
+      {
+        "file": "reproducibility/archives/Project1_Sensitivity_Development_102857.zip::run_20261106_102857_143041/run_results.csv",
+        "fields": [
+          "seed",
+          "initial_seed"
+        ]
+      },
+      {
+        "file": "reproducibility/archives/Project1_Sensitivity_Development_102857.zip::run_20261106_102857_143041/summary.csv",
+        "fields": [
+          "initial_seed"
+        ]
+      }
+    ],
+    "collisions": []
+  }
+}

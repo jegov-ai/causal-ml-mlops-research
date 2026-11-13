@@ -1,0 +1,18 @@
+{
+  "mode": "pilot",
+  "independent_master_seeds": 3,
+  "primary_mean": 0.0,
+  "negative_favors": "refreshed",
+  "protocol_primary": {
+    "current_conditions": [
+      "response_shift",
+      "opposing_shift"
+    ],
+    "future_profile": "gradual_continue",
+    "delay_periods": 1
+  },
+  "interpretation": "Fixed synthetic setting only; no safety, equivalence or universal superiority claim.",
+  "bootstrap_interval": null,
+  "monte_carlo_se": null,
+  "inference": "Engineering pilot only; no inferential interval; excluded from validation."
+}

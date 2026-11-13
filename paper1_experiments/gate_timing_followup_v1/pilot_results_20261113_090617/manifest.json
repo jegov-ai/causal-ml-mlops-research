@@ -1,0 +1,52 @@
+{
+  "status": "complete",
+  "mode": "pilot",
+  "seeds": [
+    609900,
+    609901,
+    609902
+  ],
+  "completed_seeds": [
+    609900,
+    609901,
+    609902
+  ],
+  "provenance": {
+    "commit": "99556c9bb56dbf8c239b04dc8de05e0e090f50ed",
+    "hashes": {
+      "paper1_experiments/gate_timing_followup_v1/run_gate_timing_followup.py": "44dc217718ec8e902677dc12d9d9b4860af22b616a93166f53fe77199b53f2b0",
+      "paper1_experiments/gate_timing_followup_v1/gate_timing_protocol_v1.json": "9f6b501bae0b83a28a7884b581a5ed20afded48a7646560a1dea70b4d6685816",
+      ".gitignore": "a5a98e597733a97bd71e3757b2a714ed8393e82a3a587c3d4602be531fdf5222"
+    },
+    "versions": {
+      "python": "3.12.10",
+      "numpy": "2.5.4",
+      "pandas": "3.1.0",
+      "sklearn": "1.9.1"
+    }
+  },
+  "protocol_sha256": "c8ab8a4f0745acb7a93aaee3cfd42aede6e5f8ef4e8537fae878ed47eff3c89c",
+  "estimator_parameters": {
+    "n_estimators": 100,
+    "criterion": "squared_error",
+    "max_depth": null,
+    "min_samples_split": 2,
+    "min_samples_leaf": 5,
+    "min_weight_fraction_leaf": 0.0,
+    "max_features": 1.0,
+    "max_leaf_nodes": null,
+    "min_impurity_decrease": 0.0,
+    "bootstrap": true,
+    "oob_score": false,
+    "n_jobs": 1,
+    "verbose": 0,
+    "warm_start": false,
+    "ccp_alpha": 0.0,
+    "max_samples": null,
+    "monotonic_cst": null,
+    "random_state": "Declared SeedSequence child seed for each fitted arm"
+  },
+  "audit_scope": "Runtime invariants and saved data only; no independent model refits.",
+  "pilot_purpose": "Engineering, invariants and measured runtime only. Keep allocation/settings fixed; no outcome-driven redesign or pooling with validation.",
+  "runtime_seconds": 12.05777890002355
+}
