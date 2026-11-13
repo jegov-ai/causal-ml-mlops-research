@@ -1,0 +1,99 @@
+{
+  "status": "exposed_three_date_development_pilot_not_independent_validation",
+  "dataset": "KuaiRand-Pure",
+  "provider": "https://zenodo.org/records/10439422",
+  "citation": "Gao et al. (2022), KuaiRand, CIKM, doi:10.1145/3511808.3557624",
+  "licence": "CC BY-SA 4.0; archive LICENSE retained with raw input",
+  "archive_md5": "0820331067a3784d9691136f772b35a7",
+  "source": "random_interventions_only",
+  "tab": 1,
+  "groups_in_order": [
+    "short",
+    "long",
+    "unknown"
+  ],
+  "catalogue_counts": [
+    1743,
+    5601,
+    239
+  ],
+  "short_definition": "finite catalogue video_duration > 0 and <= 30000 milliseconds",
+  "long_definition": "finite catalogue video_duration > 30000 milliseconds",
+  "unknown_definition": "missing, nonnumeric, nonfinite or nonpositive catalogue duration",
+  "group_logging_probabilities": [
+    0.22985625741790847,
+    0.7386258736647765,
+    0.03151786891731505
+  ],
+  "target_policy": "choose one duration group; sample a video uniformly within its fixed catalogue group",
+  "unknown_items_retained": true,
+  "clock": "time_ms explicitly decoded as Unix milliseconds; calendar UTC+08:00",
+  "source_date_field_not_used_for_splits": true,
+  "timestamp_mismatch_cause": "not established; raw date field and mismatch flag retained",
+  "outcome": "long_view (binary)",
+  "development_aggregate_outcomes_already_inspected": true,
+  "reserved_outcomes_not_analysed": true,
+  "intervals": {
+    "initial_training": [
+      "2022-04-22T00:00:00+08:00",
+      "2022-04-24T00:00:00+08:00"
+    ],
+    "candidate_training": [
+      "2022-04-23T12:00:00+08:00",
+      "2022-04-24T12:00:00+08:00"
+    ],
+    "gate_check": [
+      "2022-04-24T12:00:00+08:00",
+      "2022-04-24T18:00:00+08:00"
+    ],
+    "subsequent_evaluation": [
+      "2022-04-24T18:00:00+08:00",
+      "2022-04-25T00:00:00+08:00"
+    ]
+  },
+  "candidate_uses_rolling_24_hours": true,
+  "training_partitions_overlap_each_other_but_not_gate_or_evaluation": true,
+  "difference_from_ZOZO": "duration-group policies and rolling-24h candidate training; not identical item-ranking replication",
+  "features": [
+    "categorical user_id",
+    "categorical duration group",
+    "user_id by group",
+    "six-hour clock bin by group",
+    "day-of-week by group"
+  ],
+  "excluded_features": [
+    "all released aggregate user/video statistics",
+    "current/future feedback",
+    "source date field",
+    "normal recommendation logs"
+  ],
+  "model": {
+    "solver": "liblinear",
+    "C": 0.1,
+    "tol": 1e-06,
+    "max_iter": 500,
+    "random_state": 42,
+    "class_weight": null
+  },
+  "preprocessing": "training-only sparse DictVectorizer and MaxAbsScaler",
+  "gate_rule": "paired DR gain minus 1.96 row SE strictly positive; zero-match check on either compared policy",
+  "frozen_gate_q": "initial model",
+  "refreshed_gate_q": "candidate model",
+  "separate_gate_selection": true,
+  "evaluation_common_q": "candidate model for every policy",
+  "weight_clipping": null,
+  "tie_break": "first in short,long,unknown order",
+  "estimators": [
+    "DR",
+    "IPS"
+  ],
+  "inference": "descriptive development results only; no inferential claims",
+  "limitations": [
+    "Published cohort selected to have at least ten random exposures; no unrestricted population claim.",
+    "Conditional random-insertion group probabilities, not propensities for ordinary recommendations.",
+    "Repeated-user dependence is not represented by row standard errors.",
+    "Policies are evaluated on logged contexts; no policy-induced feedback or whole-feed intervention identified.",
+    "One development review cannot establish superiority or sequential safety.",
+    "Long-view is an engagement metric, not measured profit or individual causal truth."
+  ]
+}
