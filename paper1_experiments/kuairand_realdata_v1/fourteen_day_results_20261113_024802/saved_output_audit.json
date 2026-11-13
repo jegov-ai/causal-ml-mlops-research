@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "run_id": "20261113T024802Z_7e829973",
+  "mode": "saved_score_and_summary_audit",
+  "checked": [
+    "43 recorded window boundaries and counts",
+    "28 gate rules and incumbent carry-forward decisions",
+    "112 policy evaluation rows and 364 daily paired contrasts",
+    "all 14 dates equally weighted",
+    "1000 paired within-date time-block resamples",
+    "all saved gate/evaluation score arrays and weight diagnostics",
+    "saved action identities where independently comparable",
+    "reconstructed per-user and per-time-block aggregates",
+    "1000 paired user-cluster resamples across dates",
+    "explicit millisecond timestamp decoding",
+    "source snapshot and protocol hashes"
+  ],
+  "models_independently_refitted": false,
+  "raw_input_rows_independently_reloaded": false,
+  "all_incumbent_model_predictions_independently_reproduced": false,
+  "inference_scope": "Conditional saved-output arithmetic audit; no population-equivalence, safety or novelty certificate.",
+  "audit_source_sha256_LF_normalized": "b493016e4df032d4657f983b2843fb1b8c0df267137ec1b4ec2ab184115f20fe"
+}
