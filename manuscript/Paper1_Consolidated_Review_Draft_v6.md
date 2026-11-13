@@ -6,7 +6,7 @@ Author: Jegan Govinda (Jegov)
 Consolidated review draft v6 — integrated update, 13 November 2026 (Malaysia)
 Original consolidated version: 3 November 2026. The working title and manuscript identity are retained.
 
-**Draft status:** Integrated manuscript for internal and supervisor review. This update retains the two earlier 100-seed studies, restores the subsequent benchmark, model/onset and gate-development findings, and adds the completed independent-stream-seed synthetic gate validation and the prospectively specified five-day ZOZO gate case study. Earlier null and adverse results remain part of the evidence. The literature assessment is inherited from the earlier draft; this integration is not a new comprehensive novelty audit or a submission-readiness assessment.
+**Draft status:** Integrated manuscript for internal and supervisor review. This update retains the two earlier 100-seed studies, restores the subsequent benchmark, model/onset and gate-development findings, and adds the completed independent-stream-seed synthetic gate validation and the prospectively specified five-day ZOZO gate case study. Earlier null and adverse results remain part of the evidence. The earlier literature assessment is retained and supplemented by the explicitly limited primary-source check in Section 2.7; this is not a new comprehensive novelty audit or a submission-readiness assessment.
 
 **Scope of the title:** Decision robustness is measured by oracle-relative treatment-policy opportunity loss in simulation and by estimated click-policy value in a separate real-log case study. Operational constraints concern review caps, review timing and update acceptance. The MLOps scope is the monitoring-to-review-to-update component. The ZOZO experiment uses fixed daily reviews and tests the gate comparison alone; it does not validate M0/M1/FULL monitoring, identify a true shift onset, measure oracle regret or demonstrate production safety.
 
@@ -45,6 +45,17 @@ The intended contribution is a reproducible, controlled empirical evaluation of 
 The contribution and its limits require further assessment against the closest literature. In particular, the complete CausalStream and OnlineCML manuscripts were unavailable during the audit, and full overlap remains unresolved. The study is therefore presented as exploratory evidence with a provisional research-gap assessment, subject to supervisor review and final manuscript scope alignment.
 
 The later studies ask whether changing only the outcome predictions used by the held-out acceptance gate improves downstream loss, and whether that gate comparison changes selected policies in real chronological recommendation logs. The synthetic validation targets the prespecified, equally weighted shifted design conditional on three fixed initial fits. The real-log study estimates click-policy values under fixed daily reviews and has a distinct endpoint. Neither study replaces the earlier monitoring ablation or justifies pooling unlike outcomes.
+
+The integrated questions and their corresponding evidence are:
+
+| Question | Endpoint and evidence | Observed answer |
+| --- | --- | --- |
+| RQ1: Do subgroup-effect and assignment-contrast additions improve decisions beyond M1 under common adaptation procedures? | Cumulative oracle-relative loss in the original ablation and separate calendar seed set | No main-ablation improvement; occasional adverse additional-signal outcomes |
+| RQ2: How do alert-triggered reviews compare with the selected fixed calendars at common review caps? | Paired cumulative oracle-relative loss and actual review use | Scenario- and calendar-dependent differences; not universal calendar inferiority |
+| RQ3: Does refreshing only the gate outcome predictions reduce M1 loss in the fixed shifted synthetic design? | Prespecified independent-stream-seed balanced mean-window contrast, Section 3.12 | Mean difference −0.054422; treat-all remained better on the design average |
+| RQ4: Does that gate comparison change selected policies and estimated values in the five-date real-log case study? | Daily decisions and paired evening click-value estimates, Section 3.13 | Both gates retained the initial policy; exact observed path-value difference of zero |
+
+RQ1 and RQ2 retain the original study questions. RQ3 is the later prospectively specified synthetic validation target, and RQ4 is the exploratory external gate question. This mapping does not retroactively designate the development or secondary analyses as confirmatory. The contribution combines an incremental-monitoring evaluation, a controlled gate-input comparison with new-seed validation, and a bounded real-log check. Positive evidence for RQ3 is not presented as positive evidence for RQ1 or RQ4.
 
 | Evidence stage | Independent or temporal allocation | Main purpose and boundary |
 | --- | --- | --- |
@@ -88,7 +99,7 @@ The candidate gap concerns the incremental decision value of monitoring informat
 
 A richer monitoring signal can change an alert without changing a treatment decision. Its downstream value depends on whether a review occurs, whether the candidate policy passes the acceptance gate and whether sufficient future decision opportunities remain. Finite review caps can also make early alerts costly by consuming capacity before later changes.
 
-Our study examines these relationships through two completed exploratory comparisons:
+The original studies examine these relationships through two completed exploratory comparisons:
 
 1. A signal ablation separating subgroup treatment-effect statistics from a between-group treatment-assignment-rate contrast.
 2. A comparison of alert-triggered consecutive reviews with prospectively specified fixed review calendars.
@@ -110,7 +121,7 @@ Berrevoets et al. (2022, Section 5.3) provide an especially important boundary. 
 | OnlineCML example 08 | ADWIN monitoring of causal pseudo-outcomes and reset-on-drift estimation | Joint signal ablation, frozen calibration and common review/update procedures | Only selected public materials were inspected; complete manuscript overlap is unresolved |
 | CausalStream accessible abstract and first-page preview | Streaming causal inference and incremental doubly robust estimation | The present evaluation's exact joint comparison is not established by the inspected preview | The full manuscript was unavailable; its design elements must not be labelled absent |
 
-The narrow candidate contribution is an empirical attribution of the incremental policy value of subgroup monitoring under a specified common adaptation procedure. The main ablation found no observed incremental benefit, and the fresh schedule study documented occasional adverse outcomes. The contribution is not merely that timing matters, and the results do not establish that subgroup monitoring is generally unhelpful. A defensible novelty argument still requires checking whether the closest literature already provides substantially the same comparison and insight.
+The original narrow candidate contribution is an empirical attribution of the incremental policy value of subgroup monitoring under a specified common adaptation procedure. The integrated manuscript additionally evaluates a controlled gate-input change and its observed external boundary; these are extensions of the evaluation, not inventions of the underlying estimation methods. The main ablation found no observed incremental benefit, and the fresh schedule study documented occasional adverse outcomes. The contribution is not merely that timing matters, and the results do not establish that subgroup monitoring is generally unhelpful. A defensible novelty argument still requires checking whether the closest literature already provides substantially the same comparison and insight.
 
 Evidence scope: these related-work paragraphs retain the targeted inspection recorded in the earlier draft. They are not an exhaustive full-text review of the entire corpus. The new experiments reported below do not establish an unoccupied literature gap.
 
@@ -119,6 +130,18 @@ Evidence scope: these related-work paragraphs retain the targeted inspection rec
 Feng et al. (2024) compare six monitoring procedures combining three monitoring criteria with observational or interventional data. Section 4.1 distinguishes average and subgroup-specific causal positive/negative predictive values, as well as a stronger conditional calibration criterion; Section 4.3 develops monitoring procedures. This directly establishes that contrasting average and subgroup causal monitoring is not, on its own, our contribution. Their monitored quantities are causal classification-performance criteria, whereas ours are aggregate and subgroup treatment-effect pseudo-outcome means combined with conventional statistics. Our completed extensions measure the incremental downstream opportunity loss after common model reviews and held-out update acceptance. This difference supports a bounded empirical extension; it does not establish priority over all literature. Our exogenous-logging simulation also does not solve the performativity problem motivating their study.
 
 A further close preprint is Dasari (2026), When to Retrain: An Empirical Study of Retraining Policies for Streaming ML Under Concept Drift, Budget, and Latency Constraints (arXiv:2608.19488). Only abstract-level evidence was available through the retrieved arXiv search record; direct manuscript and repository access failed in this session. The record identifies an empirical comparison of retraining policies under budgets and latency. This reinforces that a generic calendar-versus-triggered comparison is not a defensible novelty claim. Its full experimental overlap remains unresolved; no full-text exclusion is asserted.
+
+### 2.7 Off-policy evaluation, nonstationarity and policy-improvement overlap
+
+The gate extension also requires comparison with off-policy evaluation literature, beyond causal-monitoring references. A targeted primary proceedings-page and abstract check on 13 November 2026 identified three relevant established strands. These records were checked at that limited level for this revision; they are not newly completed full-text reviews or additions to a claimed systematic-review count.
+
+Dudík et al. (2012) combine importance weighting, doubly robust evaluation and nonstationary policy evaluation for contextual bandits. Thus combining these ingredients, or applying off-policy evaluation to a changing policy, is not an originality claim here. Their use of nonstationary policy evaluation should not automatically be equated with every form of reward-environment drift.
+
+Liu et al. (2023) study contextual-bandit and finite-horizon policy evaluation in nonstationary environments and propose regression-assisted doubly robust estimation when reusing old data. This directly overlaps the broader issue of using historical information for policy evaluation under change. Our implemented comparison retains the existing AIPW/DR form and switches initial versus current-candidate outcome predictions; it neither introduces their estimator nor claims to supersede its estimation or confidence-interval results. No implemented comparison against that estimator has been performed.
+
+Jiang and Li (2016) extend doubly robust off-policy evaluation to reinforcement learning and illustrate its use in safe policy improvement. Consequently, using doubly robust value estimates to inform whether a policy should replace a baseline is established. Our repeated mean-minus-1.96-row-SE rule is a pointwise empirical heuristic, not a new safe-policy-improvement guarantee, and the binary-treatment and contextual-bandit studies here do not implement a general sequential-decision method.
+
+These primary abstracts establish overlap in the ingredients; they do not establish whether those papers evaluated the same frozen-versus-candidate-refreshed gate switch under matched monitoring/review schedules and downstream treatment-policy opportunity loss. That exact comparison remains a full-text verification task rather than a demonstrated literature absence. The strongest supported manuscript statement is the observed empirical attribution under the specified common pipeline, including adverse and null outcomes. Neither a positive synthetic result nor real-data use independently establishes publication-level novelty.
 
 ## 3. Methods
 
@@ -601,6 +624,15 @@ Primary-method and related-work references used in this draft are listed below. 
 - Saito, Y., Aihara, S., Matsutani, M., and Narita, Y. (2021). Open Bandit Dataset and Pipeline: Towards Realistic and Reproducible Off-Policy Evaluation. NeurIPS Datasets and Benchmarks. https://arxiv.org/abs/2008.07146
   Dataset provider: https://huggingface.co/datasets/zozonext/open-bandit ; pinned revision 90a1283aecd19026caf15a0840af1176a41f6a76. Attribution and input hashes are retained in the case-study protocol.
 
+- Dudík, M., Erhan, D., Langford, J., and Li, L. (2012). Sample-efficient Nonstationary Policy Evaluation for Contextual Bandits. Proceedings of the 28th Conference on Uncertainty in Artificial Intelligence, 245–252. https://proceedings.mlr.press/r10/dudik12a.html
+  Integration check: primary proceedings page and abstract; not a new full-text review.
+
+- Liu, V., Chandak, Y., Thomas, P., and White, M. (2023). Asymptotically Unbiased Off-Policy Policy Evaluation when Reusing Old Data in Nonstationary Environments. Proceedings of the 26th International Conference on Artificial Intelligence and Statistics, PMLR 206, 5474–5492. https://proceedings.mlr.press/v206/liu23d.html
+  Integration check: primary proceedings page and abstract; exact gate-comparison overlap unresolved.
+
+- Jiang, N., and Li, L. (2016). Doubly Robust Off-policy Value Evaluation for Reinforcement Learning. Proceedings of the 33rd International Conference on Machine Learning, PMLR 48, 652–661. https://proceedings.mlr.press/v48/jiang16.html
+  Integration check: primary proceedings page and abstract; not an implemented experimental comparator.
+
 ## Appendix A. Review-spacing engineering check
 
 A subsequent engineering check compared consecutive reviews with score-conditioned spaced reviews using only two development seeds per scenario.
@@ -621,6 +653,6 @@ This integrated revision includes the later model/onset development, diagnostic 
 
 The restored development sections refer to the preserved 8 November manuscript and its support records. Synthetic validation evidence comes from `Project1_Gate_Validation_Complete_504254.zip`, containing `run_20261110_131649_504254`, its prospective protocol, source snapshots, checkpoint, seed-level contrasts and full outcome tables. This archive was retrieved and inspected for the integration. The earlier reported 29-check audit is distinguished from the present arithmetic recalculation and from independent model refitting, which was not performed.
 
-ZOZO protocol and source are in `paper1_experiments/zozo_realdata_v1/`; the protocol, runner, results and audit commits are respectively `8bebea1`, `b216bd8`, `9f94b55` and `10134a1` on branch `paper1-realdata-validation`. Small result tables and audit disclosure are in `five_day_results_20261112_235857/`. Raw datasets and detailed score arrays remain outside Git under `data/zozo_open_bandit/`; their exclusion means the repository alone is not a self-contained copy of every raw artifact. The original source/run and microsecond timestamp disclosure must be retained. GitHub preservation of the synthetic validation archive and any untracked local historical results must be verified separately; their presence in ChatGPT or local folders does not establish repository preservation.
+ZOZO protocol and source are in `paper1_experiments/zozo_realdata_v1/`; the protocol, runner, results and audit commits are respectively `8bebea1`, `b216bd8`, `9f94b55` and `10134a1` on branch `paper1-realdata-validation`. Small result tables and audit disclosure are in `five_day_results_20261112_235857/`. Raw datasets and detailed score arrays remain outside Git under `data/zozo_open_bandit/`; their exclusion means the repository alone is not a self-contained copy of every raw artifact. The original source/run and microsecond timestamp disclosure must be retained. The complete synthetic validation run archive is now preserved at `paper1_experiments/Project1_Gate_Validation_Complete_504254.zip`, committed and pushed at `c3d60b8`. Preservation of other untracked local historical results is a separate issue; their presence in local folders alone does not establish repository preservation.
 
 The inherited related-work and novelty-access limitations have not been resolved by adding experiments. Final bibliography verification, supervisor/authorship and affiliation review, venue requirements and any applicable AI-use disclosure remain before submission. No publication acceptance or first-of-its-kind claim follows from the audit results.
