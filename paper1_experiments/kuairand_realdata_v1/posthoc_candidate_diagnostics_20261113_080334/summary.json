@@ -1,0 +1,21 @@
+{
+  "posthoc": true,
+  "dates": 14,
+  "accepted_dates": [
+    "2022-05-01"
+  ],
+  "rejected_dates": 13,
+  "rejected_point_estimate_patterns": {
+    "both_negative": 9,
+    "both_positive": 2,
+    "estimator_sign_disagreement": 2
+  },
+  "rejected_both_positive_dates": [
+    "2022-04-28",
+    "2022-04-30"
+  ],
+  "rejected_both_pointwise_user_intervals_positive_dates": [
+    "2022-04-30"
+  ],
+  "interpretation": "Descriptive diagnostics on exposed data; not true false-rejection rates, operational-constraint effects or alternative-policy value."
+}

@@ -1,0 +1,42 @@
+{
+  "status": "complete",
+  "posthoc": true,
+  "original_run_id": "20261113T024802Z_7e829973",
+  "original_run_commit": "2311e495abff3ce1086c73c886539cb65d65def0",
+  "outcome_exposure": "All original results and preliminary daily contrasts inspected before this diagnostic script.",
+  "models_refitted": false,
+  "raw_logs_reloaded": false,
+  "original_protocol_or_outputs_modified": false,
+  "bootstrap_resamples": 1000,
+  "bootstrap_seed": 42,
+  "intervals": "Per-date exploratory paired user-cluster and separate 30-minute-block percentile intervals.",
+  "limitations": [
+    "Conditional on recorded fitted models, incumbent paths and observed contexts.",
+    "Daily intervals are unadjusted for multiple comparisons and do not constitute prospective validation.",
+    "User and time resampling handle different dependence; neither captures all training, selection and temporal uncertainty.",
+    "Positive later estimates do not identify true missed beneficial updates or prove an earlier gate was overly cautious.",
+    "No counterfactual controller paths, alternative training windows, review schedules or threshold outcomes are simulated.",
+    "Daily gains must not be summed as achievable savings; old incumbents would change under alternative decisions."
+  ],
+  "input_sha256": {
+    "manifest.json": "1c0bd3d1c3d7d9cc62156b2f9c00e86ed00caa736faaff9b5cf361ba67ddd238",
+    "gate_comparison.csv": "89d55c5e50ee885e0ea341e3e363034ba4670dcd81144b773d7c0ebf3e0141e0",
+    "evaluation.csv": "2bdd99e74cf6da0f8875ee0c7cf22c9ecb6cbff295be6dee2c7bb11251414c68",
+    "saved_output_audit.json": "60283ce191c22c4e74401dd8d8db0ad4d66cc1b4c82dd7628e5b31326b06ae13",
+    "2022-04-25_evaluation_scores.npz": "5ce7291f05726d54dc687c1414121c8d5c643a5abb88e94c4a6c6160b070ba6e",
+    "2022-04-26_evaluation_scores.npz": "b1846b062c874b64dcee2152348a31e166943c86627e59a354da207ba72bb554",
+    "2022-04-27_evaluation_scores.npz": "8443e89e97d68b32816b20958d3b4483ec52fc5cce6c574dfc08ceb29e8e266e",
+    "2022-04-28_evaluation_scores.npz": "1f820e0efbc5a4196ceb31824fdc4b477e2546652a3c77249363e646130bbcb3",
+    "2022-04-29_evaluation_scores.npz": "9d47bad91aa41b67ec9588c3042480c95f7e73e1d8762da1a19e2566dc24580b",
+    "2022-04-30_evaluation_scores.npz": "65766f4f68734d675aec926e6a4e670fa3d95d14ae2e7888f92ed9d6b457af26",
+    "2022-05-01_evaluation_scores.npz": "e5f38fe012953cb199e99aef9d298a67caa18b4dc9c1be27a4ceb127f19c6115",
+    "2022-05-02_evaluation_scores.npz": "d9b94bc52e2dc7fb86a05272fdfa95bb9b139a3f740be2076d6822cc496a6668",
+    "2022-05-03_evaluation_scores.npz": "cbea310bf7316c78ae254618c94334cbd4f1f676747b392e333a7016506d8884",
+    "2022-05-04_evaluation_scores.npz": "3dd8e234cfdd59df368463d4e1ff4441809b1b4f05c81ed38f8de1741a9b33cf",
+    "2022-05-05_evaluation_scores.npz": "556f5108f97d12a266fba49a536086dff1395c832b7946167181eb36a0e5ded1",
+    "2022-05-06_evaluation_scores.npz": "0f98580c6cb9b1aaa8fcd44cd12a09108fb5c70b28b8702b38aac46f4440ba38",
+    "2022-05-07_evaluation_scores.npz": "96f2e4ba4cdf3225afc425353480618f3ca7d9f10e26a2243c146c7f40458cef",
+    "2022-05-08_evaluation_scores.npz": "f98aeed7bb9e11856125d9fb83c5f2ea4f5aacad0a60a32553bc93a8c6b125b6"
+  },
+  "diagnostic_source_sha256_LF_normalized": "e36640165fa30e181e1038e729be9cfffdd81096fc5a02cc478e4b74a6cf4291"
+}
