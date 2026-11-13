@@ -1,0 +1,345 @@
+{
+  "date_weighting": "equal across all 14 dates",
+  "dates": [
+    "2022-04-25",
+    "2022-04-26",
+    "2022-04-27",
+    "2022-04-28",
+    "2022-04-29",
+    "2022-04-30",
+    "2022-05-01",
+    "2022-05-02",
+    "2022-05-03",
+    "2022-05-04",
+    "2022-05-05",
+    "2022-05-06",
+    "2022-05-07",
+    "2022-05-08"
+  ],
+  "bootstrap_resamples": 1000,
+  "seed": 42,
+  "user_clusters": 25586,
+  "user_interval_label": "Exploratory user-cluster percentile interval conditional on selected paths",
+  "time_interval_label": "Separate exploratory within-date 30-minute block sensitivity interval",
+  "limitations": [
+    "Neither interval is guaranteed population coverage or sequential safety.",
+    "Both condition on fitted/selected policy paths and observed dates; neither refits models or captures full training/selection uncertainty.",
+    "User resampling does not resolve all common time shocks; within-date time-block resampling does not preserve all repeated-user dependence.",
+    "Fourteen adjacent dates are not fourteen independent deployments or long-term regimes.",
+    "Report both interval types; never select the narrower or more favorable interval."
+  ],
+  "contrasts": {
+    "refreshed_gate_path_minus_frozen_gate_path__dr": {
+      "mean": 0.0,
+      "user_cluster_interval": [
+        0.0,
+        0.0
+      ],
+      "time_block_sensitivity_interval": [
+        0.0,
+        0.0
+      ],
+      "primary": true
+    },
+    "refreshed_gate_path_minus_frozen_gate_path__ips": {
+      "mean": 0.0,
+      "user_cluster_interval": [
+        0.0,
+        0.0
+      ],
+      "time_block_sensitivity_interval": [
+        0.0,
+        0.0
+      ],
+      "primary": false
+    },
+    "frozen_gate_path_minus_initial_no_update__dr": {
+      "mean": 0.001741405730263584,
+      "user_cluster_interval": [
+        0.0007477685911951643,
+        0.002710082093978252
+      ],
+      "time_block_sensitivity_interval": [
+        0.000872247312554161,
+        0.0026223749165738097
+      ],
+      "primary": false
+    },
+    "frozen_gate_path_minus_initial_no_update__ips": {
+      "mean": 0.0018221549517132031,
+      "user_cluster_interval": [
+        0.0007986880207016946,
+        0.002811419315496767
+      ],
+      "time_block_sensitivity_interval": [
+        0.0009041267862648024,
+        0.0027126550876575718
+      ],
+      "primary": false
+    },
+    "frozen_gate_path_minus_always_update_current_candidate__dr": {
+      "mean": 0.0008872156359436068,
+      "user_cluster_interval": [
+        -0.00023637113552297547,
+        0.0019504625404753446
+      ],
+      "time_block_sensitivity_interval": [
+        -0.00041496459586332947,
+        0.002067375481545401
+      ],
+      "primary": false
+    },
+    "frozen_gate_path_minus_always_update_current_candidate__ips": {
+      "mean": 0.0011499292038619768,
+      "user_cluster_interval": [
+        -5.043462547123484e-05,
+        0.002288984236412295
+      ],
+      "time_block_sensitivity_interval": [
+        -0.00017411751322861054,
+        0.0023355759696193036
+      ],
+      "primary": false
+    },
+    "frozen_gate_path_minus_uniform_catalogue__dr": {
+      "mean": 0.010098985918490334,
+      "user_cluster_interval": [
+        0.008462550299319622,
+        0.01163745468810768
+      ],
+      "time_block_sensitivity_interval": [
+        0.00853921930607339,
+        0.011753783619930203
+      ],
+      "primary": false
+    },
+    "frozen_gate_path_minus_uniform_catalogue__ips": {
+      "mean": 0.010678545476360476,
+      "user_cluster_interval": [
+        0.008928844632302316,
+        0.012275977617569345
+      ],
+      "time_block_sensitivity_interval": [
+        0.009057510226401035,
+        0.012439002131201722
+      ],
+      "primary": false
+    },
+    "frozen_gate_path_minus_always_short__dr": {
+      "mean": -0.0005070301060677257,
+      "user_cluster_interval": [
+        -0.0015908276447633943,
+        0.0005148458866510777
+      ],
+      "time_block_sensitivity_interval": [
+        -0.0014581054513027154,
+        0.00045612530984123425
+      ],
+      "primary": false
+    },
+    "frozen_gate_path_minus_always_short__ips": {
+      "mean": -0.0002667371905569626,
+      "user_cluster_interval": [
+        -0.0014862151720682604,
+        0.0008685426022557881
+      ],
+      "time_block_sensitivity_interval": [
+        -0.0012634976892461484,
+        0.000772171199926475
+      ],
+      "primary": false
+    },
+    "frozen_gate_path_minus_always_long__dr": {
+      "mean": 0.010680741891200373,
+      "user_cluster_interval": [
+        0.008592790781697248,
+        0.01263211599668856
+      ],
+      "time_block_sensitivity_interval": [
+        0.00867688630568026,
+        0.012807392238083352
+      ],
+      "primary": false
+    },
+    "frozen_gate_path_minus_always_long__ips": {
+      "mean": 0.011358161955508539,
+      "user_cluster_interval": [
+        0.00913589299224822,
+        0.013304629739293996
+      ],
+      "time_block_sensitivity_interval": [
+        0.009282546179859437,
+        0.01363345400854358
+      ],
+      "primary": false
+    },
+    "frozen_gate_path_minus_always_unknown__dr": {
+      "mean": 0.07381392620157078,
+      "user_cluster_interval": [
+        0.07035760577569293,
+        0.07726876344198023
+      ],
+      "time_block_sensitivity_interval": [
+        0.07073175074501366,
+        0.0768987753242642
+      ],
+      "primary": false
+    },
+    "frozen_gate_path_minus_always_unknown__ips": {
+      "mean": 0.07457434375556482,
+      "user_cluster_interval": [
+        0.07093067742969564,
+        0.07811238749569982
+      ],
+      "time_block_sensitivity_interval": [
+        0.07154206736026875,
+        0.07759474020850485
+      ],
+      "primary": false
+    },
+    "refreshed_gate_path_minus_initial_no_update__dr": {
+      "mean": 0.001741405730263584,
+      "user_cluster_interval": [
+        0.0007477685911951643,
+        0.002710082093978252
+      ],
+      "time_block_sensitivity_interval": [
+        0.000872247312554161,
+        0.0026223749165738097
+      ],
+      "primary": false
+    },
+    "refreshed_gate_path_minus_initial_no_update__ips": {
+      "mean": 0.0018221549517132031,
+      "user_cluster_interval": [
+        0.0007986880207016946,
+        0.002811419315496767
+      ],
+      "time_block_sensitivity_interval": [
+        0.0009041267862648024,
+        0.0027126550876575718
+      ],
+      "primary": false
+    },
+    "refreshed_gate_path_minus_always_update_current_candidate__dr": {
+      "mean": 0.0008872156359436068,
+      "user_cluster_interval": [
+        -0.00023637113552297547,
+        0.0019504625404753446
+      ],
+      "time_block_sensitivity_interval": [
+        -0.00041496459586332947,
+        0.002067375481545401
+      ],
+      "primary": false
+    },
+    "refreshed_gate_path_minus_always_update_current_candidate__ips": {
+      "mean": 0.0011499292038619768,
+      "user_cluster_interval": [
+        -5.043462547123484e-05,
+        0.002288984236412295
+      ],
+      "time_block_sensitivity_interval": [
+        -0.00017411751322861054,
+        0.0023355759696193036
+      ],
+      "primary": false
+    },
+    "refreshed_gate_path_minus_uniform_catalogue__dr": {
+      "mean": 0.010098985918490334,
+      "user_cluster_interval": [
+        0.008462550299319622,
+        0.01163745468810768
+      ],
+      "time_block_sensitivity_interval": [
+        0.00853921930607339,
+        0.011753783619930203
+      ],
+      "primary": false
+    },
+    "refreshed_gate_path_minus_uniform_catalogue__ips": {
+      "mean": 0.010678545476360476,
+      "user_cluster_interval": [
+        0.008928844632302316,
+        0.012275977617569345
+      ],
+      "time_block_sensitivity_interval": [
+        0.009057510226401035,
+        0.012439002131201722
+      ],
+      "primary": false
+    },
+    "refreshed_gate_path_minus_always_short__dr": {
+      "mean": -0.0005070301060677257,
+      "user_cluster_interval": [
+        -0.0015908276447633943,
+        0.0005148458866510777
+      ],
+      "time_block_sensitivity_interval": [
+        -0.0014581054513027154,
+        0.00045612530984123425
+      ],
+      "primary": false
+    },
+    "refreshed_gate_path_minus_always_short__ips": {
+      "mean": -0.0002667371905569626,
+      "user_cluster_interval": [
+        -0.0014862151720682604,
+        0.0008685426022557881
+      ],
+      "time_block_sensitivity_interval": [
+        -0.0012634976892461484,
+        0.000772171199926475
+      ],
+      "primary": false
+    },
+    "refreshed_gate_path_minus_always_long__dr": {
+      "mean": 0.010680741891200373,
+      "user_cluster_interval": [
+        0.008592790781697248,
+        0.01263211599668856
+      ],
+      "time_block_sensitivity_interval": [
+        0.00867688630568026,
+        0.012807392238083352
+      ],
+      "primary": false
+    },
+    "refreshed_gate_path_minus_always_long__ips": {
+      "mean": 0.011358161955508539,
+      "user_cluster_interval": [
+        0.00913589299224822,
+        0.013304629739293996
+      ],
+      "time_block_sensitivity_interval": [
+        0.009282546179859437,
+        0.01363345400854358
+      ],
+      "primary": false
+    },
+    "refreshed_gate_path_minus_always_unknown__dr": {
+      "mean": 0.07381392620157078,
+      "user_cluster_interval": [
+        0.07035760577569293,
+        0.07726876344198023
+      ],
+      "time_block_sensitivity_interval": [
+        0.07073175074501366,
+        0.0768987753242642
+      ],
+      "primary": false
+    },
+    "refreshed_gate_path_minus_always_unknown__ips": {
+      "mean": 0.07457434375556482,
+      "user_cluster_interval": [
+        0.07093067742969564,
+        0.07811238749569982
+      ],
+      "time_block_sensitivity_interval": [
+        0.07154206736026875,
+        0.07759474020850485
+      ],
+      "primary": false
+    }
+  }
+}

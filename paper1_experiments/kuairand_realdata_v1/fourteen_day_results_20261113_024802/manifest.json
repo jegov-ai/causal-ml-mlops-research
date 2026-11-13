@@ -1,0 +1,472 @@
+{
+  "status": "complete",
+  "run_id": "20261113T024802Z_7e829973",
+  "reproduction": false,
+  "archive_sha256": "c814bf6f3624c0cfae83c57de3df26b2ed206e5c57bab4c4dcbfabbabe20cbf0",
+  "timestamp_array_field": "timestamp_ms",
+  "timestamp_array_unit": "ms",
+  "source_sha256_LF_normalized": {
+    "fourteen_day_protocol_v1.json": "95c34d649931628738bffce686cfa789fe7de4785ee38363736a77e823a50406",
+    "run_fourteen_day_study.py": "1f8d25dcf6bc313cc6ab76f5c464d6694de078e5d9bdb6572318b508d6f1260d",
+    "run_kuairand_pilot.py": "a947ed31fd6d586f2921ad93675005e078943e68dad93bd6b230e99070dde3c6",
+    "pilot_settings.json": "ca2cfc3ed9f6b507e3b8524a7b14e36d9a8e6d4059bcc09c3fca640e09038d9b",
+    "feasibility_checkpoint.json": "f91ec338071ad972815c2ad66a61df49260dcf4a11b9673f17bdce19ae731bd3",
+    "development_outcomes.csv": "136da923ad45833f50c4bfaf925f1b2d2f4f356e27ce4f313c36747d534834d4"
+  },
+  "protocol_canonical_sha256": "c277dde946e43957f2c8533a86019d8343459c7e33a802e6a5870d3562d657c3",
+  "versions": {
+    "python": "3.12.10",
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "sklearn": "1.9.1"
+  },
+  "git_commit": "2311e495abff3ce1086c73c886539cb65d65def0",
+  "pilot_source_commit": "b213e6c82f7b42067f3937ca1ce84cd6746e0ce7",
+  "reserved_outcomes_processing_started": true,
+  "windows": [
+    {
+      "date": "development",
+      "part": "initial_training",
+      "records": 120645,
+      "long_views": 10128,
+      "users": 14468,
+      "date_mismatches": 1023,
+      "first_timestamp": "2022-04-22 10:42:12.831000+08:00",
+      "last_timestamp": "2022-04-24 23:59:58.598000+08:00"
+    },
+    {
+      "date": "2022-04-25",
+      "part": "candidate_training",
+      "records": 42432,
+      "long_views": 3359,
+      "users": 9136,
+      "date_mismatches": 331,
+      "first_timestamp": "2022-04-24 12:00:04+08:00",
+      "last_timestamp": "2022-04-25 11:59:59.982000+08:00"
+    },
+    {
+      "date": "2022-04-25",
+      "part": "gate_check",
+      "records": 12074,
+      "long_views": 998,
+      "users": 4036,
+      "date_mismatches": 0,
+      "first_timestamp": "2022-04-25 12:00:01.513000+08:00",
+      "last_timestamp": "2022-04-25 17:59:58.737000+08:00"
+    },
+    {
+      "date": "2022-04-25",
+      "part": "subsequent_evaluation",
+      "records": 15282,
+      "long_views": 1176,
+      "users": 5058,
+      "date_mismatches": 285,
+      "first_timestamp": "2022-04-25 18:00:01.330000+08:00",
+      "last_timestamp": "2022-04-25 23:59:58.264000+08:00"
+    },
+    {
+      "date": "2022-04-26",
+      "part": "candidate_training",
+      "records": 41447,
+      "long_views": 3258,
+      "users": 8976,
+      "date_mismatches": 285,
+      "first_timestamp": "2022-04-25 12:00:01.513000+08:00",
+      "last_timestamp": "2022-04-26 11:59:56.431000+08:00"
+    },
+    {
+      "date": "2022-04-26",
+      "part": "gate_check",
+      "records": 12816,
+      "long_views": 990,
+      "users": 4327,
+      "date_mismatches": 0,
+      "first_timestamp": "2022-04-26 12:00:00.368000+08:00",
+      "last_timestamp": "2022-04-26 17:59:59.660000+08:00"
+    },
+    {
+      "date": "2022-04-26",
+      "part": "subsequent_evaluation",
+      "records": 15111,
+      "long_views": 1199,
+      "users": 4840,
+      "date_mismatches": 276,
+      "first_timestamp": "2022-04-26 18:00:03.871000+08:00",
+      "last_timestamp": "2022-04-26 23:59:54.528000+08:00"
+    },
+    {
+      "date": "2022-04-27",
+      "part": "candidate_training",
+      "records": 42041,
+      "long_views": 3287,
+      "users": 8972,
+      "date_mismatches": 276,
+      "first_timestamp": "2022-04-26 12:00:00.368000+08:00",
+      "last_timestamp": "2022-04-27 11:59:57.982000+08:00"
+    },
+    {
+      "date": "2022-04-27",
+      "part": "gate_check",
+      "records": 11927,
+      "long_views": 1007,
+      "users": 3955,
+      "date_mismatches": 0,
+      "first_timestamp": "2022-04-27 12:00:00.350000+08:00",
+      "last_timestamp": "2022-04-27 17:59:57.883000+08:00"
+    },
+    {
+      "date": "2022-04-27",
+      "part": "subsequent_evaluation",
+      "records": 15177,
+      "long_views": 1245,
+      "users": 5057,
+      "date_mismatches": 281,
+      "first_timestamp": "2022-04-27 18:00:00.756000+08:00",
+      "last_timestamp": "2022-04-27 23:59:57.549000+08:00"
+    },
+    {
+      "date": "2022-04-28",
+      "part": "candidate_training",
+      "records": 41109,
+      "long_views": 3341,
+      "users": 8887,
+      "date_mismatches": 281,
+      "first_timestamp": "2022-04-27 12:00:00.350000+08:00",
+      "last_timestamp": "2022-04-28 11:59:58.922000+08:00"
+    },
+    {
+      "date": "2022-04-28",
+      "part": "gate_check",
+      "records": 11419,
+      "long_views": 958,
+      "users": 3765,
+      "date_mismatches": 0,
+      "first_timestamp": "2022-04-28 12:00:00.552000+08:00",
+      "last_timestamp": "2022-04-28 17:59:59.492000+08:00"
+    },
+    {
+      "date": "2022-04-28",
+      "part": "subsequent_evaluation",
+      "records": 14896,
+      "long_views": 1160,
+      "users": 5072,
+      "date_mismatches": 286,
+      "first_timestamp": "2022-04-28 18:00:00.037000+08:00",
+      "last_timestamp": "2022-04-28 23:59:57.941000+08:00"
+    },
+    {
+      "date": "2022-04-29",
+      "part": "candidate_training",
+      "records": 40523,
+      "long_views": 3278,
+      "users": 8949,
+      "date_mismatches": 286,
+      "first_timestamp": "2022-04-28 12:00:00.552000+08:00",
+      "last_timestamp": "2022-04-29 11:59:58.128000+08:00"
+    },
+    {
+      "date": "2022-04-29",
+      "part": "gate_check",
+      "records": 12946,
+      "long_views": 1091,
+      "users": 4543,
+      "date_mismatches": 0,
+      "first_timestamp": "2022-04-29 12:00:00.069000+08:00",
+      "last_timestamp": "2022-04-29 17:59:55.237000+08:00"
+    },
+    {
+      "date": "2022-04-29",
+      "part": "subsequent_evaluation",
+      "records": 22197,
+      "long_views": 1718,
+      "users": 7757,
+      "date_mismatches": 476,
+      "first_timestamp": "2022-04-29 18:00:00.404000+08:00",
+      "last_timestamp": "2022-04-29 23:59:57.696000+08:00"
+    },
+    {
+      "date": "2022-04-30",
+      "part": "candidate_training",
+      "records": 57502,
+      "long_views": 4709,
+      "users": 13046,
+      "date_mismatches": 476,
+      "first_timestamp": "2022-04-29 12:00:00.069000+08:00",
+      "last_timestamp": "2022-04-30 11:59:57.288000+08:00"
+    },
+    {
+      "date": "2022-04-30",
+      "part": "gate_check",
+      "records": 17864,
+      "long_views": 1582,
+      "users": 6533,
+      "date_mismatches": 0,
+      "first_timestamp": "2022-04-30 12:00:00.570000+08:00",
+      "last_timestamp": "2022-04-30 17:59:57.864000+08:00"
+    },
+    {
+      "date": "2022-04-30",
+      "part": "subsequent_evaluation",
+      "records": 21967,
+      "long_views": 1647,
+      "users": 7800,
+      "date_mismatches": 409,
+      "first_timestamp": "2022-04-30 18:00:00.049000+08:00",
+      "last_timestamp": "2022-04-30 23:59:59.229000+08:00"
+    },
+    {
+      "date": "2022-05-01",
+      "part": "candidate_training",
+      "records": 61946,
+      "long_views": 5086,
+      "users": 13805,
+      "date_mismatches": 409,
+      "first_timestamp": "2022-04-30 12:00:00.570000+08:00",
+      "last_timestamp": "2022-05-01 11:59:58.833000+08:00"
+    },
+    {
+      "date": "2022-05-01",
+      "part": "gate_check",
+      "records": 18468,
+      "long_views": 1515,
+      "users": 6569,
+      "date_mismatches": 0,
+      "first_timestamp": "2022-05-01 12:00:03.614000+08:00",
+      "last_timestamp": "2022-05-01 17:59:59.758000+08:00"
+    },
+    {
+      "date": "2022-05-01",
+      "part": "subsequent_evaluation",
+      "records": 21109,
+      "long_views": 1639,
+      "users": 7690,
+      "date_mismatches": 478,
+      "first_timestamp": "2022-05-01 18:00:00.315000+08:00",
+      "last_timestamp": "2022-05-01 23:59:59.646000+08:00"
+    },
+    {
+      "date": "2022-05-02",
+      "part": "candidate_training",
+      "records": 60012,
+      "long_views": 4838,
+      "users": 13674,
+      "date_mismatches": 478,
+      "first_timestamp": "2022-05-01 12:00:03.614000+08:00",
+      "last_timestamp": "2022-05-02 11:59:58.385000+08:00"
+    },
+    {
+      "date": "2022-05-02",
+      "part": "gate_check",
+      "records": 29383,
+      "long_views": 2505,
+      "users": 8880,
+      "date_mismatches": 0,
+      "first_timestamp": "2022-05-02 12:00:00.051000+08:00",
+      "last_timestamp": "2022-05-02 17:59:59.809000+08:00"
+    },
+    {
+      "date": "2022-05-02",
+      "part": "subsequent_evaluation",
+      "records": 35748,
+      "long_views": 3019,
+      "users": 10503,
+      "date_mismatches": 774,
+      "first_timestamp": "2022-05-02 18:00:00.368000+08:00",
+      "last_timestamp": "2022-05-02 23:59:59.859000+08:00"
+    },
+    {
+      "date": "2022-05-03",
+      "part": "candidate_training",
+      "records": 104138,
+      "long_views": 9109,
+      "users": 17662,
+      "date_mismatches": 774,
+      "first_timestamp": "2022-05-02 12:00:00.051000+08:00",
+      "last_timestamp": "2022-05-03 11:59:59.817000+08:00"
+    },
+    {
+      "date": "2022-05-03",
+      "part": "gate_check",
+      "records": 34492,
+      "long_views": 3141,
+      "users": 9756,
+      "date_mismatches": 0,
+      "first_timestamp": "2022-05-03 12:00:00.656000+08:00",
+      "last_timestamp": "2022-05-03 17:59:59.828000+08:00"
+    },
+    {
+      "date": "2022-05-03",
+      "part": "subsequent_evaluation",
+      "records": 35794,
+      "long_views": 3050,
+      "users": 10615,
+      "date_mismatches": 849,
+      "first_timestamp": "2022-05-03 18:00:00.044000+08:00",
+      "last_timestamp": "2022-05-03 23:59:59.455000+08:00"
+    },
+    {
+      "date": "2022-05-04",
+      "part": "candidate_training",
+      "records": 110847,
+      "long_views": 9715,
+      "users": 18083,
+      "date_mismatches": 849,
+      "first_timestamp": "2022-05-03 12:00:00.656000+08:00",
+      "last_timestamp": "2022-05-04 11:59:59.966000+08:00"
+    },
+    {
+      "date": "2022-05-04",
+      "part": "gate_check",
+      "records": 33998,
+      "long_views": 3156,
+      "users": 9787,
+      "date_mismatches": 0,
+      "first_timestamp": "2022-05-04 12:00:00.250000+08:00",
+      "last_timestamp": "2022-05-04 17:59:59.575000+08:00"
+    },
+    {
+      "date": "2022-05-04",
+      "part": "subsequent_evaluation",
+      "records": 33335,
+      "long_views": 2824,
+      "users": 9999,
+      "date_mismatches": 645,
+      "first_timestamp": "2022-05-04 18:00:00.334000+08:00",
+      "last_timestamp": "2022-05-04 23:59:59.193000+08:00"
+    },
+    {
+      "date": "2022-05-05",
+      "part": "candidate_training",
+      "records": 101319,
+      "long_views": 8882,
+      "users": 17312,
+      "date_mismatches": 645,
+      "first_timestamp": "2022-05-04 12:00:00.250000+08:00",
+      "last_timestamp": "2022-05-05 11:59:59.744000+08:00"
+    },
+    {
+      "date": "2022-05-05",
+      "part": "gate_check",
+      "records": 27980,
+      "long_views": 2444,
+      "users": 8308,
+      "date_mismatches": 0,
+      "first_timestamp": "2022-05-05 12:00:00.437000+08:00",
+      "last_timestamp": "2022-05-05 17:59:59.945000+08:00"
+    },
+    {
+      "date": "2022-05-05",
+      "part": "subsequent_evaluation",
+      "records": 34934,
+      "long_views": 3114,
+      "users": 9749,
+      "date_mismatches": 766,
+      "first_timestamp": "2022-05-05 18:00:00.046000+08:00",
+      "last_timestamp": "2022-05-05 23:59:59.782000+08:00"
+    },
+    {
+      "date": "2022-05-06",
+      "part": "candidate_training",
+      "records": 96852,
+      "long_views": 8696,
+      "users": 16252,
+      "date_mismatches": 766,
+      "first_timestamp": "2022-05-05 12:00:00.437000+08:00",
+      "last_timestamp": "2022-05-06 11:59:59.815000+08:00"
+    },
+    {
+      "date": "2022-05-06",
+      "part": "gate_check",
+      "records": 31482,
+      "long_views": 2952,
+      "users": 8849,
+      "date_mismatches": 0,
+      "first_timestamp": "2022-05-06 12:00:00.197000+08:00",
+      "last_timestamp": "2022-05-06 17:59:59.923000+08:00"
+    },
+    {
+      "date": "2022-05-06",
+      "part": "subsequent_evaluation",
+      "records": 37503,
+      "long_views": 3298,
+      "users": 10266,
+      "date_mismatches": 953,
+      "first_timestamp": "2022-05-06 18:00:00.133000+08:00",
+      "last_timestamp": "2022-05-06 23:59:59.486000+08:00"
+    },
+    {
+      "date": "2022-05-07",
+      "part": "candidate_training",
+      "records": 104813,
+      "long_views": 9542,
+      "users": 16737,
+      "date_mismatches": 953,
+      "first_timestamp": "2022-05-06 12:00:00.197000+08:00",
+      "last_timestamp": "2022-05-07 11:59:59.477000+08:00"
+    },
+    {
+      "date": "2022-05-07",
+      "part": "gate_check",
+      "records": 32241,
+      "long_views": 2853,
+      "users": 9119,
+      "date_mismatches": 0,
+      "first_timestamp": "2022-05-07 12:00:00.509000+08:00",
+      "last_timestamp": "2022-05-07 17:59:59.974000+08:00"
+    },
+    {
+      "date": "2022-05-07",
+      "part": "subsequent_evaluation",
+      "records": 35506,
+      "long_views": 2951,
+      "users": 10309,
+      "date_mismatches": 1063,
+      "first_timestamp": "2022-05-07 18:00:00.533000+08:00",
+      "last_timestamp": "2022-05-07 23:59:59.971000+08:00"
+    },
+    {
+      "date": "2022-05-08",
+      "part": "candidate_training",
+      "records": 110263,
+      "long_views": 9648,
+      "users": 17484,
+      "date_mismatches": 1063,
+      "first_timestamp": "2022-05-07 12:00:00.509000+08:00",
+      "last_timestamp": "2022-05-08 11:59:59.045000+08:00"
+    },
+    {
+      "date": "2022-05-08",
+      "part": "gate_check",
+      "records": 36172,
+      "long_views": 3172,
+      "users": 9743,
+      "date_mismatches": 0,
+      "first_timestamp": "2022-05-08 12:00:00.008000+08:00",
+      "last_timestamp": "2022-05-08 17:59:59.633000+08:00"
+    },
+    {
+      "date": "2022-05-08",
+      "part": "subsequent_evaluation",
+      "records": 34538,
+      "long_views": 2795,
+      "users": 9889,
+      "date_mismatches": 0,
+      "first_timestamp": "2022-05-08 18:00:00.214000+08:00",
+      "last_timestamp": "2022-05-08 23:52:08.763000+08:00"
+    }
+  ],
+  "inference_scope": [
+    "Neither interval is guaranteed population coverage or sequential safety.",
+    "Both condition on fitted/selected policy paths and observed dates; neither refits models or captures full training/selection uncertainty.",
+    "User resampling does not resolve all common time shocks; within-date time-block resampling does not preserve all repeated-user dependence.",
+    "Fourteen adjacent dates are not fourteen independent deployments or long-term regimes.",
+    "Report both interval types; never select the narrower or more favorable interval."
+  ],
+  "stage": "complete",
+  "elapsed_seconds": 452.92093260004185,
+  "final_selected_models": {
+    "frozen": "2022-05-01_candidate",
+    "refreshed": "2022-05-01_candidate"
+  },
+  "evaluation_user_clusters": 25586
+}
