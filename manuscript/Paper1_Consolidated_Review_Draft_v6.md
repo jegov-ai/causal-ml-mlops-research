@@ -3,23 +3,24 @@
 **Preferred working title, subject to supervisor review.** This supersedes the earlier manuscript working title, “Evaluation of Causal Machine Learning Integration into MLOps Pipelines for Explainable and Robust Decision Making,” for the present draft. It does not represent formal supervisor approval or a change to the thesis or Paper 2 title.
 
 Author: Jegan Govinda (Jegov)  
-Consolidated review draft v6 — 3 November 2026 (Malaysia)
+Consolidated review draft v6 — integrated update, 13 November 2026 (Malaysia)
+Original consolidated version: 3 November 2026. The working title and manuscript identity are retained.
 
-**Draft status:** Consolidated manuscript for internal and supervisor review; not submission-ready. The targeted novelty assessment and supporting results are supplied with this draft. Full-manuscript access gaps and external-validity limitations remain. This draft reports the two completed extensions and separately preserves the engineering check; it does not replace historical Project 1 studies.
+**Draft status:** Integrated manuscript for internal and supervisor review. This update retains the two earlier 100-seed studies, restores the subsequent benchmark, model/onset and gate-development findings, and adds the completed independent-stream-seed synthetic gate validation and the prospectively specified five-day ZOZO gate case study. Earlier null and adverse results remain part of the evidence. The literature assessment is inherited from the earlier draft; this integration is not a new comprehensive novelty audit or a submission-readiness assessment.
 
-**Scope of the title:** Decision robustness is evaluated through cumulative treatment-policy opportunity loss under the specified synthetic distribution shifts; operational constraints refer to review caps, review timing and the update-acceptance procedure. The MLOps scope is the monitoring-to-review-to-update component of the prototype. The completed extensions compare additions to a baseline that already includes aggregate causal information; they do not establish causal-versus-conventional superiority, explanation-stability benefits or end-to-end production validation.
+**Scope of the title:** Decision robustness is measured by oracle-relative treatment-policy opportunity loss in simulation and by estimated click-policy value in a separate real-log case study. Operational constraints concern review caps, review timing and update acceptance. The MLOps scope is the monitoring-to-review-to-update component. The ZOZO experiment uses fixed daily reviews and tests the gate comparison alone; it does not validate M0/M1/FULL monitoring, identify a true shift onset, measure oracle regret or demonstrate production safety.
 
 ## Abstract
 
-Monitoring a changing environment does not necessarily improve the decisions made by a machine-learning system. Additional signals may identify change without producing a useful model update, particularly when review opportunities are limited. This study evaluates the incremental decision value of causal monitoring signals and the timing of model reviews in a controlled synthetic treatment-policy benchmark.
+Monitoring change can alter alerts without improving subsequent decisions. We evaluate monitoring information, review timing and candidate-update acceptance in a synthetic treatment-policy benchmark, followed by a separate real-log gate case study. Two earlier exploratory studies each used 100 paired stream seeds per scenario, five scenarios and review caps of 2, 4 and 8. Additional subgroup-effect and assignment-contrast signals produced no observed incremental regret reduction in the main ablation; the calendar comparison retained occasional adverse subgroup-monitoring outcomes. Benefits against selected calendars depended on the scenario, and simple policy benchmarks qualified those benefits.
 
-Two prospectively specified exploratory experiments used 12 windows of 1,000 customers, five distributional scenarios and review caps of 2, 4 and 8. Each experiment evaluated 100 paired seeds per scenario, conditional on one initial random-forest T-learner. The first separated subgroup treatment-effect signals and a between-group treatment-assignment-rate contrast from a baseline combining conventional statistics with aggregate causal-effect monitoring. The second compared these monitoring variants with selected fixed review calendars. Candidate estimators and held-out AIPW update-acceptance gates were common across arms. Accepted updates affected the following window.
+Development diagnostics motivated a fixed comparison of frozen versus candidate-refreshed outcome predictions in a held-out AIPW gate. Independent-stream-seed validation evaluated 3,900 initial-fit/scenario/onset/seed configurations using 100 new paired stream seeds, three reused initial fits, onsets 4, 7 and 10, and unchanged monitoring calibration and review procedures. The prespecified M1 refreshed-minus-frozen contrast was −0.054422 mean-per-window oracle-relative loss, with a descriptive paired seed-block 95% bootstrap interval of [−0.068318, −0.041040], approximately 3.64% below frozen M1's balanced shifted-design average. Treat-all nevertheless had lower design-average loss than either M1 gate. M0 and M1 recorded identical loss, FULL occasionally differed, and harmful accepted updates remained.
 
-The main ablation produced exactly zero observed paired regret differences between the additional-signal variants and the baseline. In the fresh calendar comparison, additional subgroup signals again provided no improvement and occasionally increased loss. Alert-triggered baseline reviews produced lower mean loss than the selected calendars under treatment-response and opposing subgroup-effect changes, while stable conditions favored calendar reviews. These comparisons depended on review timing and did not establish universal controller superiority.
+A prospectively specified five-date case study used ZOZO Open Bandit recommendation logs, separate morning training, midday gate and evening evaluation windows, and a common evaluation outcome model. Both gates rejected every daily candidate and retained the initial policy. Their paired value difference was exactly zero because the selected policies were identical. BTS estimates favored retention over always updating, whereas Random-log estimators disagreed and matching clicks were sparse.
 
-The findings show that monitoring differences and decision benefits must be evaluated separately. Conclusions remain conditional on the generator, initial model, calibration, update gate, fixed shift onset and chosen calendars. Novelty remains provisional.
+The evidence supports separating monitoring, update acceptance and downstream policy performance. Refreshing reduced loss in the specified synthetic target but did not improve selected real-log gate policies. These conditional findings supplement the earlier null and adverse results; they do not establish causal-monitoring superiority, universal gate benefit or deployment safety.
 
-Keywords: causal machine learning; MLOps; distribution shift; treatment-policy regret; model monitoring; review budgets.
+Keywords: causal machine learning; MLOps; distribution shift; treatment-policy regret; model monitoring; update acceptance; off-policy evaluation.
 
 ## 1. Introduction
 
@@ -31,17 +32,27 @@ Our project implements a synthetic causal-ML monitoring benchmark in which a T-l
 
 Existing research already addresses treatment decisions in dynamic environments, causal estimation on streams, monitoring-triggered adaptation and resource-constrained interventions. For example, Berrevoets et al. (2022) evaluated treatment-effect optimisation under changing conditions. OnlineCML's inspected public examples demonstrate causal pseudo-outcome monitoring and estimator reset. These precedents rule out a broad claim that combining causal estimation, drift monitoring and regret evaluation is itself new. The narrower question is whether a controlled comparison can clarify the incremental value of monitoring signals and review timing under common adaptation procedures.
 
-We examine two research questions within the scope of these extensions. First, does adding subgroup treatment-effect monitoring, a between-group assignment-rate contrast, or both reduce cumulative treatment-policy regret beyond a baseline that already includes conventional statistics and aggregate causal-effect monitoring? Second, how does alert-triggered review timing compare with prospectively specified fixed calendars when candidate estimation, update acceptance and maximum review caps are shared?
+The two original extensions examine two research questions. First, does adding subgroup treatment-effect monitoring, a between-group assignment-rate contrast, or both reduce cumulative treatment-policy regret beyond a baseline that already includes conventional statistics and aggregate causal-effect monitoring? Second, how does alert-triggered review timing compare with prospectively specified fixed calendars when candidate estimation, update acceptance and maximum review caps are shared?
 
 The first experiment compared four monitoring variants. M1 combined conventional statistics with an aggregate AIPW treatment-effect statistic. M2-A added subgroup treatment-effect statistics, M2-B added a between-group assignment-rate contrast, and M2-FULL added both. The second experiment retained these variants and introduced fixed-calendar reviews. Each experiment evaluated five scenarios and three review caps using 100 paired seeds per scenario.
 
 The principal measured outcome was cumulative period-average oracle-relative net-benefit regret over the latter six windows. Alerts, reviews, accepted updates, harmful-treatment rates and detection timing provided complementary operational evidence. Alert thresholds targeted a common stable-stream any-alert probability, with independent held-out assessment. Equal intended calibration targets were distinguished from equal achieved false-alert rates, and common review caps were distinguished from equal realized workload.
 
-The completed results did not show an incremental regret benefit from the additional monitoring signals. The main ablation yielded identical observed regret across variants, while the fresh calendar comparison included occasional adverse subgroup-monitoring outcomes. Alert-triggered M1 reviews reduced loss relative to the selected calendars under treatment-effect changes, but calendar reviews performed better in stable settings. A separate small review-spacing development check also demonstrated that delaying reviews could postpone a useful update. These findings are retained together rather than selecting only favorable comparisons.
+The original monitoring comparisons did not show an incremental regret benefit from the additional monitoring signals. The main ablation yielded identical observed regret across variants, while the fresh calendar comparison included occasional adverse subgroup-monitoring outcomes. Alert-triggered M1 reviews reduced loss relative to the selected calendars under treatment-effect changes, but calendar reviews performed better in stable settings. A separate small review-spacing development check also demonstrated that delaying reviews could postpone a useful update. These findings are retained together rather than selecting only favorable comparisons.
 
-The intended contribution is a reproducible, controlled empirical evaluation of how monitoring information and review opportunities translate into downstream policy performance. It is not a new treatment-effect estimator or drift detector. The experiments do not isolate the overall benefit of causal information over a purely conventional monitor because M1 already contains aggregate causal information. They also do not establish an explanation-stability benefit; explanation quantities remain offline diagnostics in these extensions.
+The intended contribution is a reproducible, controlled empirical evaluation of how monitoring information and review opportunities translate into downstream policy performance. It is not a new treatment-effect estimator or drift detector. The two original studies do not isolate the overall benefit of causal information over a purely conventional monitor because M1 already contains aggregate causal information. The later model/onset development check and independent-seed gate validation include M0; their observed M0–M1 loss equality is reported separately. They also do not establish an explanation-stability benefit; explanation quantities remain offline diagnostics in these extensions.
 
 The contribution and its limits require further assessment against the closest literature. In particular, the complete CausalStream and OnlineCML manuscripts were unavailable during the audit, and full overlap remains unresolved. The study is therefore presented as exploratory evidence with a provisional research-gap assessment, subject to supervisor review and final manuscript scope alignment.
+
+The later studies ask whether changing only the outcome predictions used by the held-out acceptance gate improves downstream loss, and whether that gate comparison changes selected policies in real chronological recommendation logs. The synthetic validation targets the prespecified, equally weighted shifted design conditional on three fixed initial fits. The real-log study estimates click-policy values under fixed daily reviews and has a distinct endpoint. Neither study replaces the earlier monitoring ablation or justifies pooling unlike outcomes.
+
+| Evidence stage | Independent or temporal allocation | Main purpose and boundary |
+| --- | --- | --- |
+| Original signal ablation and calendar comparison | 100 paired seeds per scenario in each separate study | Monitoring and review timing; one initial model and onset 7 |
+| Model/onset and gate development, including diagnostic replay | Three reused stream seeds and three initial fits; 117 dependent configurations | Exposed development evidence; no new independent validation |
+| Frozen-versus-refreshed synthetic validation | 100 new stream seeds; 3,900 dependent factor configurations | Prespecified M1 gate contrast; conditional on three reused initial fits and calibration |
+| ZOZO development pilot | Two previously inspected dates; one review | Engineering/development check; both gates retained the initial policy |
+| ZOZO five-date gate case study | Five consecutive reserved dates, one review per gate per date | Exploratory real-log gate comparison; no monitoring-arm or known-shift validation |
 
 ## 2. Related work and study positioning
 
@@ -101,7 +112,7 @@ Berrevoets et al. (2022, Section 5.3) provide an especially important boundary. 
 
 The narrow candidate contribution is an empirical attribution of the incremental policy value of subgroup monitoring under a specified common adaptation procedure. The main ablation found no observed incremental benefit, and the fresh schedule study documented occasional adverse outcomes. The contribution is not merely that timing matters, and the results do not establish that subgroup monitoring is generally unhelpful. A defensible novelty argument still requires checking whether the closest literature already provides substantially the same comparison and insight.
 
-Evidence scope: these paragraphs reflect targeted inspection of the identified sections and author documentation. They are not an exhaustive full-text review of the entire corpus. No new benchmark was run for this revision.
+Evidence scope: these related-work paragraphs retain the targeted inspection recorded in the earlier draft. They are not an exhaustive full-text review of the entire corpus. The new experiments reported below do not establish an unoccupied literature gap.
 
 ### 2.6 Average and subgroup causal monitoring under performativity
 
@@ -257,6 +268,89 @@ The ablation audit reconciled 72,000 period rows and 6,000 method-budget run row
 
 Checks covered saved-output consistency, aggregation, review schedules, alert caps, recorded gate acceptance, summary statistics and paired bootstrap calculations. They did not independently reproduce every random-forest fit or reconstruct every customer's action from saved predictions.
 
+### 3.8 Saved policy benchmarks and post-hoc diagnostic analysis
+
+Each evaluated stream also recorded treat-all, treat-none and frozen-T-learner policy losses on the same observations. These benchmarks do not review or update models. Their postchange losses sum period means over windows 7–12, using the same oracle-relative scoring rule. Their source generation was part of the saved experiments, but the comprehensive paired comparisons reported in Section 4.4 were added after the prospective analyses and after preparation of review draft v6.
+
+All five calendar-study arms were compared with all three benchmarks across five scenarios and three caps, yielding 225 post-hoc diagnostic contrasts. Seed-wise differences were bootstrapped with 5,000 resamples using RNG seed 20261103. These pointwise intervals are descriptive and unadjusted for multiplicity. These comparisons are not retroactively designated prospective outcomes. Full results are supplied in support/POSTHOC_SAVED_BENCHMARK_CONTRASTS_20261103.csv.
+
+### 3.9 Separately specified model/onset development check
+
+Following the prior studies and their critical review, the development protocol varied initial data/fitting seeds 42, 1042 and 2042 and shifted-scenario onsets 4, 7 and 10. Initial seeds changed both the generated 1,000-row training-source dataset and forest fitting randomness; the 800/200 split procedure remained fixed. This was a joint initial-training/fitting sensitivity check, not an isolated experiment on forest randomness.
+
+The generator's baseline/postshift magnitudes, cost 10, 12-window horizon and 1,000-customer windows remained fixed. M0 used the nine conventional statistics; M1 added aggregate AIPW; M2-FULL added both subgroup means and the assignment-rate contrast. The fourth adaptive arm was PERIODIC with the original fixed calendars. Review caps, candidate/gate procedures, next-window updates and the three fixed policy benchmarks were preserved. No conventional-only comparison is retroactively added to the two earlier evaluations.
+
+For each initial fit, stable centers/scales were estimated from 10 streams, thresholds from 40 calibration streams, and held-out alert rates from 20 further streams. The calibration and null allocations were engineering counts, not precise false-alert validation. Independent role namespaces began at 420010, 420100, 420200 and 420300, respectively. Three evaluation stream seeds (420300–420302) were paired across arms, caps, initial fits and onset views. Stable streams were evaluated once with a scoring marker of 7 rather than counted repeatedly under identical onsets.
+
+The run contained 117 fit/scenario/onset/stream configurations, 1,404 method-budget run rows and 16,848 period rows. The 117 configurations are dependent factor evaluations, not 117 independent stream replications. Within each initial-fit/scenario/onset/cap cell, the reported difference averages its three stream-seed differences. No development p-values, inferential bootstrap intervals or population-equivalence claims were generated.
+
+The development endpoint was mean period-average loss across the available post-onset windows, with cumulative loss and trajectories also saved. Mean-per-window scoring makes unequal horizons explicit but does not remove differences in remaining adaptation opportunities. Stable scoring used windows 7–12 without a real change. The earlier studies retain their original cumulative windows-7–12 endpoint; results are not pooled across studies.
+
+The development runner recalculated calibration per initial fit and saved all comparisons against M0, M1, PERIODIC and the three fixed benchmarks specified by its protocol. Incumbent explanation audits were omitted; frozen live explanation summaries remained computed but excluded from monitor scores. Runtime therefore differs from the earlier XAI-heavy evaluations. The development run took 32.08 minutes, with 35 Windows unit tests passing before execution and 95 subsequent saved-output/provenance checks passing. These checks do not reproduce every model fit or individual action.
+
+### 3.10 Retrospective diagnostic replay of update acceptance
+
+After inspecting the development results, we replayed all 117 development configurations with the original data/fitting seeds, archived calibration and unchanged controller. An added read-only callback measured candidate and incumbent policy loss without supplying synthetic truth to the acceptance rule. Every original field in the 16,848 period records reconciled with the saved development run; floating comparisons used absolute and relative tolerances of 10⁻¹². This is retrospective explanation of exposed trajectories, not new independent evaluation.
+
+At each review, candidate benefit was incumbent oracle regret minus candidate oracle regret on the same gate observations and, separately, the next simulated window. Positive values favor the candidate. Classification as helpful, harmful or tied used tolerance 10⁻¹⁰. Window-12 reviews had no next-window measurement. The next-window comparison holds both models fixed; it does not reconstruct an alternative future controller, identify population value or estimate total regret saved by changing acceptance. Repeated methods, caps, fits and onsets are dependent evaluations. No additional inferential tests were conducted.
+
+### 3.11 Exploratory comparison of frozen and refreshed gate outcome models
+
+Motivated by the retrospective diagnostics, a subsequent development comparison changed only the outcome predictions used inside the AIPW gate. The frozen variant used the initial outcome models; the refreshed variant used the current candidate models, fitted on the current window's 70% training partition. Gate outcomes remained in the separate 30% partition. Both the candidate and incumbent policies were evaluated using the same pseudo-outcomes within each gate variant. The acceptance rule retained the 1.96 standard-error multiplier and positive lower-bound requirement. Monitoring references and review schedules were unchanged, and each variant maintained a separate incumbent trajectory. Accepted replacements affected the next window only.
+
+This comparison reused all 117 previously exposed development configurations described in Section 3.9. It was not a fresh independent validation. The protocol and code were recorded before running this comparison, after inspection of earlier diagnostic findings. The original gate had to reproduce every original period field, and the refreshed variant had to preserve the same scores, thresholds, alerts and review flags. Both checks passed. Runtime was 44.13 minutes.
+
+The outcomes were paired refreshed-minus-frozen cumulative and mean-per-window post-onset regret, together with accepted-update counts and offline gate/next-window candidate-benefit diagnostics. Negative regret differences favor refreshed. All settings were retained. Signs used an absolute tolerance of 10⁻¹⁰; no inferential tests or equivalence claims were made. Outcome-model refresh is an application of existing doubly robust evaluation methodology (Dudík et al., 2011), not a proposed new estimator. Its possible effect on evaluation variance does not guarantee lower policy regret or sequential safety.
+
+### 3.12 Independent-stream-seed frozen-versus-refreshed validation
+
+A prospective protocol was specified after the exposed development comparison. The engineering pilot used seed 490000 and was excluded from the primary analysis. The completed validation used stream seeds 500000–500099. Three initial training/fitting realizations (42, 1042 and 2042) and their archived calibration were intentionally reused. Stable scoring used marker 7; the four shifted scenarios each used onsets 4, 7 and 10. These factors yield 39 fit/scenario/onset combinations per stream seed and 3,900 configurations overall, not 3,900 independent replications. M0, M1, M2-FULL and PERIODIC, review caps 2, 4 and 8, both gates and the fixed-policy benchmarks were retained.
+
+M0 uses the nine conventional statistics in Section 3.2.1. M1 adds the aggregate AIPW mean; M2-FULL adds the two subgroup means and group assignment-rate contrast. Candidate fitting, the current-window 70/30 training/gate split, monitoring references, threshold calibration, review schedules, cost and next-window application remained unchanged. The sole gate switch was initial versus current-candidate outcome predictions in the common AIPW pseudo-outcome. Both variants maintained separate incumbent paths. Exact monitoring scores, thresholds, issued alerts and review indicators were required to match across gates. Known synthetic effects remained restricted to offline scoring and diagnostics.
+
+For each shifted configuration, the endpoint was mean period-average oracle-relative loss from its onset through window 12. The primary contrast was M1 refreshed-minus-frozen loss averaged equally over the 108 initial-fit/scenario/onset/cap cells within each stream seed, then averaged across the 100 seeds. This is a deliberately balanced design average, not an estimated deployment mixture. It differs from the cumulative windows-7–12 endpoint of the earlier main studies. Mean-per-window normalization accommodates different scoring horizons but does not equalize remaining adaptation opportunities.
+
+The paired seed-block percentile bootstrap resampled the 100 seed-level averages 5,000 times using RNG seed 20261108; repeated periods, fits, onsets, arms and caps were kept within seed blocks. The Monte Carlo standard error was the sample standard deviation of those seed averages divided by the square root of 100. Stable records were retained as separate harm diagnostics, outside the shifted primary average. Secondary fixed-policy and cell comparisons remain descriptive. Helpful/harmful/tied accepted-update diagnostics used next-window fixed-model oracle benefit and tolerance 10⁻¹⁰; final-window benefit was missing, not zero. Repeated diagnostic events are dependent and cannot be interpreted as independent failure probabilities or summed as achievable savings.
+
+The completed run was `run_20261110_131649_504254`, source commit `aa7db7a3ef14cd51a893bd6818418cc50dcb63b8`. It saved 1,123,200 period records, 93,600 method-budget-gate outcome records and 46,800 paired method-budget records. The earlier saved-output audit reported 29 passed checks without independently refitting every model. For this manuscript integration, the archived seed-level primary mean and bootstrap endpoints were recalculated from saved outputs; no models were retrained. The archive, source snapshots and checkpoint establish the recorded execution, not clean-checkout reproducibility of every fitting step.
+
+### 3.13 Prospectively specified exploratory ZOZO gate case study
+
+#### Data, prior exposure and chronological allocation
+
+We used the men campaign, display position 1, from the ZOZO Open Bandit Dataset, which supplies real recommendation logs from ZOZOTOWN under multiple logging policies (Saito et al., 2021). Files came from provider revision `90a1283aecd19026caf15a0840af1176a41f6a76` of `zozonext/open-bandit`. The dataset is attributed to ZOZO NEXT/ZOZO under its stated CC BY 4.0 data licence. The Random and BTS sources were analysed separately. Products comprised 34 item IDs with four categorical item features. BTS recorded selection probabilities were used as supplied; they were not independently reconstructed.
+
+Only the outcomes of 24–25 November 2019 UTC were inspected during development. Later date/position counts and propensity ranges had been inspected, but later click outcomes had not been analysed in the recorded workflow. Development included a one-review pilot in which both gates rejected the candidate; those pilot results informed the study context and are not fresh validation evidence. The five-date protocol was committed at `8bebea1` and runner at `b216bd8` before reserved-outcome analysis. The later study therefore is a prospectively specified exploratory external gate case study after development, not an untouched end-to-end confirmatory validation.
+
+The initial outcome model used all 406,692 BTS position-1 records from 24–25 November, including 3,077 clicks. On each of 26–30 November, the same-date BTS morning window [00:00, 12:00) trained one candidate, [12:00, 18:00) checked it, and [18:00, 24:00) evaluated selected policies. All times are UTC and endpoints are start-inclusive/end-exclusive. Candidates used only that morning's observations, not cumulative training. Both gates started from the same initial model and received the same candidate, but maintained separate incumbent paths. Each had one review opportunity per date, at most five overall. Selection at the gate affected the subsequent evaluation window and was carried to the next date. Performance outside the evening evaluation windows was not an endpoint.
+
+#### Models, gate rule and value estimators
+
+The pilot's pooled logistic regression and preprocessing were reused unchanged: `liblinear`, C = 0.1, tolerance 10⁻⁶, 500 maximum iterations and random seed 42, with no class balancing or training sample weights. Features comprised categorical item ID, four categorical user features, four categorical item features and the numeric user–item affinity for the requested product. A sparse dictionary vectorizer and maximum-absolute scaling were fitted only on each training partition. All 34 products were retained. A policy selected the product with largest predicted click probability, breaking ties by lowest item ID. Timestamps, outcomes and logged probabilities were excluded from prediction features.
+
+For observation i, logged action A_i, click Y_i, recorded selection probability p_i, outcome predictions q̂_i(a), and target policy probabilities π_i(a), the implemented scores were
+
+$$
+\widehat V_i^{\mathrm{IPS}}(\pi)=\frac{\pi_i(A_i)}{p_i}Y_i,
+\qquad
+\widehat V_i^{\mathrm{DR}}(\pi)=\sum_{a=0}^{33}\pi_i(a)\hat q_i(a)
++\frac{\pi_i(A_i)}{p_i}\{Y_i-\hat q_i(A_i)\}.
+$$
+
+The gate evaluated paired candidate-minus-current-incumbent DR scores. The frozen gate always used the initial two-day outcome model for q̂; the refreshed gate used that morning's candidate outcome model. Each gate accepted only if the mean paired gain minus 1.96 row standard errors was strictly positive. Unlike the pilot, an explicitly specified fail-closed safeguard rejected either comparison if its candidate or its own incumbent had zero matching logged actions. This check was applied independently and identically to each gate. No weights were clipped and no products were dropped after seeing outcomes. Row standard errors and this pointwise rule do not provide a repeated-review safety guarantee.
+
+Evening evaluation used one common q̂ model—the current morning's candidate—across all five policies: frozen-gate path, refreshed-gate path, initial/no-update, always-update/current-candidate and uniform over the 34 products. The evaluation q̂ model was fixed before the gate and evening windows. IPS and DR were computed on the same rows within each logging source, without pooling BTS and Random. Uniform recommendation is a random product choice, not offering every product or giving every customer a discount.
+
+#### Endpoints, uncertainty and output audit
+
+The primary endpoint was the equal-weight mean across five dates of the within-date BTS evening DR value difference, refreshed path minus frozen path; positive favors refreshing. Corresponding BTS IPS and Random DR/IPS comparisons, and each gate versus the three baselines, were secondary. These click-value endpoints have different units and sign conventions from synthetic oracle loss and were not pooled with it.
+
+All daily contrasts were retained. The exploratory bootstrap used 1,000 resamples with seed 42, resampling nonempty contiguous 30-minute blocks within each date with common paired draws, recomputing each resampled date's row mean and then averaging the five dates equally. The interval conditions on the fitted/selected paths and observed dates. It does not incorporate full retraining or policy-selection uncertainty, repeated-user clustering or all temporal dependence. Matching rows/clicks, weight effective sample size (ESS) and largest normalized weight share were reported. ESS measures weight concentration, not independent sample size or a power calculation. Sparse clicks and estimator disagreements were treated as limitations on interpretation; no secondary multiplicity-unadjusted superiority claim was made.
+
+Run `20261112T235857Z_173ba8d4` completed under Python 3.12.10, pandas 3.1.0, NumPy 2.5.4 and scikit-learn 1.9.1. Input hashes matched the protocol. Summaries were committed at `9f94b55`; the saved-score audit and disclosure were committed at `10134a1`. The audit recomputed saved gate/evaluation scores, weight diagnostics, daily contrasts, equal-date means and block intervals and checked source snapshots. It did not refit models or independently reload all raw input rows.
+
+A timestamp serialization defect was identified during audit: integer arrays named `timestamp_ns` actually stored microseconds in this environment. The corrected audit explicitly decoded them with `--timestamp-unit us` and passed, recording the field-name mismatch. The experiment was not rerun and its original outputs were retained. Gate/evaluation window selection and bootstrap block construction in the runner used parsed datetimes, rather than decoding these saved integer arrays; the defect concerns the serialized audit field, not a change to the preplanned windows or calculated policy scores.
+
 ## 4. Results
 
 ### 4.1 Incremental monitoring signals
@@ -313,19 +407,142 @@ Recorded cases showed early alerts consuming reviews before a later useful updat
 
 These cases illustrate possible failure mechanisms under the specified controller; they do not establish universal harm from subgroup monitoring.
 
+### 4.4 Saved policy benchmarks: post-hoc diagnostic results
+
+Treat-all had lower mean cumulative postchange regret than both M1 and PERIODIC in all 15 scenario/cap cells for each method in the calendar study. Treat-all was oracle-optimal by construction in stable, covariate and assignment scenarios because both subgroup effects exceeded cost 10. In response and opposing scenarios, its loss was positive, but remained below the adaptive-arm means. This is not a claim of uniform seed-wise or population dominance.
+
+| Scenario | Cap | M1 loss | Treat-all loss | M1 minus treat-all |
+| --- | ---: | ---: | ---: | ---: |
+| assignment | 2 | 5.681050 | 0.000000 | 5.681050 |
+| assignment | 4 | 5.669700 | 0.000000 | 5.669700 |
+| assignment | 8 | 5.655900 | 0.000000 | 5.655900 |
+| covariate | 2 | 3.085450 | 0.000000 | 3.085450 |
+| covariate | 4 | 3.052200 | 0.000000 | 3.052200 |
+| covariate | 8 | 3.050050 | 0.000000 | 3.050050 |
+| opposing | 2 | 11.504052 | 10.659150 | 0.844902 |
+| opposing | 4 | 11.345019 | 10.659150 | 0.685869 |
+| opposing | 8 | 11.047568 | 10.659150 | 0.388418 |
+| response | 2 | 15.489650 | 10.659150 | 4.830500 |
+| response | 4 | 15.258100 | 10.659150 | 4.598950 |
+| response | 8 | 15.193450 | 10.659150 | 4.534300 |
+| stable | 2 | 5.711900 | 0.000000 | 5.711900 |
+| stable | 4 | 5.712000 | 0.000000 | 5.712000 |
+| stable | 8 | 5.712000 | 0.000000 | 5.712000 |
+
+All 225 comparisons, including treat-none and the frozen T-learner, are supplied without selecting favorable contrasts. Their intervals are post-hoc diagnostics. M1's first shifted-window detection in all 100 opposing streams left no earlier window-level detection opportunity for additional subgroup signals. In the response scenario, at least one M1 update was accepted in only 16%, 24% and 32% of streams at caps 2, 4 and 8. These rates show that alerts and available reviews did not guarantee an accepted update; they do not identify whether candidate fitting or the gate caused the limited adaptation.
+
+### 4.5 Model/onset development results
+
+M1-minus-M0 and M2-FULL-minus-M1 regret differences were exactly zero in all 351 paired method-budget observations, for both cumulative and mean-per-window loss. These observations repeatedly use the same three evaluation seeds across factors. Their equality does not establish population equivalence or general causal-monitoring redundancy.
+
+Relative to M0, M1 scores differed in 279 period rows but alert, review and accepted-update indicators did not differ. FULL scores differed in 1,872 period rows, and its alerts and reviews each differed in 18 rows; accepted-update indicators and recorded loss still agreed. These are repeated period/cap records, not independent incidents. Individual action arrays were not saved.
+
+The following table summarizes all 117 initial-fit/scenario/onset/cap cell means, each computed from three stream seeds. The cells are dependent, so these tallies are neither significance tests nor equally weighted estimates of a population treatment effect. Numerical ties for nonzero comparisons use an absolute tolerance of 10⁻¹⁰.
+
+| First policy minus comparator | Lower mean loss | Tied mean loss | Higher mean loss |
+| --- | ---: | ---: | ---: |
+| M2-FULL minus M1 | 0 | 117 | 0 |
+| M1 minus M0 | 0 | 117 | 0 |
+| M1 minus PERIODIC | 24 | 77 | 16 |
+| M1 minus treat-all | 9 | 0 | 108 |
+| M1 minus frozen initial policy | 33 | 84 | 0 |
+
+All nine cell means favoring M1 over treat-all were opposing shifts at onset 4: three initial fits and three caps. M0 and FULL obtained the same loss, so the benefit cannot be attributed to adding causal statistics. The other 108 cell means favored treat-all. This qualifies, rather than contradicts, the earlier calendar-study result: that evaluation fixed onset at 7 and used a different stream-seed set. The studies must not be pooled or compared as though their only difference were onset.
+
+M0 detected every covariate, response and opposing change in the first shifted window. Assignment changes were also detected in every evaluated stream, with at most one window of delay. Thus added signals had little or no earlier window-level detection opportunity. Per-fit held-out alert counts were 0/20, 2/20 and 0/20 for initial seeds 42, 1042 and 2042, respectively, for each of the three monitors. These small samples and shared streams do not certify equal achieved false-alert rates or a precise 5% target.
+
+### 4.6 Retrospective diagnosis of candidate acceptance
+
+The replay yielded 5,310 diagnostic review records, each reconciling with a recorded review and acceptance decision. M1 had 1,224 reviews: 92 accepted and 1,132 rejected. Among rejected reviews with a next window, 551 candidates reduced next-window oracle loss, 466 increased it and four tied; 111 rejected final-window reviews had no next-window endpoint. All 92 accepted M1 review records reduced next-window loss in this replay.
+
+| M1 review decision | Helpful next window | Harmful next window | Tied | No next window |
+| --- | ---: | ---: | ---: | ---: |
+| Accepted | 92 | 0 | 0 | 0 |
+| Rejected | 551 | 466 | 4 | 111 |
+
+In response-shift records, 265 rejected candidates were helpful on the next window and seven harmful, while 27 rejected final-window reviews lacked a next-window endpoint. Seven accepted updates were helpful. Thus timely detection and review sometimes produced useful candidates that did not pass the estimated acceptance rule. These repeated records do not represent independent missed opportunities, and their potential gains cannot be summed as achievable future savings.
+
+M0 had the same aggregate classification counts as M1. FULL had 554 helpful, 466 harmful and four tied rejected next-window comparisons, plus 108 rejected final-window reviews, and 92 helpful accepted comparisons. PERIODIC had 84 helpful and two harmful accepted next-window comparisons, plus five accepted final-window reviews. The two harmful records repeat one fit/seed/scenario/window at caps four and eight: fit 42, seed 420302, covariate scenario with onset 10, review at window 9. The candidate benefit was +0.05 on the gate sample but −0.065 on the next window. This illustrates that current-sample benefit need not persist across a shift.
+
+The gate rejected both helpful and harmful candidates. These findings support a descriptive explanation involving update acceptance in the recorded trajectories; they do not justify removing the gate, establish a unique causal bottleneck or show incremental benefit from causal monitoring. Individual diagnostic action arrays were not saved, so consistency checks cannot independently reconstruct each reported candidate benefit from customer-level predictions.
+
+### 4.7 Refreshed gate: benefits and adverse outcomes in development
+
+The comparison reconciled 33,696 period records, 10,620 review-diagnostic records and all 1,404 paired outcome records. The frozen variant reproduced the original 16,848 period records. Monitoring and review opportunities agreed across gate variants, while accepted updates and incumbent trajectories could differ. These are consistency and provenance checks, not independent reconstruction of every individual diagnostic action.
+
+| Monitor | Lower refreshed loss | Tied loss | Higher refreshed loss | Paired records |
+| --- | ---: | ---: | ---: | ---: |
+| M0 | 29 | 307 | 15 | 351 |
+| M1 | 29 | 307 | 15 | 351 |
+| M2-FULL | 29 | 307 | 15 | 351 |
+| PERIODIC | 8 | 324 | 19 | 351 |
+
+Each record pairs one initial fit, scenario, onset, stream seed, monitor and cap across gates. The same three stream seeds are reused across factors. These counts therefore are not independent replications, population win probabilities or evidence that the gate with more favorable records is preferable overall. Across 117 three-seed cell means per monitor, M0, M1 and FULL each had 22 lower-loss, 83 tied and 12 higher-loss means. PERIODIC had seven lower, 92 tied and 18 higher.
+
+For M1, response-shift cell-mean differences were nonpositive across the initial-fit/onset/cap settings. Averaging mean-per-window differences across fits and caps within onsets 4, 7 and 10 gave −0.166091, −0.033889 and −0.101667, respectively. Opposing-shift results changed direction: +0.059048, −0.276538 and +0.160370 at those onsets. These are descriptive averages of dependent cells with different remaining horizons. An adverse opposing-shift case at initial fit 1042, seed 420302 and onset 10 increased cumulative post-onset regret by 4.33 at each cap. The repeated cap records concern one underlying stream.
+
+For each of M0, M1 and FULL, the frozen gate accepted 92 review records, all helpful on the next window in this sample. The refreshed gate accepted 118: 109 helpful and nine harmful on the next window. This is an aggregate comparison rather than a one-to-one attribution of extra acceptances, because incumbent policies diverged across gates. PERIODIC changed from 84 helpful, two harmful and five final-window accepted records to 73 helpful, zero harmful and seven final-window accepted records. Final-window reviews have no next-window diagnostic and must not be counted as harmless.
+
+M0, M1 and FULL retained identical period-level regret within each gate variant. The modification therefore did not reveal incremental causal-monitoring benefit. The results describe a trade-off: refreshing gate outcome models sometimes reduced loss but also introduced adverse accepted updates and worse trajectories. They do not establish an overall improved gate, and no replacement of the original baseline is justified by this development sample alone.
+
+### 4.8 Independent-stream-seed synthetic gate validation
+
+The validation completed all 3,900 planned configurations. The primary M1 refreshed-minus-frozen mean-per-window loss difference was −0.054422, with descriptive paired seed-block 95% bootstrap interval [−0.068318, −0.041040] and Monte Carlo standard error 0.007005. Frozen and refreshed M1 balanced shifted-design means were 1.495995 and 1.441573, respectively, a reduction of approximately 3.64% relative to the frozen mean. This supports lower design-average loss under the specified synthetic target, conditional on the three fixed initial fits and reused calibration.
+
+| Balanced shifted-design policy | Mean-per-window oracle-relative loss |
+| --- | ---: |
+| M1, frozen gate | 1.495995 |
+| M1, refreshed gate | 1.441573 |
+| Fixed initial T-learner | 2.443229 |
+| Treat-all | 0.886932 |
+| Treat-none | 13.490644 |
+
+Treat-all remained below both M1 variants on this design average. Improving the gate relative to its frozen version therefore does not establish that the adaptive pipeline was the best evaluated decision strategy. The average also does not imply improvement in every scenario, onset, fit, cap or seed.
+
+M0 and M1 recorded identical mean-window loss within each gate variant throughout this validation; M2-FULL occasionally differed. The primary benefit cannot therefore be attributed to adding the aggregate causal monitoring statistic. The compared gate variants retained identical monitoring scores, thresholds, issued alerts and review indicators, isolating the implemented gate-input switch within this pipeline while allowing different incumbent paths.
+
+Adverse results remained. Across all methods, caps, initial fits, scenarios and onset settings, the frozen gate recorded 14,867 accepted-review records and the refreshed gate 15,954. Among records with an available next window, the helpful/harmful counts were 12,642/1,163 for frozen and 13,692/1,293 for refreshed; 1,062 and 969 accepted final-window records, respectively, had no next-window diagnostic. These are dependent repeated records with diverging incumbents, not independent safety probabilities or a one-to-one attribution of extra acceptances. Both gates accepted candidates that worsened next-window oracle loss despite the favorable average contrast for refreshing.
+
+### 4.9 Five-date ZOZO gate case study
+
+Both gates rejected all five daily candidates and retained the initial policy. Their gain estimates differed, but no comparison satisfied the positive-lower-bound acceptance rule. The primary refreshed-minus-frozen BTS DR contrast was exactly 0, with exploratory interval [0, 0]. Each of the five daily primary contrasts was also exactly 0; BTS IPS and both Random estimators likewise cancelled. This arithmetic cancellation follows identical selected policies on the observed rows, not proof that distinct gates are equivalent in other settings.
+
+The evening BTS windows contained 100,426 records and 648 logged clicks; Random contained 11,050 records and 38 logged clicks. These are records from five dates, not that many independent temporal replications. For the retained initial policy, the logged recommendation matched 34 clicks in BTS and only two in Random across all five evaluation windows.
+
+| Logging source | Paired comparison: retained gate policy minus comparator | Estimator | Equal-date mean | Exploratory block interval |
+| --- | --- | --- | ---: | --- |
+| BTS | Always-update/current-candidate | DR | +0.007127 | [0.002004, 0.012209] |
+| BTS | Always-update/current-candidate | IPS | +0.004026 | [0.000827, 0.007981] |
+| BTS | Uniform product policy | DR | +0.001091 | [−0.002934, 0.005176] |
+| BTS | Uniform product policy | IPS | +0.000935 | [−0.002781, 0.005019] |
+| Random | Always-update/current-candidate | DR | +0.003625 | [−0.008052, 0.011855] |
+| Random | Always-update/current-candidate | IPS | −0.003221 | [−0.011765, 0.000000] |
+| Random | Uniform product policy | DR | +0.003321 | [−0.003640, 0.011989] |
+| Random | Uniform product policy | IPS | +0.002174 | [−0.004153, 0.010377] |
+
+The frozen and refreshed gate rows are identical, so the table reports their shared retained policy once. Each gate also equalled the no-update baseline exactly. Positive differences favor retention. Values are estimated click-probability differences, not relative percentages, realized click gains or measured profit; DR estimates are not constrained to [0,1] in finite samples. The intervals are exploratory secondary comparisons rather than simultaneous or sequential superiority guarantees.
+
+BTS point estimates favored retaining the initial policy over always updating. Random estimates disagreed in sign between DR and IPS for that comparison, with sparse policy-matching clicks. Results against uniform recommendation were uncertain. This case study supplies no observed advantage from refreshing gate outcome predictions, and does not corroborate a general real-world benefit from either gate over all baselines. It remains informative about conservative update selection and the limits of evaluating many-product policies with rare click outcomes.
+
 ## 5. Discussion and limitations
 
 The completed experiments distinguish monitoring differences from decision improvements. Additional signals sometimes changed alerts or reviews without improving accepted updates or treatment-policy regret.
 
 Review timing affected outcomes, but its usefulness depended on change timing, available review opportunities and the common acceptance gate. Early alerts could exhaust scarce resources, while spacing could delay helpful adaptation.
 
-The findings are conditional on a synthetic generator, one initial fitted model, immediate labels, exogenous logging, a fixed change onset, a finite horizon, selected review calendars and one update-acceptance rule. They do not establish real-world profitability, deployment safety or robustness across model initializations.
+The original main studies were conditional on one initial fitted model and change onset 7. Later development and validation varied three initial training/fitting realizations and onsets 4, 7 and 10, extending that scope without sampling a population of initial models. The generator, immediate labels, exogenous logging, finite horizon and selected calendars remain restrictions. The validation reused small development calibration allocations; it is not fresh evidence that monitoring false-alert probabilities are precisely calibrated. Its 100 seeds support uncertainty assessment for the fixed design, not unrestricted generalization.
 
-M1 combined conventional and aggregate causal statistics. The two main extensions did not include a purely conventional M0 arm. Therefore, their results cannot isolate the overall benefit of adding causal information to conventional monitoring.
+M1 combined conventional and aggregate causal statistics. The two original studies did not include a purely conventional M0 arm. The later conventional-only comparisons found identical recorded M0–M1 loss in development and in the independent-seed gate validation. Consequently, the observed synthetic gate benefit is not evidence that adding aggregate causal monitoring improved the decisions.
 
 Explanation statistics remained offline diagnostics. These experiments do not establish an explanation-stability benefit.
 
 The interval estimates were exploratory and pointwise, without multiplicity adjustment or a prespecified equivalence margin. Null differences should not be interpreted as proof of equivalence.
+
+The development-to-validation sequence separates an exposed engineering finding from its fixed new-stream-seed evaluation. Refreshing improved M1's balanced synthetic loss on average, while harmful acceptances and a stronger simple-policy benchmark remained. This supports a bounded gate-design finding rather than a general recommendation to accept more updates. Greater candidate acceptance is not itself an objective.
+
+The real-data study addresses a different question with estimated click values and five fixed review opportunities. Identical rejection paths give an exact null difference for these observed policies and dates; they do not measure gate sensitivity under a broad range of candidate qualities. This result neither overturns the synthetic design-average benefit nor confirms its transport to recommendation settings. A larger row count cannot replace more temporal regimes or independent deployments.
+
+Real-log off-policy estimates require valid recorded probabilities and sufficient action support, usable context/outcome measurements and an appropriate per-position reward interpretation despite other products appearing in the slate. BTS probabilities were supplied estimates. Repeated-user identities were unavailable; the exploratory time-block analysis cannot fully account for that clustering. Training-only preprocessing and chronological splits reduce direct outcome reuse but do not establish causal identification under every unmeasured interaction. Random logging supplies a separate check, yet rare matching clicks make its estimates imprecise. The BTS and Random populations/logging sources were not pooled or assumed interchangeable. No individual counterfactual truth, known shift onset, production feedback experiment or real monetary benefit is available in this case study.
 
 ### 5.1 Literature coverage and contribution uncertainty
 
@@ -337,7 +554,11 @@ No claim of being the first, uniquely novel or universally superior is supported
 
 ## 6. Conclusion
 
-Under the evaluated synthetic conditions, additional subgroup-effect and assignment-contrast signals did not reduce regret beyond M1 in the main ablation. A fresh comparison identified occasional adverse subgroup-monitoring outcomes. Alert-triggered reviews reduced loss relative to the selected fixed calendars under treatment-effect changes, while calendar reviews had lower mean loss in stable conditions. These results support evaluating monitoring information together with adaptation timing and realized review use. They do not establish causal-monitoring superiority over a conventional-only baseline, universal controller superiority or real-world benefit.
+The original monitoring ablation found no incremental regret reduction from subgroup and assignment-contrast additions, and the calendar comparison retained adverse subgroup-monitoring cases and scenario-dependent timing effects. Development diagnostics and a subsequent fixed, independent-stream-seed validation identified a narrower gate-design result: candidate-refreshed AIPW outcome predictions reduced M1 balanced shifted-design mean-window loss by approximately 3.64% relative to the frozen gate. The improvement was conditional on the specified generator, three fixed initial fits and reused calibration. Treat-all remained better on the same average, M0 and M1 recorded identical loss, and harmful accepted updates persisted.
+
+In the separate five-date ZOZO gate case study, both gates rejected every candidate and retained the same initial model. Their observed policy-value difference was exactly zero. BTS estimates favored retention over always updating, while Random estimators disagreed and matching clicks were sparse. This provides a real-data boundary on the gate findings rather than evidence of real-world refreshed-gate superiority.
+
+Together, the studies support evaluating monitoring information, review timing, acceptance decisions and simple-policy benchmarks as distinct parts of an adaptation pipeline. The contribution is a conditional, reproducible empirical evaluation using established methods. Prior-art overlap, supervisor review and journal-specific preparation remain separate from completion of the experiments.
 
 ## References and evidence-limited records
 
@@ -377,6 +598,9 @@ Primary-method and related-work references used in this draft are listed below. 
 - Dasari, S. (2026). When to Retrain: An Empirical Study of Retraining Policies for Streaming ML Under Concept Drift, Budget, and Latency Constraints. arXiv:2608.19488. https://arxiv.org/abs/2608.19488
   Evidence-limited preprint record: abstract-level retrieval only in this audit; direct full-text access failed. Publication status beyond the preprint not established.
 
+- Saito, Y., Aihara, S., Matsutani, M., and Narita, Y. (2021). Open Bandit Dataset and Pipeline: Towards Realistic and Reproducible Off-Policy Evaluation. NeurIPS Datasets and Benchmarks. https://arxiv.org/abs/2008.07146
+  Dataset provider: https://huggingface.co/datasets/zozonext/open-bandit ; pinned revision 90a1283aecd19026caf15a0840af1176a41f6a76. Attribution and input hashes are retained in the case-study protocol.
+
 ## Appendix A. Review-spacing engineering check
 
 A subsequent engineering check compared consecutive reviews with score-conditioned spaced reviews using only two development seeds per scenario.
@@ -393,4 +617,10 @@ The accompanying support/PAPER1_SUPPORTING_TABLES_v1.md contains all main-study 
 
 support/PAPER1_REPRODUCIBILITY_v1.md records software, source hashes, seed ranges, model allocation and operational assumptions. support/PAPER1_NOVELTY_ASSESSMENT_20261103.md records the completed targeted literature assessment, its search scope and unresolved access limits. support/PROJECT1_PAPER1_COMPLETION_RECORD_20261103.md distinguishes completed work from unperformed robustness extensions.
 
-The present package is a completed consolidated review draft of the existing exploratory studies, not a claim of submission readiness or publication acceptance. No onset sensitivity, multiple-initial-model analysis, real-data validation or new conventional-only comparison was performed for this revision. Those limitations restrict the claims and cannot be treated as completed tests.
+This integrated revision includes the later model/onset development, diagnostic replay, refreshed-gate development comparison, independent-stream-seed gate validation and exploratory real-log gate case study. It supersedes the original v6 statement that no such extensions had been performed. It does not relabel exposed development evidence as independent validation or broaden the real-data experiment to monitoring validation.
+
+The restored development sections refer to the preserved 8 November manuscript and its support records. Synthetic validation evidence comes from `Project1_Gate_Validation_Complete_504254.zip`, containing `run_20261110_131649_504254`, its prospective protocol, source snapshots, checkpoint, seed-level contrasts and full outcome tables. This archive was retrieved and inspected for the integration. The earlier reported 29-check audit is distinguished from the present arithmetic recalculation and from independent model refitting, which was not performed.
+
+ZOZO protocol and source are in `paper1_experiments/zozo_realdata_v1/`; the protocol, runner, results and audit commits are respectively `8bebea1`, `b216bd8`, `9f94b55` and `10134a1` on branch `paper1-realdata-validation`. Small result tables and audit disclosure are in `five_day_results_20261112_235857/`. Raw datasets and detailed score arrays remain outside Git under `data/zozo_open_bandit/`; their exclusion means the repository alone is not a self-contained copy of every raw artifact. The original source/run and microsecond timestamp disclosure must be retained. GitHub preservation of the synthetic validation archive and any untracked local historical results must be verified separately; their presence in ChatGPT or local folders does not establish repository preservation.
+
+The inherited related-work and novelty-access limitations have not been resolved by adding experiments. Final bibliography verification, supervisor/authorship and affiliation review, venue requirements and any applicable AI-use disclosure remain before submission. No publication acceptance or first-of-its-kind claim follows from the audit results.
