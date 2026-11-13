@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "run_id": "20261112T235857Z_173ba8d4",
+  "mode": "saved_score_and_summary_audit",
+  "saved_timestamp_field": "timestamp_ns",
+  "saved_timestamp_actual_unit": "us",
+  "timestamp_field_mislabelled": true,
+  "timestamp_unit_source": "explicit audit argument; checked against registered windows and saved blocks",
+  "models_independently_refitted": false,
+  "raw_input_rows_independently_reloaded": false,
+  "checked": [
+    "all five dates and separate logging sources",
+    "gate rules and incumbent carry-forward",
+    "window boundaries and counts",
+    "paired contrasts and equal-date averages",
+    "1000 paired block resamples",
+    "all saved gate and evaluation score arrays",
+    "weight support diagnostics",
+    "source snapshot hashes"
+  ],
+  "source_file_sha256": "0168450710db2567c92991d5352ec4e9f84d7beaf566c035e5d646a8d65ca067"
+}
