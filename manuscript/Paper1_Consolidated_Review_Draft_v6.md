@@ -741,6 +741,21 @@ The primary-condition signed-error decomposition was:
 
 Response transfer and panel composition are identical between gates within a current condition because their candidate/incumbent policy pair and evaluation panels are shared. Neither gate forecasts the future response surface. The audit's maximum unrounded decomposition residual was 1.78 × 10⁻¹⁵; displayed rounding can alter sums in the final decimal. A small mean current-estimation error does not imply accurate individual seed estimates or a calibrated acceptance bound: errors can cancel across seeds. The lower selection loss therefore should not be described as proof that refreshing solves horizon mismatch or improves every estimation-error measure.
 
+**Post-hoc mechanism and baseline review.** After the primary results were inspected, we summarized the already saved gate estimates and standard errors to clarify the observed acceptance differences. This introduces no new model fits, streams, hypothesis tests or prospective validation target. AIPW with correctly known randomization probabilities and appropriate training/evaluation separation does not require a correct outcome model to target the treatment-effect mean. Changing outcome predictions can nevertheless change score variability and a standard-error-based acceptance decision. The empirical summaries were:
+
+| Current condition | Gate | Mean estimated gain | Mean reported standard error | Accepted / 100 |
+| --- | --- | ---: | ---: | ---: |
+| Response shift | frozen | 1.012356 | 1.974093 | 3 |
+| Response shift | refreshed | 0.988372 | 1.713214 | 6 |
+| Opposing shift | frozen | 5.471127 | 1.939755 | 84 |
+| Opposing shift | refreshed | 5.475004 | 1.630844 | 97 |
+| Stable history | frozen | 0.022364 | 1.230760 | 3 |
+| Stable history | refreshed | 0.035697 | 1.235795 | 4 |
+
+In opposing shifts, average estimated gains were almost unchanged (5.471127 versus 5.475004), while average reported standard errors were 1.939755 versus 1.630844 and acceptance rose from 84 to 97 per 100 reviews. This is consistent with an uncertainty-related pathway for the observed gate difference, rather than a large change in the average estimated benefit. It is not a causal mediation analysis or proof of bound calibration. Mean reported standard error is also distinct from the Monte Carlo variability of the mean across seeds. Stable history did not show the same reduction in reported standard error, so the precision finding is conditional on response conditions.
+
+The immediate, unchanged-response control provides an additional check against an exclusively beneficial-candidate interpretation. On the independent deployment panel, all 100 candidates were beneficial relative to the incumbent in each shifted current condition, while stable history contained 44 beneficial and 56 harmful candidates. In that stable-history control, mean selection losses were 0.123710 (frozen), 0.120710 (refreshed), 0.135965 (always accept) and 0.119130 (always retain). Both gates therefore had lower point loss than always accepting in this control, but retaining the incumbent had lower point loss than either gate. Each gate still accepted two truly harmful candidates there. These are descriptive, post-hoc checks of existing results; no new superiority test, population harm bound or optimality claim follows. They strengthen the interpretation that the preferred action depends on candidate quality and future conditions, while leaving the stronger primary always-accept baseline and all adverse cases visible.
+
 The zero-delay primary-condition average difference was already −0.337173, compared with −0.458938 at delay 1 under continuation. This descriptive comparison shows that the observed refresh benefit was not created solely by waiting; varying future responses changed the costs of the same recorded decisions. It does not isolate a new training-window or review-calendar intervention, and no future-aware controller was implemented.
 
 ## 5. Discussion and limitations
