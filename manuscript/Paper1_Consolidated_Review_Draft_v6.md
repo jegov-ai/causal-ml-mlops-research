@@ -3,12 +3,12 @@
 **Preferred working title, subject to supervisor review.** This supersedes the earlier manuscript working title, “Evaluation of Causal Machine Learning Integration into MLOps Pipelines for Explainable and Robust Decision Making,” for the present draft. It does not represent formal supervisor approval or a change to the thesis or Paper 2 title.
 
 Author: Jegan Govinda (Jegov)  
-Consolidated review draft v6 — integrated update, 13 November 2026 (Malaysia)
+Consolidated review draft v6 — integrated update, 15 November 2026 (Malaysia)
 Original consolidated version: 3 November 2026. The working title and manuscript identity are retained.
 
-**Draft status:** Integrated manuscript for internal and supervisor review. This update retains the two earlier 100-seed studies, restores the subsequent benchmark, model/onset and gate-development findings, and adds the completed independent-stream-seed synthetic gate validation and the prospectively specified ZOZO five-date and KuaiRand fourteen-date gate case studies. Earlier null and adverse results remain part of the evidence. The earlier literature assessment is retained and supplemented by the explicitly limited primary-source check in Section 2.7; this is not a new comprehensive novelty audit or a submission-readiness assessment.
+**Draft status:** Integrated manuscript for internal and supervisor review. This update retains the two earlier 100-seed studies, restores the subsequent benchmark, model/onset and gate-development findings, and includes the completed independent-stream-seed synthetic gate validation, the prospectively specified ZOZO five-date and KuaiRand fourteen-date gate case studies, and a separately specified 100-master-seed synthetic gate-timing follow-up. Earlier null and adverse results remain part of the evidence. The earlier literature assessment is retained and supplemented by the explicitly limited primary-source checks in Sections 2.7–2.8; this is not a new comprehensive novelty audit or a submission-readiness assessment.
 
-**Scope of the title:** Decision robustness is measured by oracle-relative treatment-policy opportunity loss in simulation and by estimated click-policy value in a separate real-log case study. Operational constraints concern review caps, review timing and update acceptance. The MLOps scope is the monitoring-to-review-to-update component. Both real-data experiments use fixed daily reviews and test the gate comparison alone; it does not validate M0/M1/FULL monitoring, identify a true shift onset, measure oracle regret or demonstrate production safety.
+**Scope of the title:** Decision robustness is measured by oracle-relative treatment-policy opportunity loss in the original simulations, best-of-two-policy selection loss in the gate-timing follow-up, and estimated click- or long-view-policy value in the separate real-log studies. Operational constraints concern review caps, review timing and update acceptance. The MLOps scope is the monitoring-to-review-to-update component. Both real-data experiments use fixed daily reviews and test the gate comparison alone; they do not validate M0/M1/FULL monitoring, identify a true shift onset, measure oracle regret or demonstrate production safety.
 
 ## Abstract
 
@@ -18,7 +18,7 @@ Development diagnostics motivated a fixed comparison of frozen versus candidate-
 
 The real-log studies separated training, checking and subsequent evaluation. Both ZOZO gates rejected all five daily candidates. Both KuaiRand gates accepted the same candidate on 1 May and rejected the other thirteen, yielding identical paths across fourteen reserved dates. Their primary refreshed-minus-frozen value contrasts were exactly zero in both studies. KuaiRand evening evaluation covered 373,097 records and 25,586 users; user-cluster and time-block intervals were reported separately. Secondary KuaiRand estimates favored the shared gate path over retaining the initial policy, but showed no clear advantage over always updating or the always-short baseline.
 
-A post-hoc KuaiRand analysis identified one rejected candidate with positive later estimated gains under both estimators and both resampling procedures, providing an exploratory gate-to-evening discrepancy.
+A post-hoc KuaiRand analysis identified one rejected candidate with positive later estimated gains under both estimators and both resampling procedures, providing an exploratory gate-to-evening discrepancy. A separately specified synthetic follow-up used 100 fresh master seeds, each with a new initial fit, across 4,500 dependent response-profile/delay cells. In its predefined gradual-continuation target, refreshed-minus-frozen best-of-two selection loss was −0.458938 per deployment record, with paired master-seed 95% bootstrap interval [−0.680513, −0.257304]. Always accepting the candidate had zero selection loss in that target and outperformed both gates; some reversing-response cases favored the frozen gate.
 
 These findings distinguish monitoring information from acceptance and downstream policy performance. Refreshing improved the specified synthetic design average but added no observed policy-value benefit in either real-log case study. The contribution is a controlled empirical evaluation using established methods, retaining beneficial, null and adverse outcomes and simple baselines; it is not a new estimator or a sequential-safety result.
 
@@ -56,8 +56,9 @@ The integrated questions and their corresponding evidence are:
 | RQ2: How do alert-triggered reviews compare with the selected fixed calendars at common review caps? | Paired cumulative oracle-relative loss and actual review use | Scenario- and calendar-dependent differences; not universal calendar inferiority |
 | RQ3: Does refreshing only the gate outcome predictions reduce M1 loss in the fixed shifted synthetic design? | Prespecified independent-stream-seed balanced mean-window contrast, Section 3.12 | Mean difference −0.054422; treat-all remained better on the design average |
 | RQ4: Does that gate comparison change selected policies and estimated values in the two real-log case studies? | Daily decisions and paired evening values: ZOZO clicks (Section 3.13), KuaiRand long views (Section 3.14) | Identical gate paths in each study: no updates in ZOZO, one common update in KuaiRand; exact observed gate differences of zero |
+| RQ5: How do fixed frozen/refreshed gate decisions perform when responses change between checking and use? | Predefined two-cell future selection-loss contrast across 100 fresh master seeds, Sections 3.16 and 4.12 | Refreshed-minus-frozen −0.458938; always-accept was stronger in the primary target; reversals retained adverse refresh cases |
 
-RQ1 and RQ2 retain the original study questions. RQ3 is the later prospectively specified synthetic validation target, and RQ4 is the exploratory external gate question. This mapping does not retroactively designate the development or secondary analyses as confirmatory. The contribution combines an incremental-monitoring evaluation, a controlled gate-input comparison with new-seed validation, and a bounded real-log check. Positive evidence for RQ3 is not presented as positive evidence for RQ1 or RQ4.
+RQ1 and RQ2 retain the original study questions. RQ3 is the later prospectively specified synthetic validation target, and RQ4 is the exploratory external gate question. This mapping does not retroactively designate the development or secondary analyses as confirmatory. The contribution combines an incremental-monitoring evaluation, a controlled gate-input comparison with new-seed validation, and a bounded real-log check. Positive evidence for RQ3 is not presented as positive evidence for RQ1 or RQ4. RQ5 is the separately specified follow-up motivated by exposed KuaiRand diagnostics; its fresh-seed validation does not turn the motivating real-data observation into prospective evidence.
 
 | Evidence stage | Independent or temporal allocation | Main purpose and boundary |
 | --- | --- | --- |
@@ -67,6 +68,8 @@ RQ1 and RQ2 retain the original study questions. RQ3 is the later prospectively 
 | ZOZO development pilot | Two previously inspected dates; one review | Engineering/development check; both gates retained the initial policy |
 | ZOZO five-date gate case study | Five consecutive reserved dates, one review per gate per date | Exploratory real-log gate comparison; no monitoring-arm or known-shift validation |
 | KuaiRand fourteen-date group-policy study | Fourteen reserved dates; 25,586 evaluation users; one review per gate per date | Separate real source and policy class; user-cluster and time-block uncertainty conditional on selected paths |
+| Gate-timing engineering pilot | Three allocated master seeds, excluded from validation | Software invariants and resource feasibility; no inferential interval or outcome-driven redesign |
+| Gate-timing follow-up validation | 100 fresh master seeds with fresh initial data/fits; 4,500 dependent cells | One review per current condition; policies and gate decisions fixed across future profiles/delays; best-of-two selection loss |
 
 ## 2. Related work and study positioning
 
@@ -145,6 +148,12 @@ Liu et al. (2023, Sections 4.1–4.2, Section 6 and Appendix E/Algorithm 1) use 
 Jiang and Li (2016, Sections 3.3 and 6.2) already separate candidate training from evaluation, allow training data to fit the DR outcome/value model, and select policies using value minus a multiple of empirical standard error, retaining the behavior policy when appropriate. This is close prior art for the broad gate idea. Our comparison concerns fixed initial versus candidate-refreshed nuisance predictions under matched monitoring and review opportunities, using a paired candidate-minus-current-incumbent score and a changing incumbent path. These implementation differences define the empirical comparison, not a new DR gate or safety theorem.
 
 The inspected sections establish substantial ingredient-level overlap. They do not establish that the identical joint frozen-versus-refreshed pipeline comparison has already been evaluated, and they cannot prove its absence across the literature. The defensible contribution statement is the measured conditional effect of that controlled switch, its adverse outcomes and its observed real-data boundaries, alongside the original monitoring ablation. Publication-level novelty remains a separate assessment of the importance and prior coverage of this empirical contribution.
+
+### 2.8 Future policy value and the gate-timing follow-up
+
+Forecasting policy value under nonstationarity is established prior work. Chandak et al. (2020a), *Optimizing for the Future in Non-Stationary MDPs*, introduce Prognosticator, which fits a temporal curve to counterfactual policy-value estimates and optimizes predicted future performance. Chandak et al. (2020b), *Towards Safe Policy Improvement for Non-Stationary MDPs*, use forecasting, testing and wild-bootstrap uncertainty in smoothly varying environments. Thus neither future-horizon evaluation nor safe policy improvement under nonstationarity is introduced here.
+
+The follow-up protocol records targeted earlier inspection of the Prognosticator formulation/limitations and SPIN assumptions, testing procedure and selected empirical passages. Their primary proceedings abstracts and bibliographic records were rechecked for this integration. This is bounded source inspection, not a new systematic review. Our experiment holds the fitted candidate/incumbent pair and current-data gate decisions fixed, varies future treatment-response surfaces and delay, and uses synthetic truth to measure two-policy choice loss and reconcile three sources of estimation discrepancy. It implements neither Prognosticator nor SPIN and establishes no comparative advantage over them. Abrupt-change stress cases outside a smoothness assumption do not refute a theorem under that assumption. The proposed contribution remains an empirical characterization of the existing gate-input switch; a new algorithm or established publication-level novelty is not claimed.
 
 ## 3. Methods
 
@@ -417,6 +426,30 @@ Each daily paired contrast received separate user-cluster and 30-minute-block pe
 
 The diagnostic run was `posthoc_20261113T080334Z_fc95911b`; source and summaries were committed at `179b250`. It used the original successful saved-score audit and recorded input/source hashes, without refitting models or reopening raw logs. No alternative training window, review calendar or acceptance threshold was evaluated. These diagnostics cannot independently identify true false rejections, effects of operational constraints or a superior replacement controller.
 
+### 3.16 Fresh-master-seed gate-timing follow-up
+
+**Design and allocation.** The exposed KuaiRand diagnostics motivated a new synthetic study; they were not relabelled as its validation data. Protocol `gate_timing_protocol_v1.json` was committed at `fbe9ed8` before new simulations. Runner and artificial-data tests were committed at `99556c9`. Three engineering master seeds (609900–609902), excluded from validation, checked invariants and runtime; their summaries were preserved at `71317a1`. The completed validation used master seeds 610000–610099. It was prospectively specified within this project, not a formal external preregistration or a formal power calculation.
+
+Each master seed supplied fresh initial observed data, a fresh initial model fit, shared current-data feature/assignment/noise draws, and an independent deployment feature panel. This samples new initial-data/fitting realizations, unlike the earlier 3,900-configuration validation conditional on three reused initial fits. Three current conditions, five future profiles and three delays yielded 45 factor cells per master seed and 4,500 validation cells. All factors remain dependent within a master seed; the independent replication count is 100. The experiment performs one candidate review per current condition, not a sequential monitoring/controller comparison.
+
+**Generator, fitting and separation.** Younger-group probability is q = 17/48; ages are uniform integers 18–34 or 35–65 within group. Previous spending follows Normal(200, 60²), clipped below at zero. Logged treatment T is independent Bernoulli(0.5), with observed outcome Y = 50 + 0.4 × previous_spending + Tτ(group) + ε and ε ~ Normal(0, 20²). Cost is 10. Initial effects are (40, 15). Current effects are (40, 15) for stable history, (5, 15) for response shift, and (5, 34.193548...) for opposing shift, preserving the initial population-average effect in expectation in the last condition.
+
+Of 1,000 initial observations, 800 train the initial T-learner following an unstratified 80/20 split with random state 42. A separate 1,000-record current sample is split 70/30, jointly stratified by subgroup and logged treatment, into candidate training and held-out gate records. Both features are used by separate treatment-arm random forests: 100 trees, minimum leaf size 5, full feature sampling, bootstrap sampling and one fitting thread; all estimator parameters are fixed explicitly in the protocol. Policies treat iff predicted effect exceeds 10. No true effect is supplied to fitting or acceptance.
+
+NumPy SeedSequence combines each master seed with role codes 0 (initial data), 1 (current base data) and 2 (deployment features); separate declared child codes control the current split and fitted arm models. Current X, T and noise are shared across the three current conditions, with only τ changed to form their outcomes. One independent 10,000-record deployment X panel is shared across future profiles and delays. Row identity includes master seed, role and within-role index. The incumbent, candidate, gate records and recommendations are fixed before varying future responses. Reuse of the same prediction panel is intentional pairing, not new training on future data.
+
+**Gates and future response surfaces.** Frozen AIPW uses initial-model outcome predictions; refreshed AIPW uses candidate-model predictions learned without the gate records. For both, ψ = μ̂₁ − μ̂₀ + T(Y − μ̂₁)/0.5 − (1 − T)(Y − μ̂₀)/0.5 and paired gain scores are (a_candidate − a_incumbent)(ψ − 10). A candidate is accepted strictly when its mean score minus 1.96 sample standard errors exceeds zero. There is no clipping, threshold relaxation, forced acceptance or recomputation of acceptance using future effects.
+
+Future effects equal current effects plus m(profile, h) times a fixed group-specific step. The response-shift step is (−10, 0); stable-history and opposing-shift steps are (−10, 10q/(1−q)). The step magnitude was fixed at the existing cost scale before new outcomes. For delays h ∈ {0, 1, 2}, m is zero under unchanged responses, h/2 under gradual continuation, −h/2 under gradual reversal, and respectively +1 or −1 after zero delay under abrupt continuation or reversal. Feature distributions remain fixed. A period is a synthetic unit, not a stated real-world duration. All profiles coincide at zero delay; additional endpoint duplicates are also retained as labelled controls, not independent evidence.
+
+**Endpoint and primary target.** On the common deployment panel, Δ = mean[(a_candidate − a_incumbent)(τ_future − 10)]. Gate selection loss is max(Δ, 0) − BΔ, where B indicates acceptance. This is the loss from choosing between two entire fixed policies on that panel. It is not the loss against a per-person oracle that can mix their actions. Each seed's primary value averages refreshed-minus-frozen selection loss equally across response and opposing shifts under gradual continuation at delay 1: two cells per seed. The final endpoint averages those 100 seed values; negative favors refreshing. The continuation case was selected before new outcomes, avoiding a symmetric pooling of opposite drift directions that could hide direction-specific effects. It represents this target, not an estimated real-world mixture of regimes.
+
+A 5,000-resample paired master-seed percentile bootstrap uses seed 20261113; Monte Carlo standard error is the sample standard deviation of the 100 primary values divided by √100. All other profiles, delays and baseline comparisons are descriptive secondary results without multiplicity adjustment. Baselines always retain, always accept, and select the offline better of the two policies; the latter has zero two-policy selection loss by definition. Treat-all and treat-none are assessed by individual-oracle net-benefit regret, with their two-policy selection loss left undefined because they need not lie in that policy pair.
+
+**Error accounting and verification.** On the same gate X, the difference between estimated gate gain and deployment-panel future true gain is decomposed exactly into (i) estimate minus current true pair gain on gate X, (ii) current minus future true pair gain on that same X, and (iii) future true gain on gate X minus future true gain on the independent deployment X. With a fixed feature distribution, the third term is finite-panel variation rather than designed covariate drift. This is an offline accounting identity, not a forecast estimator.
+
+The recorded environment was Python 3.12.10, NumPy 2.5.4, pandas 3.1.0 and scikit-learn 1.9.1. Scoped preflight checks matched committed sources, protocol and versions and scanned project CSV seed fields and ZIP-contained CSVs for allocated-master-seed collisions; undocumented external runs cannot be excluded. First-execution markers, unique output directories and preserved failure records constrained retries. Validation run `20261115T042413Z_e567516c` completed all seeds, with results committed at `268d60d`. The saved-output audit at `bf64e23` checked 600 gate decisions, 9,000 gate-outcome rows, 22,500 baseline rows, saved-array fingerprints, formula/split checks, every profile/delay, all primary values, the seed-block bootstrap and descriptive summaries. It did not independently refit forests or establish from model objects how every prediction was trained. No new research seeds were generated by the audit.
+
 ## 4. Results
 
 ### 4.1 Incremental monitoring signals
@@ -655,13 +688,68 @@ This is a case of disagreement between gate-time and subsequent-period estimated
 
 The case was identified retrospectively among multiple daily comparisons. Different contexts, sampling variation, dependence, estimator limitations or temporal changes could contribute; the analysis does not isolate the cause or establish a true missed beneficial update. It motivates a targeted investigation of whether a checking window represents the later decision horizon, rather than an automatic relaxation of acceptance. The original exact null refreshed-versus-frozen result remains unchanged.
 
+### 4.12 Gate-timing follow-up: gains, stronger baselines and reversals
+
+The primary refreshed-minus-frozen selection-loss contrast was −0.458938 net-benefit units per deployment record, with paired master-seed 95% bootstrap interval [−0.680513, −0.257304] and Monte Carlo standard error 0.111364. Mean frozen and refreshed losses were respectively 1.577943 and 1.119004. These values average the two specified gradual-continuation/delay-1 cells within each seed before averaging seeds. They are not cumulative twelve-window loss, click rates or an additional estimate of the earlier 3.64% result.
+
+The conditional improvement was concentrated in opposing shifts: the primary-cell mean difference was −0.841161, compared with −0.076715 for response shifts. Candidate acceptance occurred in 84/100 versus 97/100 opposing-shift reviews for frozen versus refreshed gates, 3/100 versus 6/100 response-shift reviews, and 3/100 versus 4/100 stable-history reviews. Decisions were computed once per current condition and remained fixed across all future profiles and delays. Those acceptance counts must not be multiplied by 15 as additional independent reviews.
+
+The following table reports all five profiles at delay 1 for all three current conditions. The preserved tables additionally retain every zero- and two-delay cell, including duplicate effect surfaces. Positive differences favor the frozen gate.
+
+| Current condition | Future profile, delay 1 | Frozen loss | Refreshed loss | Refreshed minus frozen |
+| --- | --- | ---: | ---: | ---: |
+| Response shift | unchanged | 1.002520 | 0.965470 | -0.037050 |
+| Response shift | gradual continue | 2.132615 | 2.055900 | -0.076715 |
+| Response shift | gradual reverse | 0.082225 | 0.084840 | +0.002615 |
+| Response shift | abrupt continue | 3.262710 | 3.146330 | -0.116380 |
+| Response shift | abrupt reverse | 0.036570 | 0.078850 | +0.042280 |
+| Opposing shift | unchanged | 0.774589 | 0.137293 | -0.637296 |
+| Opposing shift | gradual continue | 1.023270 | 0.182109 | -0.841161 |
+| Opposing shift | gradual reverse | 0.525908 | 0.092478 | -0.433430 |
+| Opposing shift | abrupt continue | 1.271952 | 0.226924 | -1.045027 |
+| Opposing shift | abrupt reverse | 0.277226 | 0.047662 | -0.229564 |
+| Stable history | unchanged | 0.123710 | 0.120710 | -0.003000 |
+| Stable history | gradual continue | 0.192601 | 0.187505 | -0.005096 |
+| Stable history | gradual reverse | 0.063017 | 0.062113 | -0.000904 |
+| Stable history | abrupt continue | 0.263750 | 0.256559 | -0.007191 |
+| Stable history | abrupt reverse | 0.040225 | 0.041416 | +0.001191 |
+
+Refreshing therefore did not improve every scenario average. Under response shift with abrupt reversal, refreshed loss exceeded frozen by 0.042280; the stable-history abrupt-reversal difference was +0.001191. Gradual response reversal at delay 1 also favored frozen by +0.002615. These are descriptive secondary differences, without cell-specific inferential or multiplicity-adjusted superiority claims. In the response-shift/abrupt-reversal/delay-1 cell, frozen and refreshed accepted 3 and 6 truly harmful candidates respectively. Stable history in that same future profile included 1 and 2 harmful acceptances. Thus the favorable primary result did not eliminate harmful choices when future responses changed direction.
+
+The primary target also retained a stronger simple alternative:
+
+| Policy or selection rule | Mean two-policy selection loss | Mean individual-oracle regret |
+| --- | ---: | ---: |
+| Frozen gate | 1.577943 | 3.386207 |
+| Refreshed gate | 1.119004 | 2.927268 |
+| Always retain incumbent | 4.626130 | 6.434393 |
+| Always accept candidate | 0.000000 | 1.808264 |
+| Offline best of the two fixed policies | 0.000000 | 1.808264 |
+| Treat all | Undefined | 3.533120 |
+| Treat none | Undefined | 10.326147 |
+
+All primary candidate-to-incumbent future gains were nonnegative; always accepting therefore matched the offline best-of-two reference on that target and had zero selection loss. Both gates incurred loss by rejecting beneficial candidates. Always accepting also had lower mean individual-oracle regret than either gate, whereas the offline best-of-two reference is an evaluation benchmark rather than a deployable truth-aware method. This finding restricts the claim to improvement over the frozen gate; it supplies no evidence that either acceptance gate was the best available rule in the primary setting. The treatment benchmarks and the two-policy reference have distinct oracle targets and must not be conflated.
+
+The primary-condition signed-error decomposition was:
+
+| Primary current condition | Gate | Current estimation error | Response transfer | Panel composition | Total signed error |
+| --- | --- | ---: | ---: | ---: | ---: |
+| Response shift | frozen | -0.010477 | -1.167500 | -0.001532 | -1.179509 |
+| Response shift | refreshed | -0.034461 | -1.167500 | -0.001532 | -1.203493 |
+| Opposing shift | frozen | +0.100675 | -1.640731 | -0.049211 | -1.589267 |
+| Opposing shift | refreshed | +0.104552 | -1.640731 | -0.049211 | -1.585390 |
+
+Response transfer and panel composition are identical between gates within a current condition because their candidate/incumbent policy pair and evaluation panels are shared. Neither gate forecasts the future response surface. The audit's maximum unrounded decomposition residual was 1.78 × 10⁻¹⁵; displayed rounding can alter sums in the final decimal. A small mean current-estimation error does not imply accurate individual seed estimates or a calibrated acceptance bound: errors can cancel across seeds. The lower selection loss therefore should not be described as proof that refreshing solves horizon mismatch or improves every estimation-error measure.
+
+The zero-delay primary-condition average difference was already −0.337173, compared with −0.458938 at delay 1 under continuation. This descriptive comparison shows that the observed refresh benefit was not created solely by waiting; varying future responses changed the costs of the same recorded decisions. It does not isolate a new training-window or review-calendar intervention, and no future-aware controller was implemented.
+
 ## 5. Discussion and limitations
 
 The completed experiments distinguish monitoring differences from decision improvements. Additional signals sometimes changed alerts or reviews without improving accepted updates or treatment-policy regret.
 
 Review timing affected outcomes, but its usefulness depended on change timing, available review opportunities and the common acceptance gate. Early alerts could exhaust scarce resources, while spacing could delay helpful adaptation.
 
-The original main studies were conditional on one initial fitted model and change onset 7. Later development and validation varied three initial training/fitting realizations and onsets 4, 7 and 10, extending that scope without sampling a population of initial models. The generator, immediate labels, exogenous logging, finite horizon and selected calendars remain restrictions. The validation reused small development calibration allocations; it is not fresh evidence that monitoring false-alert probabilities are precisely calibrated. Its 100 seeds support uncertainty assessment for the fixed design, not unrestricted generalization.
+The original main studies were conditional on one initial fitted model and change onset 7. The earlier model/onset development and its 3,900-configuration validation varied three initial training/fitting realizations and onsets 4, 7 and 10, extending that scope without sampling a population of initial models. The separate gate-timing follow-up subsequently generated new initial data/fits per master seed; it does not change the conditional scope of those earlier studies. The generator, immediate labels, exogenous logging, finite horizon and selected calendars remain restrictions. The validation reused small development calibration allocations; it is not fresh evidence that monitoring false-alert probabilities are precisely calibrated. Its 100 seeds support uncertainty assessment for the fixed design, not unrestricted generalization.
 
 M1 combined conventional and aggregate causal statistics. The two original studies did not include a purely conventional M0 arm. The later conventional-only comparisons found identical recorded M0–M1 loss in development and in the independent-seed gate validation. Consequently, the observed synthetic gate benefit is not evidence that adding aggregate causal monitoring improved the decisions.
 
@@ -677,6 +765,8 @@ Real-log off-policy estimates require valid recorded probabilities and sufficien
 
 The post-hoc KuaiRand diagnostics further distinguish weak subsequent candidate estimates, uncertainty-limited rejection and disagreement between checking-time and later estimated value. The 30 April case is an exploratory signal for gate-to-action-horizon alignment, not evidence that refreshing solves that issue: both gate variants rejected it. The stored trajectories do not isolate training-window or review-budget effects, and an outcome-informed change would require separately specified prospective validation. No causal claim about the rejection mechanism or new controller-performance estimate is made from this case.
 
+The fresh-master-seed follow-up adds controlled future-response variation while resampling initial fits, but remains distinct from the original monitoring studies and both real-log cases. Its primary continuation contrast favored refreshing; reversals retained adverse effects, and always accepting beat both gates on the primary target. Future surfaces are deliberately constructed, context distributions are fixed, and only one review is studied. The selection-loss endpoint compares two whole policies, rather than the individual-treatment oracle used elsewhere. These differences prevent pooling its magnitude with earlier losses or interpreting it as a field validation of the KuaiRand discrepancy. The three-term decomposition diagnoses known simulated quantities; it does not learn or correct future changes. Neither sequential safety nor superiority over published nonstationary policy-improvement methods was tested.
+
 ### 5.1 Literature coverage and contribution uncertainty
 
 The existing corpus contains 100 records; it must not be described as 100 completed full-text reviews. Nine particularly relevant papers were previously selected, of which seven received selective full-text inspection. The complete CausalStream and OnlineCML manuscripts remained unavailable.
@@ -691,7 +781,7 @@ The original monitoring ablation found no incremental regret reduction from subg
 
 In the separate ZOZO and KuaiRand case studies, gate paths were identical within each study: all five candidates were rejected in ZOZO, while both KuaiRand gates accepted the same 1 May candidate and rejected the other thirteen. Both primary refreshed-versus-frozen value contrasts were exactly zero. KuaiRand secondary estimates favored their shared path over never updating, but did not distinguish it clearly from always-short or always-updating. These results provide observed external boundaries on the gate findings, without attributing shared improvements to outcome-model refreshing or asserting that personalization beat every simple baseline.
 
-A retrospective KuaiRand case additionally showed negative gate-time estimates alongside positive later estimates, motivating further investigation of checking-window representativeness without establishing a true false rejection. Together, the studies support evaluating monitoring information, review timing, acceptance decisions and simple-policy benchmarks as distinct parts of an adaptation pipeline. The contribution is a conditional, reproducible empirical evaluation using established methods. Prior-art overlap, supervisor review and journal-specific preparation remain separate from completion of the experiments.
+A retrospective KuaiRand case additionally showed negative gate-time estimates alongside positive later estimates, motivating further investigation of checking-window representativeness without establishing a true false rejection. The separately specified fresh-master-seed follow-up subsequently found lower future two-policy selection loss for refreshing in its primary continuation target, while always accepting was stronger there and some reversals favored frozen predictions. It characterizes how fixed gate decisions transfer across designed future responses; it does not establish a future-aware or universally superior gate. Together, the studies support evaluating monitoring information, review timing, acceptance decisions and simple-policy benchmarks as distinct parts of an adaptation pipeline. The contribution is a conditional, reproducible empirical evaluation using established methods. Prior-art overlap, supervisor review and journal-specific preparation remain separate from completion of the experiments.
 
 ## References and evidence-limited records
 
@@ -746,6 +836,12 @@ Primary-method and related-work references used in this draft are listed below. 
 - Gao, C., Li, S., Zhang, Y., Chen, J., Li, B., Lei, W., Jiang, P., and He, X. (2022). KuaiRand: An Unbiased Sequential Recommendation Dataset with Randomly Exposed Videos. Proceedings of the 31st ACM International Conference on Information & Knowledge Management, 3953–3957. https://doi.org/10.1145/3511808.3557624
   Author manuscript: https://hexiangnan.github.io/papers/cikm22-kuairand.pdf ; provider documentation: https://kuairand.com/ ; pinned data record: https://zenodo.org/records/10439422 . Dataset archive licence: CC BY-SA 4.0.
 
+- Chandak, Y., Theocharous, G., Shankar, S., White, M., Mahadevan, S., and Thomas, P. (2020a). Optimizing for the Future in Non-Stationary MDPs. Proceedings of the 37th International Conference on Machine Learning, PMLR 119, 1414–1425. https://proceedings.mlr.press/v119/chandak20a.html
+  Targeted protocol-stage formulation/limitations inspection; primary proceedings abstract and bibliographic metadata rechecked during integration. Not an implemented comparator.
+
+- Chandak, Y., Jordan, S., Theocharous, G., White, M., and Thomas, P. S. (2020b). Towards Safe Policy Improvement for Non-Stationary MDPs. Advances in Neural Information Processing Systems, 33. https://papers.neurips.cc/paper_files/paper/2020/hash/680390c55bbd9ce416d1d69a9ab4760d-Abstract.html
+  Targeted protocol-stage assumptions/testing inspection and primary abstract recheck; SPIN is not implemented in these experiments, and no challenge to its smooth-environment guarantee is inferred.
+
 ## Appendix A. Review-spacing engineering check
 
 A subsequent engineering check compared consecutive reviews with score-conditioned spaced reviews using only two development seeds per scenario.
@@ -773,3 +869,5 @@ The inherited related-work and novelty-access limitations have not been resolved
 KuaiRand records are under `paper1_experiments/kuairand_realdata_v1/` on branch `paper1-kuairand-feasibility`: structural checkpoint `b26e8e4`, development summary `b34c23c`, pilot source/settings `b213e6c`, pilot findings `2bbfc1e`, fourteen-date protocol `063633f`, main runner `2311e49`, results `b9ba6e6` and saved-score audit `5b2cc88`. Small results and the audit disclosure are in `fourteen_day_results_20261113_024802/`. The raw archive and detailed NPZ arrays remain excluded from Git in `data/kuairand/`; the public repository's summaries alone do not contain every row needed to reconstruct the full saved-score audit. The run records explicit millisecond units and both uncertainty procedures. The inherited 100-record corpus count is not increased or relabelled as completed full-text review by the targeted follow-up in Section 2.7.
 
 The explicitly post-hoc KuaiRand diagnostic source is `diagnose_candidate_gates.py`; its manifest, full fourteen-date table and summary are preserved in `posthoc_candidate_diagnostics_20261113_080334/`, committed and pushed at `179b250`. They record prior outcome exposure, paired daily uncertainty and the limits of predecision-incumbent reconstruction. This follow-up explains exposed results and is not counted as an additional independent validation experiment or a prospectively confirmed hypothesis.
+
+The gate-timing follow-up is under `paper1_experiments/gate_timing_followup_v1/` on branch `paper1-gate-timing-followup`: protocol `fbe9ed8`, runner/tests `99556c9`, engineering pilot `71317a1`, validation summaries `268d60d`, and saved-output audit `bf64e23`. The validation directory is `validation_results_20261115_042413/`, corresponding to run `20261115T042413Z_e567516c`. `analysis.json` and `primary_seed_differences.csv` retain the fixed target, 100 seed values and bootstrap settings; `gate_outcomes.csv`, `benchmark_outcomes.csv` and `secondary_descriptive.csv` retain every designed factor cell and baseline. The auditor checks detailed per-seed NPZ arrays in the original local run under ignored `data/gate_timing_followup/`; those arrays are not included in the public summary directory. Consequently, the public summaries reproduce aggregation but do not alone reconstruct all saved-prediction checks. A successful saved-output audit is not an independent model refit or a new assessment of publication novelty.
