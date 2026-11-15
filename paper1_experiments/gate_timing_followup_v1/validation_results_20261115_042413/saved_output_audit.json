@@ -1,0 +1,45 @@
+{
+  "status": "passed",
+  "scope": "saved_predictions_scores_and_summary_audit",
+  "mode": "validation",
+  "master_seeds": 100,
+  "gate_decisions_checked": 600,
+  "gate_outcomes_checked": 9000,
+  "benchmark_rows_checked": 22500,
+  "primary_mean": -0.45893822580645166,
+  "bootstrap_interval": [
+    -0.6805133629032258,
+    -0.25730354435483876
+  ],
+  "max_decomposition_residual": 1.7763568394002505e-15,
+  "model_refits": false,
+  "raw_real_world_logs_opened": false,
+  "new_study_seeds_generated": false,
+  "verified": [
+    "protocol and source snapshots",
+    "saved array fingerprints and shapes",
+    "outcome formulas",
+    "split row partitions and strata",
+    "declared child seeds",
+    "AIPW and strict acceptance",
+    "all future profiles and delays",
+    "selection loss and individual-oracle regret",
+    "adverse decisions and simple baselines",
+    "three-term decomposition",
+    "zero-delay identity",
+    "paired primary aggregation and seed-block bootstrap",
+    "all secondary descriptive means"
+  ],
+  "limitations": [
+    "No independent refit of forests or verification of the fitting process from model objects.",
+    "Freshness report and recorded version/source provenance checked; historical scan not repeated.",
+    "No inference of real-world safety, equivalence or universal superiority."
+  ],
+  "audit_time_UTC": "2026-11-15T05:00:22.535768+00:00",
+  "auditor_sha256": "66910094d31d6f2768faecef42f528c10dc65d4255adfda57ca5e192ad9690e0",
+  "audit_versions": {
+    "python": "3.12.10",
+    "numpy": "2.5.4",
+    "pandas": "3.1.0"
+  }
+}
