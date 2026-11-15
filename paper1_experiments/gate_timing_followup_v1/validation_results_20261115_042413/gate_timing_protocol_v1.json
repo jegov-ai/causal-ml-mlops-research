@@ -1,0 +1,288 @@
+{
+  "protocol_version": "1.0",
+  "status": "prospective_fresh_seed_followup_after_exposed_real_data_diagnostics_not_formal_preregistration",
+  "purpose": "Measure future selection loss of existing frozen and refreshed AIPW gates when response conditions continue or change between checking and use.",
+  "motivation": {
+    "source_commit": "179b250",
+    "diagnostic_date": "2022-04-30",
+    "source": "KuaiRand exposed post-hoc analysis",
+    "finding": "Both gate point estimates were negative; later candidate-minus-incumbent DR and IPS estimates were positive with exploratory user and time intervals above zero.",
+    "boundary": "An exploratory observation among multiple daily comparisons, not proof of temporal causation or a true false rejection."
+  },
+  "literature_positioning": {
+    "claim": "Controlled empirical replication/extension of the existing gate pipeline; no established new estimator, forecasting method, safety theorem or publication-level novelty.",
+    "targeted_evidence": [
+      {
+        "source": "Thomas et al. (2017), Predictive Off-Policy Policy Evaluation for Nonstationary Decision Problems, with Applications to Digital Marketing",
+        "url": "https://ojs.aaai.org/index.php/AAAI/article/view/19104",
+        "inspection": "Primary proceedings metadata and abstract; full-text retrieval was inconsistent.",
+        "overlap": "Counterfactual evaluation combined with time-series prediction of future policy value already exists."
+      },
+      {
+        "source": "Chandak et al. (2020), Optimizing for the Future in Non-Stationary MDPs",
+        "url": "https://proceedings.mlr.press/v119/chandak20a.html",
+        "pdf": "https://proceedings.mlr.press/v119/chandak20a/chandak20a.pdf",
+        "inspection": "Primary abstract and targeted full-text introduction, problem formulation and limitations.",
+        "overlap": "Prognosticator optimizes a forecast of future policy performance; its stated scope uses smooth exogenous changes."
+      },
+      {
+        "source": "Chandak et al. (2020), Towards Safe Policy Improvement for Non-Stationary MDPs",
+        "url": "https://papers.neurips.cc/paper_files/paper/2020/hash/680390c55bbd9ce416d1d69a9ab4760d-Abstract.html",
+        "pdf": "https://papers.neurips.cc/paper_files/paper/2020/file/680390c55bbd9ce416d1d69a9ab4760d-Paper.pdf",
+        "inspection": "Primary abstract; targeted full-text Assumption 1, Section 4 and selected empirical passages.",
+        "overlap": "SPIN separates candidate search from testing and accepts using forecasted future performance bounds. Smoothness assumptions exclude abrupt breaks.",
+        "boundary": "We do not implement or claim to outperform SPIN. Abrupt-change stress testing here does not refute its stated theorem or assumptions."
+      }
+    ],
+    "proposed_empirical_distinction": "Hold current data, candidate/incumbent policies and gate decisions fixed within each seed/current condition, then vary only future response trajectories and delay; separately account for current estimation error, response transfer and finite-panel composition.",
+    "novelty_scope": "Exact absence of this evaluation from all prior work is not established. Not a restarted systematic review."
+  },
+  "questions": [
+    "Does candidate refresh reduce future gate-selection loss in the fixed primary gradual-continuation setting?",
+    "How do the same recorded decisions behave under unchanged, abrupt or reversing future responses and delays?",
+    "How much current-to-future gain-estimation discrepancy is attributable to current estimation, response transfer or finite-panel composition in this controlled generator?"
+  ],
+  "scope": {
+    "unit": "One candidate review per seed/current-response condition; no subsequent controller changes or retraining.",
+    "not_tested": [
+      "M0/M1/FULL monitoring superiority",
+      "A new causal estimator or forecasting algorithm",
+      "Whole sequential-controller trajectories",
+      "Operational effects of alternative training windows or review calendars",
+      "Real-world profitability",
+      "Sequential deployment safety"
+    ],
+    "synthetic_truth": "Offline scoring and decomposition only; never provided to fitting, gate scoring or acceptance."
+  },
+  "sample_allocation": {
+    "engineering_pilot_master_seeds": [
+      609900,
+      609901,
+      609902
+    ],
+    "validation_master_seeds_start_inclusive": 610000,
+    "validation_master_seeds_end_exclusive": 610100,
+    "independent_validation_replicates": 100,
+    "fresh_initial_data_and_fit_per_master_seed": true,
+    "current_response_conditions": [
+      "stable_history",
+      "response_shift",
+      "opposing_shift"
+    ],
+    "future_profiles": [
+      "unchanged",
+      "gradual_continue",
+      "gradual_reverse",
+      "abrupt_continue",
+      "abrupt_reverse"
+    ],
+    "delays_periods": [
+      0,
+      1,
+      2
+    ],
+    "factor_cells_per_master_seed": 45,
+    "validation_factor_cells": 4500,
+    "primary_cells_per_master_seed": 2,
+    "dependence": "All current conditions, future profiles, delays and gate variants remain inside one master-seed resampling block. 4500 cells are not 4500 independent replications.",
+    "allocation_rationale": "Fixed pragmatic Monte Carlo allocation, not a formal power calculation. Do not enlarge after inspecting significance.",
+    "pilot_excluded_from_validation": true,
+    "freshness_check": "Before pilot/validation, scoped scan of saved project CSV seed columns and CSV members of archives for allocated master seeds; reject recorded collisions and preserve report. This cannot exclude undocumented external runs."
+  },
+  "generator": {
+    "customer_features": [
+      "age",
+      "previous_spending"
+    ],
+    "younger_group": "age < 35",
+    "younger_probability": 0.3541666666666667,
+    "ages_younger": "Uniform integer 18 through 34 inclusive",
+    "ages_older": "Uniform integer 35 through 65 inclusive",
+    "spending": "Normal(mean=200,sd=60), clipped below at 0",
+    "logging": "Independent Bernoulli treatment with known propensity 0.5",
+    "outcome": "Y = 50 + 0.4*previous_spending + T*tau(group) + epsilon; epsilon Normal(0,20^2)",
+    "cost": 10,
+    "initial_effects": {
+      "younger": 40,
+      "older": 15
+    },
+    "current_effects": {
+      "stable_history": {
+        "younger": 40,
+        "older": 15
+      },
+      "response_shift": {
+        "younger": 5,
+        "older": 15
+      },
+      "opposing_shift": {
+        "younger": 5,
+        "older": 34.193548387096776
+      }
+    },
+    "future_step_vectors": {
+      "stable_history": {
+        "younger": -10,
+        "older": 5.483870967741937
+      },
+      "response_shift": {
+        "younger": -10,
+        "older": 0
+      },
+      "opposing_shift": {
+        "younger": -10,
+        "older": 5.483870967741937
+      }
+    },
+    "magnitude_rationale": "Future younger-group step magnitude equals the pre-existing cost scale, 10; opposing offsets preserve the population-average effect in expectation. Fixed before any new outcomes, not tuned to reproduce April 30.",
+    "initial_records": 1000,
+    "current_records": 1000,
+    "deployment_feature_panel_records": 10000,
+    "random_number_pairing": "Within each master seed, share current X,T,epsilon across current-response conditions; apply each declared effect surface to obtain Y. Share one independent deployment X panel across all future profiles and delays.",
+    "feature_distribution_fixed_over_time": true,
+    "independent_roles": "Use NumPy SeedSequence([master_seed,role_code]); role 0 initial observed data, role 1 current observed base data, role 2 deployment feature panel. Split and model fitting use separately declared child-seed codes.",
+    "current_stratified_split_child_seed_code": 90,
+    "initial_model_child_seed_codes": [
+      10,
+      11
+    ],
+    "candidate_model_child_seed_code_rule": "100 + 10*current_condition_index + treatment_arm, with declared condition order and treatment_arm 0/1; generate one uint32 using SeedSequence for sklearn random_state."
+  },
+  "models_and_gate": {
+    "family": "T-learner with separate random-forest outcome regressors",
+    "random_forest": {
+      "n_estimators": 100,
+      "criterion": "squared_error",
+      "max_depth": null,
+      "min_samples_split": 2,
+      "min_samples_leaf": 5,
+      "min_weight_fraction_leaf": 0.0,
+      "max_features": 1.0,
+      "max_leaf_nodes": null,
+      "min_impurity_decrease": 0.0,
+      "bootstrap": true,
+      "oob_score": false,
+      "n_jobs": 1,
+      "verbose": 0,
+      "warm_start": false,
+      "ccp_alpha": 0.0,
+      "max_samples": null,
+      "monotonic_cst": null,
+      "random_state": "Declared SeedSequence child seed for each fitted arm"
+    },
+    "initial_fit": "Unstratified 80/20 split, random_state=42; fit on 800 initial observations.",
+    "candidate_fit": "70/30 current-data split, stratified jointly by subgroup and logged treatment; fit on approximately 700 records and gate on separate approximately 300 records.",
+    "initial_incumbent_shared_across_current_conditions": true,
+    "candidate_incumbent_fixed_across_future_profiles_and_delays_within_current_condition": true,
+    "clarification": "Different current-response conditions have separately fitted candidates; the same candidate/incumbent pair is retained across the future conditions used to test that pair.",
+    "policy": "Treat iff estimated effect > cost 10; equality selects no treatment.",
+    "frozen_gate": "AIPW pseudo-outcomes use initial outcome regressors.",
+    "refreshed_gate": "AIPW pseudo-outcomes use current candidate regressors, fitted without gate outcomes.",
+    "AIPW": "psi = mu1-mu0 + T*(Y-mu1)/p - (1-T)*(Y-mu0)/(1-p)",
+    "paired_gain": "g = (candidate_action-incumbent_action)*(psi-cost)",
+    "acceptance": "mean(g) - 1.96*sample_sd(g)/sqrt(n_gate) > 0 strictly; shared split, actions and known propensities.",
+    "no_weight_clipping_threshold_relaxation_or_forced_acceptance": true,
+    "gate_decision_not_recomputed_using_future_outcomes_or_delay": true,
+    "preprocessing": "Only age and previous_spending predictors, as in the existing simulation; no synthetic true effects as input."
+  },
+  "future_trajectories": {
+    "time_zero": "Checking time; immediate deployment panel is independent of gate/training data and has the current response surface.",
+    "definition": "tau_future(group,h) = tau_current(group) + multiplier(profile,h)*future_step(group,current_condition)",
+    "multipliers": {
+      "unchanged": "0 for all h",
+      "gradual_continue": "h/2",
+      "gradual_reverse": "-h/2",
+      "abrupt_continue": "0 if h==0, otherwise +1",
+      "abrupt_reverse": "0 if h==0, otherwise -1"
+    },
+    "zero_delay_duplicates": "All profiles are identical at h=0. Retain labelled control rows but do not count them as independent evidence or include their duplicates in the primary average.",
+    "delay_unit": "One synthetic period, not an asserted number of real-world hours.",
+    "future_outcome_labels": "Not needed for oracle scoring of fixed policies; use declared effects and independent deployment features. Do not train on deployment data."
+  },
+  "outcomes": {
+    "true_pair_gain": "Delta_future = mean[(a_candidate(X)-a_incumbent(X))*(tau_future(X)-cost)] on the common independent deployment panel.",
+    "gate_selection_loss": "max(Delta_future,0) - B_gate*Delta_future, where B_gate is 1 for accept and 0 for reject.",
+    "meaning": "Opportunity loss from selecting the worse of two available fixed policies on the finite deployment panel; not regret against the globally optimal individual treatment policy.",
+    "primary_regime": {
+      "current_conditions": [
+        "response_shift",
+        "opposing_shift"
+      ],
+      "future_profile": "gradual_continue",
+      "delay_periods": 1
+    },
+    "primary_contrast": "For each validation master seed, average refreshed-minus-frozen gate-selection loss equally across its two primary current conditions. Then average those 100 seed-level values. Negative favors refreshing.",
+    "primary_rationale": "A single preselected gradual-continuation case tests ongoing changes. Opposite drift directions and other delays remain fully reported secondary stress tests, avoiding a symmetric pooled target that can algebraically hide direction-specific failures.",
+    "secondary": [
+      "All 45 condition/profile/delay cells per seed for both gates",
+      "Gate estimate versus future true pair gain, including signed, absolute and squared errors",
+      "Accepted harmful, rejected helpful and tied decisions using future pair gain and tolerance 1e-10",
+      "Full individual-oracle-relative net-benefit policy regret",
+      "Comparisons with always retain incumbent and always accept candidate; offline best-of-two reference has selection loss zero",
+      "Treat-all and treat-none individual-oracle-regret benchmarks"
+    ],
+    "timing_decomposition": {
+      "current_estimation_error": "estimated_gate_gain - true_current_pair_gain_on_gate_X",
+      "response_transfer": "true_current_pair_gain_on_gate_X - true_future_pair_gain_on_same_gate_X",
+      "panel_composition": "true_future_pair_gain_on_same_gate_X - true_future_pair_gain_on_deployment_X",
+      "identity": "Sum of the three terms equals estimated_gate_gain - true_future_pair_gain_on_deployment_X.",
+      "boundary": "An accounting identity using known synthetic effects, not a new estimator. Holding feature distributions fixed means the last term is finite-panel variation rather than designed covariate drift."
+    }
+  },
+  "analysis": {
+    "primary_bootstrap": {
+      "resamples": 5000,
+      "seed": 20261113,
+      "method": "Paired master-seed percentile bootstrap of the 100 seed-level primary differences. Never resample factor cells or customers as independent stream replications."
+    },
+    "primary_monte_carlo_SE": "Sample SD of 100 primary seed differences divided by sqrt(100).",
+    "secondary_intervals": "Descriptive and unadjusted for multiplicity; no secondary cell promoted to a new primary result.",
+    "report_all_cases": "Include ties, adverse profiles and all simple baselines even if the primary contrast is favorable.",
+    "no_equivalence_or_safety_claim": "Exact zero differences and zero bootstrap intervals do not establish population equivalence or safety.",
+    "initial_randomness": "Inference spans the newly generated initial-data/fitting realizations coupled to the 100 master seeds, within this generator; it is not unrestricted model-population generalization."
+  },
+  "execution": {
+    "no_simulation_has_been_run_to_prepare_protocol": true,
+    "commit_protocol_runner_tests_before_pilot": true,
+    "pilot_purpose": "Engineering, invariants and measured runtime only. Keep allocation/settings fixed; no outcome-driven redesign or pooling with validation.",
+    "profile_after_pilot_before_validation": "Use measured runtime to assess feasibility. A resource-driven change requires a new version before validation outcomes are generated.",
+    "first_execution_markers_and_unique_output_directories": true,
+    "preserve_failures_and_no_automatic_seed_retries": true,
+    "provenance": [
+      "Git commit",
+      "Normalized source/protocol hashes and snapshots",
+      "Versioned explicit estimator parameters",
+      "Master and child seed allocations",
+      "Per-role data/split fingerprints",
+      "Completion/failure state and runtime"
+    ],
+    "required_checks": [
+      "No train/gate/deployment row reuse",
+      "Identical candidate/incumbent actions across future response profiles on common X",
+      "Identical gate estimates and acceptance across future profiles/delays",
+      "Nonnegative selection loss within numerical tolerance",
+      "Zero selection loss for offline best-of-two reference",
+      "Exact decomposition reconciliation",
+      "Fixed h=0 response identity across profiles",
+      "Exact primary cell count and paired seed aggregation",
+      "Fresh-seed scoped collision scan"
+    ],
+    "independent_verification_scope": "Saved-output audit is separate from independently refitting every model; describe actual checks without implying refits.",
+    "stop_conditions": [
+      "Malformed data or invalid propensities",
+      "Inadequate split strata",
+      "Nonfinite predictions or statistics",
+      "Source/configuration mismatch",
+      "Missing factor cells or failed invariants"
+    ],
+    "no_publishing_or_baseline_replacement_inferred": true,
+    "expected_versions": {
+      "python": "3.12.10",
+      "numpy": "2.5.4",
+      "pandas": "3.1.0",
+      "sklearn": "1.9.1"
+    },
+    "version_mismatch": "Stop before any new simulation and record mismatch; version-driven changes require a disclosed protocol revision before pilot."
+  },
+  "paper_integration": "Separate new-seed mechanistic follow-up motivated by exposed diagnostics. Keep original synthetic, ZOZO and KuaiRand outcomes unchanged. Do not relabel the April 30 observation as prospective validation or claim a newly invented safe gate."
+}

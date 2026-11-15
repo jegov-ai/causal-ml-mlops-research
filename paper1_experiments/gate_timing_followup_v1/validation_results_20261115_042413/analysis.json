@@ -1,0 +1,22 @@
+{
+  "mode": "validation",
+  "independent_master_seeds": 100,
+  "primary_mean": -0.45893822580645166,
+  "negative_favors": "refreshed",
+  "protocol_primary": {
+    "current_conditions": [
+      "response_shift",
+      "opposing_shift"
+    ],
+    "future_profile": "gradual_continue",
+    "delay_periods": 1
+  },
+  "interpretation": "Fixed synthetic setting only; no safety, equivalence or universal superiority claim.",
+  "bootstrap_interval": [
+    -0.6805133629032258,
+    -0.25730354435483876
+  ],
+  "monte_carlo_se": 0.11136424569290011,
+  "bootstrap_resamples": 5000,
+  "bootstrap_seed": 20261113
+}
